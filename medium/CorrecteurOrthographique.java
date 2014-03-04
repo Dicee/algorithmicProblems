@@ -57,8 +57,8 @@ class CorrecteurOrthographique {
 		}		
 	}
 	
-	private static String conjuguer(String mot, List<String[]> noms, int index) {
-		for (String[] versions : noms) 
+	private static String conjuguer(String mot, List<String[]> dico, int index) {
+		for (String[] versions : dico) 
 			for (String version : versions)
 				if (version.equals(mot)) 
 					return versions[index];
