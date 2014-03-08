@@ -21,7 +21,7 @@ class ChuckNorris {
 				same    = bin.indexOf('1');
 			} else {
 				result += "0 ";
-				same    = bin.indexOf('0');
+				same    = bin.indexOf("0");
 			}
 			int l = bin.length();   
 			same  = same == -1 ? l  : same;
@@ -41,7 +41,6 @@ class ChuckNorris {
 		String bin  = ""; 
 		for (int i=0; i<n; i++) 
 			bin += toBin(text.charAt(i));
-		System.err.println("Debug : " + bin);
 		System.out.print(chuckNorris(bin));		
 		in.close();
 	}
