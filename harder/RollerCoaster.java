@@ -54,10 +54,10 @@ class RollerCoaster {
 			groups[i] = in.nextInt();
 		in.close();
 		
-		int tour                = 0;
-		long earned             = 0;
-		HashSet<Tour> tours     = new HashSet<>();
-		List<Tour> orderedTours = new ArrayList<>();
+		int tour                  = 0;
+		long earned               = 0;
+		HashSet<Tour> tours       = new HashSet<>();
+		List<Tour> orderedTours   = new ArrayList<>();
 		
 		while (C > 0) {
 			int placesLeft        = L;

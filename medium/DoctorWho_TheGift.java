@@ -48,9 +48,9 @@ public class DoctorWho_TheGift {
 				if (toDistribute != 0) {
 					//Fair repartition of what is left to pay. The amount paid cannot
 					//be higher than the minimum contributor's budget left
-					int pay      = Math.min(budgetMin,toDistribute);
-					paid        += pay;
-					c           -= pay*canPay;
+					int pay = Math.min(budgetMin,toDistribute);
+					paid   += pay;
+					c      -= pay*canPay;
 					
 					for (int i=indexMin ; i<indexMin + count ; i++)
 						contributions[i] = paid;
