@@ -3,7 +3,7 @@ package codingame.medium;
 import java.awt.Point;
 import java.util.Scanner;
 
-class Player {
+public class Solution {
 
 	public static final double	G						= 3.711;
 	public static final int		verticalLandingSpeed	= 40;
