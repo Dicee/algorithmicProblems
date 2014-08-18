@@ -1,5 +1,9 @@
 package projectEuler.pb_16_to_30;
 
+import static projectEuler.pb_1_to_15.Problems_1_to_15_Scala.isPrime;
+import static utils.ExtendedMath_Java.reverse;
+import static utils.ExtendedMath_Java.swap;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -221,7 +224,7 @@ public class Problems_16_to_30_Java {
 		while (!Arrays.equals(perm,goal) && count < 999_999) {
 			if (index != 0 && sortedRight(perm,index)) {
 				while (index > 0 && perm[index - 1] > perm[index]) index--;
-				int k   = index - 1;
+				int k = index - 1;
 				while (index < n - 1 && perm[k] < perm[index + 1]) index++;
 				swap(perm,index,k);
 				reverse(perm,k + 1,perm.length-1);
@@ -234,16 +237,6 @@ public class Problems_16_to_30_Java {
 		String res = "";
 		for (int i=0 ; i<n ; i++) res += perm[i];
 		return Long.parseLong(res);
-	}
-	
-	public static void reverse(int[] arr, int min, int max) {
-		while (min < max) swap(arr,min++,max--);
-	}
-	
-	public static void swap(int[] arr, int i, int j) {
-		int tmp = arr[i];
-		arr[i]  = arr[j];
-		arr[j]  = tmp;
 	}
 	
 	public static long problem24_bis() {
@@ -283,7 +276,7 @@ public class Problems_16_to_30_Java {
 	 * What is the first term in the Fibonacci sequence to contain 1000 digits?
 	 */
 	public static int problem25() {
-		/* Mathematically, the solution consists in resolving phi^n/sqrt(5) > 10^999, where phi
+		/* Mathematically, the solution consists in solving phi^n/sqrt(5) > 10^999, where phi
 		 * is the golden number which can be implemented like that : 
 		 * 
 		 * double phi = (Math.sqrt(5) + 1)/2;
@@ -293,32 +286,186 @@ public class Problems_16_to_30_Java {
 		return Problems_16_to_30_Scala.problem25();
 	}
 	
-	public static int problem30() {
-		return 0;
+	/**
+	 A unit fraction contains 1 in the numerator. The decimal representation
+	 * of the unit fractions with denominators 2 to 10 are given:
+	 * 
+	 * 1/2 = 0.5 1/3 = 0.(3) 1/4 = 0.25 1/5 = 0.2 1/6 = 0.1(6) 1/7 = 0.(142857)
+	 * 1/8 = 0.125 1/9 = 0.(1) 1/10 = 0.1
+	 * 
+	 * Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can
+	 * be seen that 1/7 has a 6-digit recurring cycle.
+	 * 
+	 * Find the value of d < 1000 for which 1/d contains the longest recurring
+	 * cycle in its decimal fraction part.
+	 */
+	public static int problem26() {
+		int res = 0;
+		int max = 0;
+		for (int i=1000 ; i>max && i>=2 ; i--) {
+			int r = 1;
+			Set<Integer> remainders = new HashSet<>();
+			while (remainders.add(r)) r = (10*r) % i;
+			int size = remainders.size();
+			if (size > max) {
+				res = i;
+				max = size;
+			}
+		}
+		return res;
+	}
+
+	/**
+	 * Euler discovered the remarkable quadratic formula: n² + n + 41
+	 * 
+	 * It turns out that the formula will produce 40 primes for the consecutive
+	 * values n = 0 to 39. However, when n = 40, 402 + 40 + 41 = 40(40 + 1) + 41
+	 * is divisible by 41, and certainly when n = 41, 41² + 41 + 41 is clearly
+	 * divisible by 41.
+	 * 
+	 * The incredible formula n² − 79n + 1601 was discovered, which produces 80
+	 * primes for the consecutive values n = 0 to 79. The product of the
+	 * coefficients, −79 and 1601, is −126479.
+	 * 
+	 * Considering quadratics of the form:
+	 * 
+	 * n² + an + b, where |a| < 1000 and |b| < 1000
+	 * 
+	 * where |n| is the modulus/absolute value of n e.g. |11| = 11 and |−4| = 4
+	 * 
+	 * Find the product of the coefficients, a and b, for the quadratic
+	 * expression that produces the maximum number of primes for consecutive
+	 * values of n, starting with n = 0.
+	 */
+	public static int problem27() {
+		return Problems_16_to_30_Scala.problem27();
 	}
 	
+	public static int problem27_bis() {
+		int res = 0;
+		int max = 0;
+		for (int a=-999 ; a<999 ; a++) 
+			for (int b=-999 ; b<999 ; b++) {
+				if (Math.abs(a % 2) == Math.abs(b % 2) && 39*39 + a*39 + b > 1 && isPrime(b)) {
+					int i;
+					for (i =0 ; isPrime(i*i + a*i + b) ; i++);
+					if (i > max) {
+						max = i;
+						res = a*b;
+					}
+				}
+			}
+		return res;
+	}
+	
+	/**
+	 * Starting with the number 1 and moving to the right in a clockwise
+	 * direction a 5 by 5 spiral is formed as follows:
+	 * 
+	 * 21 22 23 24 25 
+	 * 20 07 08 09 10 
+	 * 19 06 01 02 11 
+	 * 18 05 04 03 12 
+	 * 17 16 15 14 13
+	 * 
+	 * It can be verified that the sum of the numbers on the diagonals is 101.
+	 * 
+	 * What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral
+	 * formed in the same way?
+	 */
+	public static int problem28() {
+		int res  = 1;
+		int index = 1;
+		for (int edge=2 ; edge<=1001 ; edge += 2) 
+			for (int i=0 ; i<4 ; i++) 
+				res += (index += edge);
+		return res;
+	}
+	
+	/**
+	 * Consider all integer combinations of ab for 2 ≤ a ≤ 5 and 2 ≤ b ≤ 5:
+	 * 
+	 * 2^2=4, 2^3=8, 2^4=16, 2^5=32 3^2=9, 3^3=27, 3^4=81, 3^5=243 4^2=16, 4^3=64, 4^4=256,
+	 * 4^5=1024 5^2=25, 5^3=125, 5^4=625, 5^5=3125
+	 * 
+	 * If they are then placed in numerical order, with any repeats removed, we
+	 * get the following sequence of 15 distinct terms:
+	 * 
+	 * 4, 8, 9, 16, 25, 27, 32, 64, 81, 125, 243, 256, 625, 1024, 3125
+	 * 
+	 * How many distinct terms are in the sequence generated by a^b for 2 ≤ a ≤
+	 * 100 and 2 ≤ b ≤ 100?
+	 */
+	public static int problem29() {
+		Set<Double> res = new HashSet<>();
+		for (int a=2 ; a<=100 ; a++) {
+			for (int b=2 ; b<=100 ; b++) 
+				res.add(Math.pow(a,b));
+		}
+		return res.size();
+	}
+	
+	/**
+	 * Surprisingly there are only three numbers that can be written as the sum
+	 * of fourth powers of their digits:
+	 * 
+	 * 1634 = 1^4 + 6^4 + 3^4 + 4^4
+	 * 8208 = 8^4 + 2^4 + 0^4 + 8^4
+	 * 9474 = 9^4 + 4^4 + 7^4 + 4^4
+	 * 
+	 * As 1 = 1^4 is not a sum it is not included.
+	 * 
+	 * The sum of these numbers is 1634 + 8208 + 9474 = 19316.
+	 * 
+	 * Find the sum of all the numbers that can be written as the sum of fifth
+	 * powers of their digits.
+	 */
+	public static int problem30() {
+		return Problems_16_to_30_Scala.problem30();
+	}
+	
+	public static long problem(String s) throws IOException {
+		switch (s) {
+			case "16"     : return problem16     ();
+			case "17"     : return problem17     ();
+			case "18"     : return problem18     ();
+			case "67"     : return problem67     ();
+			case "19"     : return problem19     ();
+			case "19_bis" : return problem19_bis ();
+			case "20"     : return problem20     ();
+			case "21"     : return problem21     ();
+			case "22"     : return problem22     ();
+			case "23"     : return problem23     ();
+			case "23_bis" : return problem23_bis ();
+			case "24"     : return problem24     ();
+			case "24_bis" : return problem24_bis ();
+			case "25"     : return problem25     ();
+			case "26"     : return problem26     ();
+			case "27"     : return problem27     ();
+			case "28"     : return problem28     ();
+			case "29"     : return problem29     ();
+			case "30"     : return problem30     ();
+		}
+		throw new IllegalArgumentException(String.format("Problem %s doesn't exist",s));
+	}
+	
+	public static void test(String pb, long result) throws IOException {
+		long start = System.nanoTime();
+		try {
+			assert(problem(pb) == result);
+			System.out.println(String.format("Problem %s passed (execution time : %.2f ms)",pb,(System.nanoTime() - start)/1e6d));
+		} catch (AssertionError ae) {
+			System.err.println(String.format("Problem %s failed (execution time : %.2f ms)",pb,(System.nanoTime() - start)/1e6d));
+		}
+	}
+	
+	
 	public static void main(String[] args) throws IOException {
-
+		String[] tests   = { "16","17","18","67","19","19_bis","20","21","22","23","23_bis","24","24_bis","25","26","27","28","29","30" };
+		long[]   results = { 1366,21124,1074,7273,171,171,648,31626,871198282L,4179871,4179871,2783915460L,2783915460L,4782,983,-59231,
+				669171001,9183,443839 };
+		
+		for (int i = 0; i < tests.length; i++)
+			test(tests[i],results[i]);
 	}
 }
-
-//long start = System.currentTimeMillis();
-//assert(problem16     () == 1366       );
-//assert(problem17     () == 21124      );
-//assert(problem18     () == 1074         );
-//assert(problem67     () == 7273       );
-//assert(problem19     () == 171   );
-//assert(problem19_bis    () == 171     );
-//assert(problem20     () == 648      );
-//assert(problem21     () == 31626   );
-//assert(problem22    () == 871198282L);
-//assert(problem23    () == 4179871     );
-//assert(problem23_bis() == 4179871     );
-//assert(problem24    () == 2783915460L   );
-//assert(problem24_bis() == 2783915460L    );
-//assert(problem25    () == 4782  );
-//assert(problem14    () == 837799       );
-//assert(problem14_bis() == 837799       );
-//assert(problem15    () == 137846528820L);
-//assert(problem15_bis() == 137846528820L);
-//System.out.println(String.format("All 19 tests passed in %d ms",System.currentTimeMillis() - start));

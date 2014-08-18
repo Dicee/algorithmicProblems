@@ -4,18 +4,8 @@ import scala.io.Source
 import scala.annotation.tailrec
 
 object Problems_1_to_15_Scala {
-	def problem10  =  (for (i <- 2 to 2000000 ; if (isPrime(i))) yield i.toLong).reduce(_ + _)
-	
-	def isPrime(n : Long) : Boolean = {
-		var sqrt = Math.ceil(Math.sqrt(n)).toInt
-		var i    = 2
-		while (i <= n/sqrt) { { 
-		  	if (n % i == 0) return false
-		  	i += 1
-		  }
-		}
-		return true
-	}
+	def isPrime(n : Int) = n == 2 || (2 to Math.ceil(Math.sqrt(n)).toInt).forall(n % _ != 0)
+	def problem10        =  (for (i <- 2 to 2000000 ; if (isPrime(i))) yield i.toLong).reduce(_ + _)
 	
 	def problem11 = {
 		var s = "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08 " + 
@@ -84,6 +74,6 @@ object Problems_1_to_15_Scala {
 	}
 	
 	def main(args : Array[String]) {
-		println(problem15);
+		
 	}
 }

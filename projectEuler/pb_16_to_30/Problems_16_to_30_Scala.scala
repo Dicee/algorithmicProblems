@@ -1,7 +1,6 @@
 package projectEuler.pb_16_to_30
 
 import java.util.Arrays
-
 import scala.annotation.tailrec
 import scala.io.Source
 
@@ -64,7 +63,23 @@ object Problems_16_to_30_Scala {
 		fibo.takeWhile(x => x.toString.length < 1000).zipWithIndex.last._2 + 2
 	}
 	
+	def problem27 = {
+		val consecutivePrimes : ((Int,Int)) => Int = { case (a,b) => Stream.from(0).zipWithIndex.map(p => p._2*p._2 + a*p._2 + b).takeWhile(isPrime(_)).length }
+		val couples = (-999 to 999).map(n => (n,(2 to 999).filter(m => 39*39 + 39*n + m > 1 && isPrime(m)))).flatMap(p => p._2.map((p._1,_)))
+		
+		type T = ((Int,Int),Int)
+		val res = couples.map(p => (p,consecutivePrimes(p))).max(new Ordering[T] { def compare(p : T,q : T) = if (p._2 < q._2) -1 else 1 })._1
+		res._1 * res._2 
+	}
+	def isPrime(n : Int) = (2 to Math.ceil(Math.sqrt(n)).toInt).forall(n % _ != 0)
+	
+	def problem30 = {
+		val d = Math.pow(9,5)
+		val maxDigits = Stream.from(1).takeWhile(p => ("9" * p).toInt < p*d).last + 1
+		(10 to (d * maxDigits).toInt).filter(n => n.toString.map(ch => Math.pow(ch.asDigit,5)).sum == n).sum
+	}
+	
 	def main(args : Array[String]) {
-		println(problem25)
+		println(problem30)
 	}
 }

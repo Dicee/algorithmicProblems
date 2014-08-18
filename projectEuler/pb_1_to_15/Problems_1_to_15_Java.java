@@ -144,7 +144,7 @@ public class Problems_1_to_15_Java {
 	 * the 1000-digit number that have the greatest product. What is the value
 	 * of this product?
 	 */
-	public static int problem8() {
+	public static long problem8() {
 		String s =  "7316717653133062491922511967442657474235534919493496983"
 				+ "520312774506326239578318016984801869478851843858615607891"
 				+ "129494954595017379583319528532088055111254069874715852386"
@@ -164,11 +164,11 @@ public class Problems_1_to_15_Java {
 				+ "710940507754100225698315520005593572972571636269561882670"
 				+ "428252483600823257530420752963450";
 		int len    = s.length();
-		int subLen = 14;
-		int res = 0;
+		int subLen = 13;
+		long res    = 0;
 		for (int i=0 ; i<len - subLen + 1 ; i++) {
-			int prod = 1;
-			for (int j=i ; j<i + subLen ; j++) prod *= (s.charAt(j) - 48);
+			long prod = 1;
+			for (int j=i ; j<i + subLen ; j++) prod *= (s.charAt(j) - '0');
 			res = Math.max(res,prod);
 		}
 		return res;
@@ -185,11 +185,11 @@ public class Problems_1_to_15_Java {
 	 */
 	public static int problem9() {
 		int max = 1000;
-		for (int a=1 ; a<max ; a++)
-			for (int b=a ; b<max ; b++) {
-				double c = Math.sqrt(a*a + b*b);
-				if (c % 1 == 0 && a + b + c == max) 
-					return a*b*(int) c;
+		for (int a=1 ; a<max/3 ; a++)
+			for (int b=a ; b<=(max - a)/2 ; b++) {
+				int c = max - a - b;
+				if (c*c == a*a + b*b) 
+					return a*b*c;
 			}
 		return -1;
 	}
@@ -360,27 +360,48 @@ public class Problems_1_to_15_Java {
 		return c;
 	}
 	
+	public static long problem(String s) {
+		switch (s) {
+			case "1"      : return problem1     ();
+			case "2"      : return problem2     ();
+			case "3"      : return problem3     ();
+			case "4"      : return problem4     ();
+			case "5"      : return problem5     ();
+			case "6"      : return problem6     ();
+			case "7"      : return problem7     ();
+			case "8"      : return problem8     ();
+			case "9"      : return problem9     ();
+			case "10"     : return problem10    ();
+			case "11"     : return problem11    ();
+			case "11_bis" : return problem11_bis();
+			case "12"     : return problem12    ();
+			case "12_bis" : return problem12_bis();
+			case "13"     : return problem13    ();
+			case "14"     : return problem14    ();
+			case "14_bis" : return problem14_bis();
+			case "15"     : return problem15    ();
+			case "15_bis" : return problem15_bis();
+		}
+		throw new IllegalArgumentException(String.format("Problem %s doesn't exist",s));
+	}
+	
+	public static void test(String pb, long result) {
+		long start = System.nanoTime();
+		try {
+			assert(problem(pb) == result);
+			System.out.println(String.format("Problem %s passed (execution time : %.2f ms)",pb,(System.nanoTime() - start)/1e6d));
+		} catch (AssertionError ae) {
+			System.err.println(String.format("Problem %s failed (execution time : %.2f ms)",pb,(System.nanoTime() - start)/1e6d));
+		}
+	}
+	
 	public static void main(String[] args) throws IOException {
-		long start = System.currentTimeMillis();
-		assert(problem1     () == 233168       );
-		assert(problem2     () == 4613732      );
-		assert(problem3     () == 6857         );
-		assert(problem4     () == 906609       );
-		assert(problem5     () == 232792560    );
-		assert(problem6     () == 25164150     );
-		assert(problem7     () == 104743       );
-		assert(problem8     () == 2123366400   );
-		assert(problem9     () == 31875000     );
-		assert(problem10    () == 142913828922L);
-		assert(problem11    () == 70600674     );
-		assert(problem11_bis() == 70600674     );
-		assert(problem12    () == 76576500     );
-		assert(problem12_bis() == 76576500     );
-		assert(problem13    () == 5537376230L  );
-		assert(problem14    () == 837799       );
-		assert(problem14_bis() == 837799       );
-		assert(problem15    () == 137846528820L);
-		assert(problem15_bis() == 137846528820L);
-		System.out.println(String.format("All 19 tests passed in %d ms",System.currentTimeMillis() - start));
+		String[] tests   = { "1","2","3","4","5","6","7","8","9","10","11","11_bis","12","12_bis","13","14","14_bis","15","15_bis" };
+		long[]   results = { 233168,4613732,6857,906609,232792560,25164150,104743,23514624000L,31875000,142913828922L,70600674,70600674,
+				76576500,76576500,5537376230L,837799,837799,137846528820L,137846528820L };
+		
+//		for (int i=0 ; i<tests.length ; i++) 
+//			test(tests[i],results[i]);
+		test("9",results[8]);
 	}
 }
