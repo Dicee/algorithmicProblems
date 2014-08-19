@@ -1,8 +1,8 @@
 package projectEuler.pb_16_to_30;
 
 import static projectEuler.pb_1_to_15.Problems_1_to_15_Scala.isPrime;
-import static utils.ExtendedMath_Java.reverse;
-import static utils.ExtendedMath_Java.swap;
+import static utils.ExtendedMath.reverse;
+import static utils.ExtendedMath.swap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -442,6 +442,7 @@ public class Problems_16_to_30_Java {
 			case "25"     : return problem25     ();
 			case "26"     : return problem26     ();
 			case "27"     : return problem27     ();
+			case "27_bis" : return problem27_bis ();
 			case "28"     : return problem28     ();
 			case "29"     : return problem29     ();
 			case "30"     : return problem30     ();
@@ -461,8 +462,8 @@ public class Problems_16_to_30_Java {
 	
 	
 	public static void main(String[] args) throws IOException {
-		String[] tests   = { "16","17","18","67","19","19_bis","20","21","22","23","23_bis","24","24_bis","25","26","27","28","29","30" };
-		long[]   results = { 1366,21124,1074,7273,171,171,648,31626,871198282L,4179871,4179871,2783915460L,2783915460L,4782,983,-59231,
+		String[] tests   = { "16","17","18","67","19","19_bis","20","21","22","23","23_bis","24","24_bis","25","26","27","27_bis","28","29","30" };
+		long[]   results = { 1366,21124,1074,7273,171,171,648,31626,871198282L,4179871,4179871,2783915460L,2783915460L,4782,983,-59231,-59231,
 				669171001,9183,443839 };
 		
 		for (int i = 0; i < tests.length; i++)

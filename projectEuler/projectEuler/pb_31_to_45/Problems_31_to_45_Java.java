@@ -1,17 +1,18 @@
 package projectEuler.pb_31_to_45;
 
 
-import static utils.ExtendedMath_Java.reverse;
-import static utils.ExtendedMath_Java.isPandigital;
-import static utils.ExtendedMath_Java.isPrime;
-import static utils.ExtendedMath_Java.swap;
+import static utils.ExtendedMath.ESieve;
+import static utils.ExtendedMath.isPandigital;
+import static utils.ExtendedMath.isPrime;
+import static utils.ExtendedMath.reverse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import utils.PermutationGenerator;
 
 public class Problems_31_to_45_Java {
 	/**
@@ -394,39 +395,78 @@ public class Problems_31_to_45_Java {
 	 * What is the largest n-digit pandigital prime that exists?
 	 */
 	public static long problem41() {
-		int n = 4;
-		int[] perm = new int[n];
-		int[] goal = new int[n];
-		for (int i=0 ; i<n ; i++) {
-			perm[n-i-1] = i;
-			goal[i]     = i;
+		for (int i=9 ; i>0 ; i--) {
+			int sum = 0;
+			for (int j=1 ; j<=i ; j++) sum += j;
+			//We eliminate the pandigital numbers that are divisible by 3
+			if (sum % 3 != 0)
+				for (Integer[] perm : new PermutationGenerator(i,true)) {
+					int n = 0;
+					for (int j=0 ; j<perm.length ; j++) 
+						n = n*10 + perm[j] + 1;
+					if (isPrime(n)) 
+						return n;
+				}
 		}
-		int index = 0;
-		System.out.println(Arrays.toString(perm));
-		while (!Arrays.equals(perm,goal)) {
-			if (index != n - 1 && sortedRight(perm,index)) {
-				while (index < n - 1 && perm[index] > perm[index + 1]) index++;
-				int k = index + 1;
-				System.out.println(k);
-				while (index > 0 && perm[k] > perm[index + 1]) index--;
-				swap(perm,index,k);
-				reverse(perm,k + 1,perm.length-1);
-				index = k;
-				System.out.println(Arrays.toString(perm));
-			} else 
-				index--;
-		}
-		String res = "";
-		for (int i=0 ; i<n ; i++) res += perm[i];
-		return Long.parseLong(res);
+		return -1;
 	}
 	
-	public static boolean sortedRight(int[] arr, int index) {
-		for (int i=index ; i<arr.length - 1 ; i++)
-			if (arr[i] <= arr[i + 1])
-				return false;
-		return true;
+	/**
+	 * The nth term of the sequence of triangle numbers is given by, tn =
+	 * 1/2*n(n+1); so the first ten triangle numbers are:
+	 * 
+	 * 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
+	 * 
+	 * By converting each letter in a word to a number corresponding to its
+	 * alphabetical position and adding these values we form a word value. For
+	 * example, the word value for SKY is 19 + 11 + 25 = 55 = t10. If the word
+	 * value is a triangle number then we shall call the word a triangle word.
+	 * 
+	 * Using words.txt (right click and 'Save Link/Target As...'), a 16K text
+	 * file containing nearly two-thousand common English words, how many are
+	 * triangle words?
+	 */
+	public static int problem42() {
+		return Problems_31_to_45_Scala.problem42();
 	}
+	
+	/**
+	 * The number, 1406357289, is a 0 to 9 pandigital number because it is made
+	 * up of each of the digits 0 to 9 in some order, but it also has a rather
+	 * interesting sub-string divisibility property.
+	 * 
+	 * Let d1 be the 1st digit, d2 be the 2nd digit, and so on. In this way, we
+	 * note the following:
+	 * 
+	 * d_2d_3d_4=406 is divisible by 2 d_3d_4d_5=063 is divisible by 3 d_4d_5d_6=635 is
+	 * divisible by 5 d_5d_6d_7=357 is divisible by 7 d_6d_7d_8=572 is divisible by 11
+	 * d_7d_8d_9=728 is divisible by 13 d8d9d10=289 is divisible by 17
+	 * 
+	 * Find the sum of all 0 to 9 pandigital numbers with this property.
+	 */
+	public static long problem43() {
+		return Problems_31_to_45_Scala.problem43();
+	}
+	
+	public static long problem43_bis() {
+		long    res   = 0;
+		int[][] conds = { { 4,7 },{ 5,11},{ 6,13 },{ 7,17 } };
+		ext : for (Integer[] perm : new PermutationGenerator("1023456789")) {
+			if (perm[3] % 2 != 0)                       continue;
+			if (perm[5] % 5 != 0)                       continue;
+			if ((perm[2] + perm[3] + perm[4]) % 3 != 0) continue;
+			for (int[] cond : conds) {
+				int i = cond[0];
+				if ((100*perm[i] + 10*perm[i + 1] + perm[i + 2]) % cond[1] != 0)
+					continue ext;
+			}
+			long n = 0;
+			for (int i : perm) n = 10*n + i;
+			res += n;
+		}
+		return res;
+	}
+	
 	
 	public static long problem(String s) throws IOException {
 		switch (s) {
@@ -446,6 +486,9 @@ public class Problems_31_to_45_Java {
 			case "40_bis"  : return problem40_bis ();
 			case "40_tris" : return problem40_tris();
 			case "41"      : return problem41     ();
+			case "42"      : return problem42     ();
+			case "43"      : return problem43     ();
+			case "43_bis"  : return problem43_bis ();
 		}
 		throw new IllegalArgumentException(String.format("Problem %s doesn't exist",s));
 	}
@@ -462,13 +505,11 @@ public class Problems_31_to_45_Java {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		String[] tests   = { "31","32","33","34","34_bis","35","35_bis","36","37","38","39","40","40_bis","40_tris" };
-		long[]   results = { 73682,45228,100,40730,40730,55,55,872187,748317,932718654,840,210,210,210 };
+		String[] tests   = { "31","32","33","34","34_bis","35","35_bis","36","37","38","39","40","40_bis","40_tris","41","42","43","43_bis" };
+		long[]   results = { 73682,45228,100,40730,40730,55,55,872187,748317,932718654,840,210,210,210,7652413,162,16695334890L,16695334890L };
 		
-//		for (int i = 0; i < tests.length; i++)
-//			test(tests[i],results[i]);
-//		test("37",748317);
-//		test("41",0);
-		problem41();
+		for (int i = 0; i < tests.length; i++)
+			test(tests[i],results[i]);
+//		test("43",16695334890L);
 	}
 }

@@ -1,8 +1,10 @@
 package projectEuler.pb_31_to_45
 
-import utils.ExtendedMath_Java._
-
+import utils.ExtendedMath._
 import java.util.Arrays
+import utils.PermutationGenerator
+import utils.PermGen
+import scala.io.Source
 
 object Problems_31_to_45_Scala {
 	def problem33 = {
@@ -25,7 +27,7 @@ object Problems_31_to_45_Scala {
 		}
 		def next(s : String) = s.charAt(s.length - 1) + s.substring(0,s.length - 1)
 		def nextList(n : String, p : String) : List[String] = if (p == n) Nil else p.toString :: nextList(n,next(p))
-		(2 to 999999).filter(n => eligible(n) && nextList(n.toString,next(n.toString)).map(_.toInt).forall(isPrime(_))).length
+		(2 to 999999).count(n => eligible(n) && nextList(n.toString,next(n.toString)).map(_.toInt).forall(isPrime(_)))
 	}
 	
 	def problem40 = {
@@ -39,13 +41,27 @@ object Problems_31_to_45_Scala {
 		Array(s(1),s(10),s(100),s(1000),s(10000),s(100000),s(1000000)).map(_.asDigit).reduce(_*_)
 	}
 	
-	def problem41 = {
-//		(1 to 987654321).filter(isPrime(_))
-		Stream.from(2).take(10).reverse.toList
+	def problem42 = {
+		def isTriangle(n : Int) = ((Math.sqrt(1 + 8*n) - 1)/2 % 1) == 0
+		var s = Source.fromURL(getClass.getResource("data/problem42.txt")).mkString
+		s.split(",").map(w => w.map(ch => if (!ch.isLetter) 0 else ch - 'A' + 1).sum).count(isTriangle)
+	}
+	
+	def problem43 = {
+		def subNum(perm : Array[Int], index : Int) = 100*perm(index) + 10*perm(index + 1) + perm(index + 2)
+		PermGen("1023456789").filter(perm =>
+			subNum(perm,1) % 2 == 0 &&
+			subNum(perm,2) % 3 == 0 &&
+			subNum(perm,3) % 5 == 0 &&
+			subNum(perm,4) % 7 == 0 &&
+			subNum(perm,5) % 11 == 0 &&
+			subNum(perm,6) % 13 == 0 &&
+			subNum(perm,7) % 17 == 0).map(perm => perm.mkString.toLong).sum
 	}
 	
 	def main(args : Array[String]) {
-		println(problem41)
+//		println(problem43)
+		for (a <- PermGen("2031",true)) println(a.mkString)
 //		println(nextList(100,next(100)).forall(isPrime))
 	}
 }
