@@ -10,9 +10,15 @@ class PermGen(var n : Int, var reverse : Boolean = false) extends Iterable[Array
 		generator = new PermutationGenerator(seed,reverse);
 	}
 	
+	def this(seed : String, goal : String) = {
+		this(seed.length)
+		generator = new PermutationGenerator(seed,goal);
+	}
+	
 	def iterator = new Iterator[Array[Int]] {
-		def next    = generator.iterator.next.map(_.toInt)
-		def hasNext = generator.iterator.hasNext
+		private val it = generator.iterator
+		def next    = it.next.map(_.toInt)
+		def hasNext = it.hasNext
 	}
 }
 
@@ -20,4 +26,5 @@ object PermGen {
 	def apply(n : Int, reverse : Boolean = false) = new PermGen(n,reverse)
 	def apply(seed : String, reverse : Boolean)   = new PermGen(seed,reverse)
 	def apply(seed : String)                      = new PermGen(seed,false)
+	def apply(seed : String, goal : String)       = new PermGen(seed,goal)
 }

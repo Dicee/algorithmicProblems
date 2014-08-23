@@ -1,8 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.function.Predicate;
 
 public class ExtendedMath {
@@ -38,6 +38,18 @@ public class ExtendedMath {
 	            return false;
 	    return true;
 	}
+	
+	public static boolean isPrime(long n) {
+		if (n == 2 || n == 3)
+			return true;
+	    if(n <= 1 || n % 2 == 0 || n % 3 == 0)
+	        return false;
+	    int x = (int) Math.sqrt(n);
+	    for(int i=1 ; (6*i-1) <= x ; i++)
+	        if(n % (6*i-1) == 0 || n % (6*i+1) == 0) 
+	            return false;
+	    return true;
+	}
 
 	public static boolean[] ESieve(int n) {
 		//true means the value has been eliminated, not that is is a prime !
@@ -50,6 +62,24 @@ public class ExtendedMath {
 					sieve[k] = true;
 		return sieve;
 	}
+	
+//	public static boolean[] ESieve1(int n) {
+//		//true means the value has been eliminated, not that is is a prime !
+//		boolean[] sieve = new boolean[n + 1];
+//		sieve[0] = true;
+//		sieve[1] = true;
+//		eliminate(2,sieve);
+//		eliminate(3,sieve);
+//		for (int i=1 ; 6*i - 1 < n ; i++) {
+//			if (!sieve[6*i - 1]) eliminate(6*i - 1,sieve);
+//			if (!sieve[6*i + 1]) eliminate(6*i + 1,sieve);
+//		}
+//		return sieve;
+//	}
+//	
+//	private static void eliminate(int prime, boolean[] sieve) {
+//		for (int i=2*prime ; i<sieve.length - 1 ; i += prime) sieve[i] = true;
+//	}
 	
 	public static <T extends Collection<Integer>> T ESieve(int n, T fill, Predicate<Integer> pred) {
 		boolean[] sieve = ESieve(n);
@@ -132,17 +162,10 @@ public class ExtendedMath {
 	
 	public static void main(String[] args) {
 //		long start = System.currentTimeMillis();
-//		List<Integer> result = new ArrayList<>();
-//		for (int i=1 ; i<10000000 ; i++)
-//			if (isPrime(i))
-//				result.add(i);
+//		ESieve1(100_000_000);
 //		System.out.println(System.currentTimeMillis() - start);
 //		start = System.currentTimeMillis();
-//		basicESieve(10000000);
+//		ESieve(100_000_000);
 //		System.out.println(System.currentTimeMillis() - start);
-		long start = System.currentTimeMillis();
-		for (int i=2 ; i<=Integer.MAX_VALUE ; i++) {
-			if (isPrime1(i) != isPrime(i)) { System.out.println(i); break;}
-		}
 	}
 }

@@ -3,14 +3,13 @@ package utils;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import static utils.ExtendedMath.reverse;
 import static utils.ExtendedMath.swap;
 
 public class PermutationGenerator implements Iterable<Integer[]> {
-	private int n, index;
-	private boolean init = true;
-	
-	private Integer[] current;
+	private Integer[] start;
 	private Integer[] goal;
 	private Comparator<Integer> cmp;
 	
@@ -22,28 +21,40 @@ public class PermutationGenerator implements Iterable<Integer[]> {
 		this(seed,false);
 	}
 	
+	public PermutationGenerator(String seed, String goal) {
+		this(toIntArray(seed),toIntArray(goal));
+	}
+	
 	public PermutationGenerator(int n, boolean reverse) {
-		this(first(n,reverse),reverse);
+		this(first(n,reverse),first(n,!reverse));
 	}
 	
 	public PermutationGenerator(String seed, boolean reverse) {
-		this(toIntArray(seed),reverse);
+		this(toIntArray(seed),first(seed.length(),!reverse));
 	}
 	
-	private PermutationGenerator(Integer[] seed, boolean reverse) {
-		checkSeed(seed);
-		this.n       = seed.length;
-		this.cmp     = reverse ? Comparator.reverseOrder() : Integer::compare;
-		this.index   = 0;
-		this.goal    = first(seed.length,!reverse);
-		this.current = seed;
+	private PermutationGenerator(Integer[] seed, Integer[] goal) {
+		checkPerm(seed);
+		checkPerm(goal);
+		
+		if (seed.length != goal.length)
+			throw new IllegalArgumentException("Inconsistent permutation length");
+		
+		boolean reverse = false;
+		for (int i=0 ; i < seed.length && !reverse ; i++)
+			if (reverse = seed[i] > goal[i]);
+			else if (seed[i] < goal[i]) break;
+
+		this.cmp   = reverse ? Comparator.reverseOrder() : Integer::compare;
+		this.goal  = goal;
+		this.start = seed;
 	}
 	
-	private void checkSeed(Integer[] seed) {
+	private void checkPerm(Integer[] seed) {
 		boolean[] seen = new boolean[seed.length];
 		for (Integer i : seed)
 			if (i < 0 || i >= seed.length || seen[i]) 
-				throw new IllegalArgumentException("Malformed seed : " + Arrays.toString(seed));
+				throw new IllegalArgumentException("Malformed permutation : " + Arrays.toString(seed));
 			else 
 				seen[i] = true;
 	}
@@ -61,45 +72,65 @@ public class PermutationGenerator implements Iterable<Integer[]> {
 		return res;
 	}
 	
-	private boolean sortedRight(int index) {
-		for (int i=index ; i<current.length - 1 ; i++)
-			if (cmp.compare(current[i],current[i + 1]) < 0)
-				return false;
-		return true;
-	}
-	
 	@Override
 	public Iterator<Integer[]> iterator() {
 		return new Iterator<Integer[]>() {
+			private Integer[]	current = Arrays.copyOf(start,start.length);
+			private boolean		init	= true;
+			private int			index	= 0;
+			private boolean		ended   = Arrays.equals(current,goal);
+			
 			@Override
 			public boolean hasNext() {
-				return !Arrays.equals(current,goal);
+				return !ended;
 			}
 
 			@Override
 			public Integer[] next() {
+				if (ended)
+					throw new NoSuchElementException();
+				
 				if (init) {
 					init = false;
 					return current;
 				}
+				
+				int n = current.length;
+				Integer[] result;
+				
 				if (index != 0 && sortedRight(index)) {
 					while (index > 0 && cmp.compare(current[index - 1],current[index]) > 0) index--;
 					int k = index - 1;
 					while (index < n - 1 && cmp.compare(current[k],current[index + 1]) < 0) index++;
+					
 					swap(current,index,k);
 					reverse(current,k + 1,current.length-1);
-					index = k;
-					return current;
+					
+					index  = k;
+					result = current;
 				} else {
 					index++;
-					return next();
+					result = next();
 				}
+				ended = Arrays.equals(result,goal);
+				return result;
+			}
+			
+			private boolean sortedRight(int index) {
+				for (int i=index ; i<current.length - 1 ; i++)
+					if (cmp.compare(current[i],current[i + 1]) < 0)
+						return false;
+				return true;
 			}
 		};
 	}
 	
 	public static void main(String[] args) {
-		for (Integer[] arr : new PermutationGenerator("30154"))
-			System.out.println(Arrays.toString(arr));
+		PermutationGenerator generator = new PermutationGenerator("3201",true);
+//		for (Integer[] arr : generator)
+//			System.out.println(Arrays.toString(arr));
+		Iterator<Integer[]> it = generator.iterator();
+		while (it.hasNext())
+			System.out.println(Arrays.toString(it.next()));
 	}
 }

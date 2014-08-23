@@ -49,7 +49,7 @@ object Problems_31_to_45_Scala {
 	
 	def problem43 = {
 		def subNum(perm : Array[Int], index : Int) = 100*perm(index) + 10*perm(index + 1) + perm(index + 2)
-		PermGen("1023456789").filter(perm =>
+		PermGen("1023465789").filter(perm =>
 			subNum(perm,1) % 2 == 0 &&
 			subNum(perm,2) % 3 == 0 &&
 			subNum(perm,3) % 5 == 0 &&
@@ -60,8 +60,8 @@ object Problems_31_to_45_Scala {
 	}
 	
 	def main(args : Array[String]) {
-//		println(problem43)
-		for (a <- PermGen("2031",true)) println(a.mkString)
+		println(problem43)
+//		for (a <- PermGen("210",true)) println(a.mkString)
 //		println(nextList(100,next(100)).forall(isPrime))
 	}
 }
