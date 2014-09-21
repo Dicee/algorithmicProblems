@@ -29,7 +29,7 @@ class SuiteConway {
 			}
 			suite = suiteNextStep;
 		}
-		System.out.println("Computed : " + (System.currentTimeMillis() - deb));
+		System.err.println("Computed : " + (System.currentTimeMillis() - deb));
 		
 		//The StringBuilder class is way faster than String for that kind of operation
 		StringBuilder sb = new StringBuilder();
@@ -40,6 +40,6 @@ class SuiteConway {
 		
 		System.out.println(sb);
 		in.close();
-		System.out.println("Finished : " + (System.currentTimeMillis() - deb));
+		System.err.println("Finished : " + (System.currentTimeMillis() - deb));
 	}
 }

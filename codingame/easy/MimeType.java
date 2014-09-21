@@ -35,7 +35,7 @@ class MimeType {
 			else {
 			    s = s.substring(index + 1);
 				for (Map.Entry<String,HashSet<String>> entry : mimeTypes.entrySet()){
-					if (entry.getValue().contains(s)) {
+					if (entry.getValue().contains(s.toLowerCase())) {
 						mimeType = entry.getKey();
 						break;
 					}
