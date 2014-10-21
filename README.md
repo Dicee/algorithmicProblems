@@ -6,4 +6,8 @@ Some solutions of algorithmic problems in Scala and Java. The problems come from
 Links 
 ===================
 - CodinGame (http://www.codingame.com/cg/) is a french website dedicated to programming freaks which proposes problems of increasing difficulty.
+
 - Project Euler (https://projecteuler.net/) is a website that every math and algorithmic lover must visit. To this date, more than 470 problems have been released, giving a hard time to thousands of programers. Most of these problems are math-oriented and require good skills both in math and programming.
+
+- Codility (https://codility.com/programmers/lessons/) is a website that proposes some algorithmic lessons and exercises. It also provides a nice in-browser IDE and offers its services to company recruiters to test their candidates on Codility's platform.
+
