@@ -1,6 +1,9 @@
 import java.util.*;
 
-class Solution {
+/**
+ *   Level : respectable 
+ */
+class MaxCounters {
     class Counter {
         public int version, value;
         public Counter(int version, int value) {
