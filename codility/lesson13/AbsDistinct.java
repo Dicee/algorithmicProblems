@@ -4,37 +4,39 @@ import java.util.Arrays;
 
 /**
  * Level : painless
- */
-public class AbsDistinct {
+ */		
+public class Solution {
 	public int solution(int[] A) {
-        // we could use an HashSet to crack this...        
+	// we could use an HashSet to crack this...        
         /* Set<Integer> set = new HashSet<>();
          * for (int i : A) set.add(Math.abs(i));
          *return set.size();
          */
          
          // ... but it would not be fun
-		int splitIndex  = Math.abs(Arrays.binarySearch(A,0));
-		int[] B = A;       
-
-		if (splitIndex > 0) {
-			B         = new int[A.length];
-			int[] neg = Arrays.copyOf(A,splitIndex);
-			int[] pos = Arrays.copyOfRange(A,splitIndex,A.length); 
-			for (int min=0, max=splitIndex-1 ; min <= max ; min++, max--) {
-				int tmp = Math.abs(neg[min]);
-				neg[min]  = Math.abs(neg[max]);
-				neg[max]  = tmp;
-			}
-			int x = 0, y = 0;
-			int i = 0;
-			while (x < neg.length || y < pos.length)
-				B[i++] = x >= neg.length ? pos[y++] : y >= pos.length ? 
-					neg[x++] : neg[x] < pos[y] ? neg[x++] : pos[y++]; 
-		} 
-		int count = 1;
-		for (int i=1 ; i<B.length ; i++)
-			if (B[i] != B[i - 1]) count++;
-		return count;
+	int splitIndex = Arrays.binarySearch(A,0);
+	splitIndex     = splitIndex < 0 ? - splitIndex - 1 : splitIndex;
+	splitIndex     = Math.min(splitIndex,A.length - 1);
+	 long[] B       = new long[A.length];  
+		
+	int neg = A[splitIndex] >= 0 ? splitIndex - 1 : splitIndex;
+	int pos = A[splitIndex] >= 0 ? splitIndex     : splitIndex + 1;
+		
+	int i     = 0;
+	int count = 0;
+		
+	while (pos < A.length || neg >= 0) {
+		if (pos >= A.length)
+			B[i] = - (long) A[neg--];
+		else if (neg < 0 || A[pos] < - A[neg])
+		        B[i] = A[pos++];
+		else 
+		        B[i] = - (long) A[neg--];
+		  
+		if (i == 0 || B[i] != B[i-1]) 
+		        count++;
+		i++;
+	}
+	return count;
     }
 }

@@ -1,6 +1,3 @@
-/**
- * Level : respectable
- */
 object MissingIntegerScala {
 	def solution(A : Array[Int]) : Int = {
 		val N = A.length;
