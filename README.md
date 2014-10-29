@@ -1,7 +1,8 @@
 algorithmicProblems
 ===================
 
-Some solutions of algorithmic problems in Scala and Java. The problems come from CodinGame, Project Euler and Codility.
+Some solutions of algorithmic problems in Scala and Java. The problems come from CodinGame, Project Euler and Codility. For Codility,
+I will share the code both of the training problems (in the *lessonX* folders) and challenges I participated to.
 
 Links 
 ===================
