@@ -1,0 +1,1 @@
+- fix lesson7/DoubleMaxSliceSum

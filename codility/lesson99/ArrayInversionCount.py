@@ -1,9 +1,5 @@
 from collections import deque
 
-###############
-# To be fixed #
-###############
-
 def solution(arr) :
     """Level : respectable"""
     def merge(arr,imin,imax) :
@@ -18,10 +14,10 @@ def solution(arr) :
                 arr[i] = left.popleft()
             else :
                 arr[i] = right.popleft()
-                count += 1
+                count += len(left) 
             i  += 1
 
-        for k in (left if len(right) == 0 else right) :
+        for k in left if len(right) == 0 else right:
             arr[i] = k
             i     += 1
 
