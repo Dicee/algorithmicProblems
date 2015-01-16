@@ -8,7 +8,7 @@ with open(sys.argv[1],'r') as lines:
 
         q     = len(arr) // n
         for i in range(q):
-            res[i*n:(i+1)*n - 1] = reversed(arr[i*n:(i+1)*n])
+            res[i*n:(i+1)*n] = reversed(arr[i*n:(i+1)*n])
 
         res[q*n:] = arr[q*n:]
         print(",".join(res))
