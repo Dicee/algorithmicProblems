@@ -21,7 +21,7 @@ with open(sys.argv[1], 'r') as lines:
 		i   = j = 0
 		while len(res) != len(arr):
 			(i,j) = (i + hinc,j + winc)				
-			reached = reached = reached_goal(i,j,(wmin,wmax),(hmin,hmax),(winc,hinc))
+			reached = reached_goal(i,j,(wmin,wmax),(hmin,hmax),(winc,hinc))
 			res.append(arr[i*w + j])
 				
 			if reached:
