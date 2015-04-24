@@ -1,3 +1,5 @@
+package training;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,16 +7,18 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Comment;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class RankingPrinter {
+public class Main {
 	public static final String ROOT       = "https://app.lestalentsdunumerique.fr";
 	public static final String HOME_PAGE  = ROOT + "/concours/list";
 	
@@ -40,6 +44,7 @@ public class RankingPrinter {
 	}
 	
 	private static List<Candidate> getRanking(Set<String> candidatesUrl) {
+		System.out.println(candidatesUrl);
 		return candidatesUrl.stream()
 			.map(Main::parseCandidatePageContent)
 			.sorted(Comparator.reverseOrder())
@@ -49,19 +54,39 @@ public class RankingPrinter {
 	private static Candidate parseCandidatePageContent(String candidatePage) {
 		try {
 			Document document  = Jsoup.connect(candidatePage).get();
-			
-			Element  titleNode = document.getElementById("projet-porteur");
-			Element  votesNode = document.getElementById("votes");
-			Element  viewsNode = votesNode.parent().parent().child(1).child(0);
-
-			String   title     = titleNode.ownText();
-			int      votes     = Integer.parseInt(votesNode.ownText());
-			int      views     = Integer.parseInt(viewsNode.ownText());
-			
-			return new Candidate(title,votes,views);
+			return extractCandidate(document);
 		} catch (IOException e) {
 			return Candidate.UNKOWN;
 		}
+	}
+	
+	private static Candidate extractCandidate(Document document) {
+		Element             titleNode   = document.getElementById("projet-porteur");
+		Optional<Candidate> typicalCase = extractCandidateInTypicalCase(document,titleNode);
+		return typicalCase.orElse(extractCandidateInHackyCase(document,titleNode).orElse(Candidate.UNKOWN));
+	}
+
+	private static Optional<Candidate> extractCandidateInTypicalCase(Document document, Element titleNode) {
+		Element votesNode = document.getElementById("votes");
+		
+		if (votesNode == null) return Optional.empty();
+			
+		Element  viewsNode = votesNode.parent().parent().child(1).child(0);
+
+		String   title     = titleNode.ownText();
+		int      votes     = Integer.parseInt(votesNode.ownText());
+		int      views     = Integer.parseInt(viewsNode.ownText());
+			
+		return Optional.of(new Candidate(title,votes,views));
+	}
+
+	// Apparently, the developers of the website think that a good way to hide the number of votes and views is to 
+	// comment them in the rendered HTML code. Let's prove them wrong.
+	private static Optional<Candidate> extractCandidateInHackyCase(Document document, Element titleNode) {
+		Element  parentDiv     = document.select("div.col-sm-8.nopadding").first();
+		String   commentedHTML = ((Comment) parentDiv.childNode(1)).getData();
+		Document commentDoc    = Jsoup.parse(commentedHTML);
+		return extractCandidateInTypicalCase(commentDoc,titleNode);
 	}
 	
 	private static void printRanking(List<Candidate> ranking) {
