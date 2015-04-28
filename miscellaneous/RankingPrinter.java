@@ -1,4 +1,3 @@
-package Test;
 import static java.util.stream.Collectors.groupingBy;
 
 import java.io.BufferedReader;
