@@ -19,7 +19,7 @@ import org.jsoup.nodes.Comment;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class Main {
+public class RankingPrinter {
     public static final String ROOT       = "https://app.lestalentsdunumerique.fr";
     public static final String HOME_PAGE  = ROOT + "/concours/list";
    
@@ -108,7 +108,7 @@ public class Main {
     }
     
     private static List<Candidate> getAllCandidates(Set<String> candidatesUrl) {
-        return candidatesUrl.stream().map(Main::parseCandidatePageContent).collect(Collectors.toList());
+        return candidatesUrl.stream().map(RankingPrinter::parseCandidatePageContent).collect(Collectors.toList());
     }
     
     private static void printRankingPerCategory(Map<String,List<Candidate>> ranking) {
