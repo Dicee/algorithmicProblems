@@ -1,3 +1,5 @@
+package codeeval.moderate.NumberPairs;
+
 import java.util.Arrays
 
 object Main extends App {

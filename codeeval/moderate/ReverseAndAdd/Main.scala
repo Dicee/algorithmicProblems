@@ -1,3 +1,5 @@
+package codeeval.moderate.ReverseAndAdd;
+
 object Main extends App {
 	def isPalindrome(n: Int) = reverse(n) == n
 	def reverse(n: Int) = {

@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.DataRecovery;
+
+object Main extends App {
     scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)
         .map(line => {
             val split = line.split(";").map(_.split("\\s+"))

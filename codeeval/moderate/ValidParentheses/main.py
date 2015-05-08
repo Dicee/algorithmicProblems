@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.ValidParentheses;
+
+import sys
 with open(sys.argv[1],'r') as lines:
 	corresponding = { ")":"(", "]":"[", "}":"{", "(":")", "[":"]", "{":"}" }
 	for line in lines:

@@ -1,4 +1,4 @@
-package lesson7;
+package codility.lesson7;
 
 /**
  * Level : painless

@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.MorseCode;
+
+object Main extends App {
 	val morse = Map(
 	        ".-"    -> "A", "-..."  -> "B", "-.-."  -> "C", "-.."   -> "D", "."     -> "E", "..-."  -> "F", "--."   -> "G", 
 	        "...."  -> "H", ".."    -> "I", ".---"  -> "J", "-.-"   -> "K", ".-.."  -> "L", "--"    -> "M", "-."    -> "N",

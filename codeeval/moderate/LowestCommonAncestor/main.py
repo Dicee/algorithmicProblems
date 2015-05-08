@@ -1,4 +1,6 @@
-﻿import re
+package codeeval.moderate.LowestCommonAncestor;
+
+import re
 import sys
 
 """It wasn't necessary to code a whole class but it was a little exercise for me

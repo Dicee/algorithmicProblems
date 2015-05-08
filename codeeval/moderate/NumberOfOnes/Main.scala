@@ -1,3 +1,5 @@
+package codeeval.moderate.NumberOfOnes;
+
 object Main extends App {
 	def countOnes(n: Int) = {
 		var (j,count) = (n,0)

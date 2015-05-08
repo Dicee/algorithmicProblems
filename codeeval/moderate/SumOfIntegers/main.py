@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.SumOfIntegers;
+
+import sys
 with open(sys.argv[1], 'r') as lines:
 	for line in lines:
 		arr = list(map(lambda x: int(x.strip()),line.split(",")))

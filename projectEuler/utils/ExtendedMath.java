@@ -1,18 +1,10 @@
-package utils;
+package projectEuler.utils;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Predicate;
 
 public class ExtendedMath {
-//	public static final Set<Integer> MILLION_SIEVE = new HashSet<>(400_000);
-//	static {
-//		boolean[] sieve = ESieve(300_000);
-//		for (int i=0 ; i<sieve.length ; i++)
-//			if (!sieve[i])
-//				MILLION_SIEVE.add(i);
-//	}
+//	public static final boolean[] MILLION_SIEVE = ESieve(1_000_000);
 	
 	public static boolean isPrime1(int n) {
 //		if (n <= 1_000_000)
@@ -51,18 +43,6 @@ public class ExtendedMath {
 	    return true;
 	}
 
-	public static boolean[] ESieve(int n) {
-		//true means the value has been eliminated, not that is is a prime !
-		boolean[] sieve = new boolean[n + 1];
-		sieve[0] = true;
-		sieve[1] = true;
-		for (int i=2 ; i<n ; i++) 
-			if (!sieve[i]) 
-				for (int k=2*i ; k<n ; k += i)
-					sieve[k] = true;
-		return sieve;
-	}
-	
 //	public static boolean[] ESieve1(int n) {
 //		//true means the value has been eliminated, not that is is a prime !
 //		boolean[] sieve = new boolean[n + 1];
@@ -80,6 +60,18 @@ public class ExtendedMath {
 //	private static void eliminate(int prime, boolean[] sieve) {
 //		for (int i=2*prime ; i<sieve.length - 1 ; i += prime) sieve[i] = true;
 //	}
+	
+	public static boolean[] ESieve(int n) {
+		//true means the value has been eliminated, not that is is a prime !
+		boolean[] sieve = new boolean[n + 1];
+		sieve[0] = true;
+		sieve[1] = true;
+		for (int i=2 ; i<n ; i++) 
+			if (!sieve[i]) 
+				for (int k=2*i ; k<n ; k += i)
+					sieve[k] = true;
+		return sieve;
+	}
 	
 	public static <T extends Collection<Integer>> T ESieve(int n, T fill, Predicate<Integer> pred) {
 		boolean[] sieve = ESieve(n);

@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.easy.MultiplesOfANumber;
+
+import sys
 lines = open(sys.argv[1], 'r')
 for line in lines:
 	split = line.split(",")

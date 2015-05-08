@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.AgeDistribution;
+
+object Main extends App {
 	scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)
     	.map(n => AgeCategory.values.find(_.accept(n.toInt)) match {
     	    case Some(x) => x.msg

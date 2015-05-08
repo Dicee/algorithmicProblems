@@ -1,4 +1,6 @@
-﻿import java.util.regex.Pattern
+package codeeval.easy.DeltaTime;
+
+import java.util.regex.Pattern
 
 object Main extends App {
     val p = Pattern.compile("([0-9]{2}):([0-9]{2}):([0-9]{2})")

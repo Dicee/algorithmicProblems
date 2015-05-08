@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.easy.RacingChars;
+
+import sys
 lines = open(sys.argv[1], 'r')
 i    = -1
 init = True

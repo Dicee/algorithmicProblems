@@ -1,3 +1,5 @@
+package codility.lesson2
+
 /**
  * Level : respectable
  */

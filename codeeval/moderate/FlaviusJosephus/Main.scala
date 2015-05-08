@@ -1,4 +1,6 @@
-﻿import scala.collection.mutable.ArrayBuffer
+package codeeval.moderate.FlaviusJosephus;
+
+import scala.collection.mutable.ArrayBuffer
 object Main extends App {
     scala.io.Source.fromFile(args(0)).getLines
     	.filter(!_.isEmpty)

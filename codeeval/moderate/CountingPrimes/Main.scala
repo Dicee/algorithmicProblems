@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.moderate.CountingPrimes;
+
+object Main extends App {
 	val queries = scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty).map(_.split(",").map(_.toInt)).toSeq
 	val max     = queries.map(x => x(1)).max
 	val sieve   = Array.fill[Boolean](max + 1)(true)

@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.BigDigits
+
+object Main extends App {
     val ascii = Array(
     		"-**----*--***--***---*---****--**--****--**---**--",
     		"*--*--**-----*----*-*--*-*----*-------*-*--*-*--*-",

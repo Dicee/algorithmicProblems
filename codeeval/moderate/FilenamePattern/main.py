@@ -1,3 +1,5 @@
+package codeeval.moderate.FilenamePattern;
+
 import sys
 import re
 

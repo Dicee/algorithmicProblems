@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.QueryBoard;
+
+object Main extends App {
 	val board = Array.ofDim[Int](256,256)
 	scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)
     	.foreach(line => {

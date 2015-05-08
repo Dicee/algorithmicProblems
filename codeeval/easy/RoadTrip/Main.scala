@@ -1,7 +1,9 @@
-﻿import java.util.regex.Pattern
+package codeeval.easy.RoadTrip;
+
+import java.util.regex.Pattern
 import scala.collection.mutable.TreeSet
 
-object Main extends App {
+object MainScala extends App {
     val p = Pattern.compile("\\d+")
     scala.io.Source.fromFile(args(0)).getLines
     	.filter(!_.isEmpty)

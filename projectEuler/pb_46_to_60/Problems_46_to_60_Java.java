@@ -1,7 +1,7 @@
 package projectEuler.pb_46_to_60;
 
-import static utils.ExtendedMath.ESieve;
-import static utils.ExtendedMath.isPrime;
+import static projectEuler.utils.ExtendedMath.isPrime;
+import static projectEuler.utils.ExtendedMath.ESieve;
 
 import java.util.ArrayList;
 import java.util.Collections;

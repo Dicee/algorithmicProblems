@@ -1,3 +1,5 @@
+package codeeval.hard.SpiralPrinting;
+
 object Main extends App {
 	private type P = (Int,Int)
 	def reachedGoal(coords: P, wBounds: P, hBounds: P, incs: P) = 

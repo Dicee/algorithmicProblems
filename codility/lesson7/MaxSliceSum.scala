@@ -1,7 +1,9 @@
+package codility.lesson7;
+
 /**
  * Level : respectable
  */
-object Solution {
+object SolutionScala {
     def solution(A : Array[Int]) : Int = {
         val index = A.indexWhere(_ > 0) 
         

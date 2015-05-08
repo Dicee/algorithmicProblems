@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.RacingChars;
+
+object Main extends App {
     var i = -1
     scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)
         .map(line => {

@@ -1,4 +1,4 @@
-package lesson2;
+package codility.lesson2;
 
 import java.util.*;
 import java.util.stream.*;

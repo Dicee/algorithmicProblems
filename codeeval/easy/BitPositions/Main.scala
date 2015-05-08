@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.BitPositions
+
+object Main extends App {
 	scala.io.Source.fromFile(args(0)).getLines
     	.map(line => {
     		val split = line.split(",").map(_.toInt)

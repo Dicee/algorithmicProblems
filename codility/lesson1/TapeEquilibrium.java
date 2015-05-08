@@ -1,3 +1,5 @@
+package codility.lesson1;
+
 /**
  * Level : painless
  */

@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.moderate.StringRotation;
+
+object Main extends App {
     def findRotationIn(s: String, cmp: String, occurrences: Iterable[Int]): String = {
         val len = s.length
         for (i <- occurrences) {

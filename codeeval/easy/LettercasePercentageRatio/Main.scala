@@ -1,4 +1,6 @@
-﻿import scala.collection.mutable.PriorityQueue;
+package codeeval.easy.LettercasePercentageRatio;
+
+import scala.collection.mutable.PriorityQueue;
 
 object Main extends App {
 	scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)

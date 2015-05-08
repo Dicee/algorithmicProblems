@@ -1,3 +1,5 @@
+package miscellaneous;
+
 import static java.util.stream.Collectors.groupingBy;
 
 import java.io.BufferedReader;

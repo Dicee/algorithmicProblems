@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.CompressedSequence;
+
+object Main extends App {
     scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)
     	.foreach(line => {
     	    val split = line.split("\\s+")

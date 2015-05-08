@@ -1,4 +1,6 @@
-﻿public class Main {
+package codeeval.easy.PrimePalindrome;
+
+public class Main {
 	public static void main(String[] args) {
 		// a bit hacky but it enables to use a faster algorithm to
 		// find the primes

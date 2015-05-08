@@ -1,3 +1,5 @@
+package codeeval.moderate.PrimeNumbers;
+
 object Main extends App {
 	val queries = scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty).map(_.toInt).toSeq
 	val max     = queries.max

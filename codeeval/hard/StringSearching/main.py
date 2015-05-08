@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.hard.StringSearching;
+
+import sys
 with open(sys.argv[1], 'r') as lines:
 	def match(s,pattern):
 		i       = 0

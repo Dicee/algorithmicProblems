@@ -1,4 +1,6 @@
-﻿import scala.io.Source;
+package codeeval.easy.FibonacciSeries;
+
+import scala.io.Source;
 
 object Main extends App {
     val indexes = (for (line <- Source.fromFile(args(0)).getLines) yield line.toInt).toIndexedSeq

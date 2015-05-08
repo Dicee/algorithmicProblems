@@ -1,4 +1,4 @@
-package utils
+package projectEuler.utils
 
 import scala.collection.Iterator
 

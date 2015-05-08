@@ -1,11 +1,11 @@
-package lesson13;
+package codility.lesson13;
 
 import java.util.Arrays;
 
 /**
  * Level : painless
  */		
-public class Solution {
+public class AbsDistinct {
 	public int solution(int[] A) {
 	// we could use an HashSet to crack this...        
         /* Set<Integer> set = new HashSet<>();

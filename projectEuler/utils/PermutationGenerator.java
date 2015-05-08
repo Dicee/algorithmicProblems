@@ -1,12 +1,12 @@
-package utils;
+package projectEuler.utils;
+
+import static projectEuler.utils.ExtendedMath.reverse;
+import static projectEuler.utils.ExtendedMath.swap;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import static utils.ExtendedMath.reverse;
-import static utils.ExtendedMath.swap;
 
 public class PermutationGenerator implements Iterable<Integer[]> {
 	private Integer[] start;
