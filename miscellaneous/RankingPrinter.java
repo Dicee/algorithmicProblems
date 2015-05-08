@@ -24,11 +24,11 @@ import org.jsoup.nodes.Element;
 public class RankingPrinter {
     public static final String ROOT       = "https://app.lestalentsdunumerique.fr";
     public static final String HOME_PAGE  = ROOT + "/concours/list";
-   
+    
     public static void main(String[] args) throws IOException {
         Set<String>     candidatesUrl = getCandidatesUrl();
         List<Candidate> candidates    = getAllCandidates(candidatesUrl);
-        printRanking(getGlobalRanking(candidates));
+        printGlobalRanking     (getGlobalRanking     (candidates));
         printRankingPerCategory(getRankingPerCategory(candidates));
     }
    
@@ -44,6 +44,10 @@ public class RankingPrinter {
             System.out.println("Found " + res.size() + " candidates");
             return res;
         }
+    }
+    
+    private static List<Candidate> getAllCandidates(Set<String> candidatesUrl) {
+        return candidatesUrl.stream().map(RankingPrinter::parseCandidatePageContent).collect(Collectors.toList());
     }
    
     private static List<Candidate> getGlobalRanking(List<Candidate> candidates) {
@@ -62,8 +66,9 @@ public class RankingPrinter {
     private static Candidate extractCandidate(Document document) {
         Element             titleNode    = document.getElementById("projet-porteur");
         Element             categoryNode = document.getElementById("projet-titre");
-        Optional<Candidate> typicalCase  = extractCandidateInTypicalCase(document,titleNode,categoryNode);
-        return typicalCase.orElse(extractCandidateInHackyCase(document,titleNode,categoryNode).orElse(Candidate.UNKOWN));
+        return extractCandidateInTypicalCase   (document,titleNode,categoryNode)
+	    .orElse(extractCandidateInHackyCase(document,titleNode,categoryNode)
+            .orElse(Candidate.UNKOWN));
     }
    
     private static Optional<Candidate> extractCandidateInTypicalCase(Document document, Element titleNode, Element categoryNode) {
@@ -90,39 +95,31 @@ public class RankingPrinter {
         return extractCandidateInTypicalCase(commentDoc,titleNode,categoryNode);
     }
    
-    private static void printRanking(List<Candidate> ranking) {
-        int rank = 1;
-        for (Candidate candidate : ranking) {
-            printCandidate(rank,candidate);
-            rank++;
-        }
-    }
-
-	private static void printCandidate(int rank, Candidate candidate) {
-		String display = rank + " " + candidate;
-		System.out.println(candidate.name.toLowerCase().contains("introvigne") ? ">>>> " + display + " <<<<" : display);
-	}
+    private static void printGlobalRanking(List<Candidate> ranking) { printRanking(ranking,0); }
 
     private static Map<String,List<Candidate>> getRankingPerCategory(List<Candidate> candidates) {
-    	return CollectionUtils.mapValues(
-    		candidates.stream().collect(groupingBy((Candidate x) -> x.category)),
-    		list -> list.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+        return CollectionUtils.mapValues(
+            candidates.stream().collect(groupingBy((Candidate x) -> x.category)),
+            list -> list.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
     }
     
-    private static List<Candidate> getAllCandidates(Set<String> candidatesUrl) {
-        return candidatesUrl.stream().map(RankingPrinter::parseCandidatePageContent).collect(Collectors.toList());
-    }
-    
-    private static void printRankingPerCategory(Map<String,List<Candidate>> ranking) {
-        for (String category : ranking.keySet()) {
-        	int rank = 1;
-        	System.out.println("\nCategory : " + category + "\n");
-        	for (Candidate candidate : ranking.get(category)) {
-        		System.out.print("\t");
-        		printCandidate(rank,candidate);
-        		rank++;
-        	}
+    private static void printRanking(List<Candidate> ranking, int offset) {
+        StringBuilder sb = new StringBuilder();
+        for (int i=0 ; i<offset ; i++) sb.append(" ");
+
+        String margin = sb.toString();
+        int    rank   = 1;
+        for (Candidate candidate : ranking) {
+            String display = (rank++) + " " + candidate;
+            System.out.println(margin + (candidate.name.toLowerCase().contains("introvigne") ? ">>>> " + display + " <<<<" : display));
         }
+    }
+    
+    private static void printRankingPerCategory(Map<String,List<Candidate>> rankingPerCategory) {
+        rankingPerCategory.entrySet().stream().forEach(entry -> {
+        	System.out.println("\nCategory : " + entry.getKey() + "\n");
+        	printRanking(entry.getValue(),4);
+        });
     }
    
     public static class Candidate implements Comparable<Candidate> {
@@ -134,7 +131,7 @@ public class RankingPrinter {
         public final int views;
 
         public Candidate(String category, String name, int votes, int views) {
-        	this.category = category;
+            this.category = category;
             this.name     = name;
             this.votes    = votes;
             this.views    = views;
@@ -143,9 +140,7 @@ public class RankingPrinter {
         @Override
         public int compareTo(Candidate that) { return Integer.compare(votes,that.votes); }
 
-		@Override
-		public String toString() {
-			return "Candidate [category=" + category + ", name=" + name + ", votes=" + votes + ", views=" + views + "]";
-		}
+        @Override
+        public String toString() { return "Candidate [category=" + category + ", name=" + name + ", votes=" + votes + ", views=" + views + "]"; }
     }
 }
