@@ -1,10 +1,14 @@
 package projectEuler.pb_1_to_15;
 
+import static projectEuler.utils.ExtendedMath.isPrime;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import projectEuler.utils.ExtendedMath;
 
 public class Problems_1_to_15_Java {
 
@@ -134,7 +138,7 @@ public class Problems_1_to_15_Java {
 	public static int problem7() {
 		int count = 0;
 		int i;
-		for (i=2 ; count<10_001 ; i++) if (Problems_1_to_15_Scala.isPrime(i)) count++;
+		for (i=2 ; count<10_001 ; i++) if (isPrime(i)) count++;
 		return i - 1;
 	}
 	

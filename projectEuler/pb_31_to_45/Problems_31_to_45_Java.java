@@ -1,6 +1,7 @@
 package projectEuler.pb_31_to_45;
 
 
+import static projectEuler.utils.ExtendedMath.isPalindrome;
 import static projectEuler.utils.ExtendedMath.isPandigital;
 import static projectEuler.utils.ExtendedMath.isPrime;
 import static projectEuler.utils.ExtendedMath.reverse;
@@ -212,10 +213,6 @@ public class Problems_31_to_45_Java {
 						res += p;
 			}
 		return res;
-	}
-	
-	public static boolean isPalindrome(int n, int b) {
-		return reverse(n,b) == n;
 	}
 	
 	private static int createPalindrome(int n, int b, boolean odd) {
@@ -444,7 +441,7 @@ public class Problems_31_to_45_Java {
 	 * 
 	 * Find the sum of all 0 to 9 pandigital numbers with this property.
 	 */
-	public static long problem43() {
+	public static Long problem43() {
 		return Problems_31_to_45_Scala.problem43();
 	}
 	

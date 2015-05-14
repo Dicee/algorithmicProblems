@@ -1,7 +1,10 @@
 package projectEuler.utils;
 
+import java.math.BigInteger;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ExtendedMath {
 //	public static final boolean[] MILLION_SIEVE = ESieve(1_000_000);
@@ -101,6 +104,19 @@ public class ExtendedMath {
 		return n;
 	}
 	
+	public static BigInteger reverse(BigInteger n) {
+		return new BigInteger(new StringBuilder(n.toString()).reverse().toString());
+	}
+	
+	public static long reverse(long n, int b) {
+		long rev = 0;
+		while (n > 0) {
+			rev = (rev * b) + n % b;
+			n  /= b;
+		}
+		return rev;
+	}
+	
 	public static int reverse(int n, int b) {
 		int rev = 0;
 		while (n > 0) {
@@ -108,6 +124,10 @@ public class ExtendedMath {
 			n  /= b;
 		}
 		return rev;
+	}
+	
+	public static boolean isPalindrome(int n, int b) {
+		return reverse(n,b) == n;
 	}
 	
 	public static boolean isPandigital(long n) {
@@ -130,26 +150,6 @@ public class ExtendedMath {
 			else
 				digits /= 2;
 		return true; 
-	}
-	
-	public static <T> void reverse(T[] arr, int min, int max) {
-		while (min < max) swap(arr,min++,max--);
-	}
-	
-	public static <T> void swap(T[] arr, int i, int j) {
-		T tmp  = arr[i];
-		arr[i] = arr[j];
-		arr[j] = tmp;
-	}
-	
-	public static void reverse(int[] arr, int min, int max) {
-		while (min < max) swap(arr,min++,max--);
-	}
-	
-	public static void swap(int[] arr, int i, int j) {
-		int tmp  = arr[i];
-		arr[i] = arr[j];
-		arr[j] = tmp;
 	}
 	
 	public static void main(String[] args) {

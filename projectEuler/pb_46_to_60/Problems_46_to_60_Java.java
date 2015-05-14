@@ -1,11 +1,21 @@
 package projectEuler.pb_46_to_60;
 
-import static projectEuler.utils.ExtendedMath.isPrime;
 import static projectEuler.utils.ExtendedMath.ESieve;
+import static projectEuler.utils.ExtendedMath.isPrime;
+import static projectEuler.utils.ExtendedMath.reverse;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import projectEuler.utils.ExtendedMath;
 
 public class Problems_46_to_60_Java {
 
@@ -174,6 +184,167 @@ public class Problems_46_to_60_Java {
 		return res;
 	}
 	
+	/**
+	 * It can be seen that the number, 125874, and its double, 251748, contain exactly the same digits, 
+	 * but in a different order. Find the smallest positive integer, x, such that 2x, 3x, 4x, 5x, and 6x,
+	 * contain the same digits.
+	 */
+	public static int problem52() {
+		float lowerBound = 10*5/3f;
+		float upperBound = 10*lowerBound;
+		int res          = (int) lowerBound;
+		while (!multiplesHaveSameDigits(res)) {
+			if (res + 1 >= upperBound) {
+				lowerBound  = upperBound;
+				upperBound *= 10;
+				res         = (int) lowerBound;
+			} else 
+				res++;
+		}
+		return res;
+	}
+	
+	private static boolean multiplesHaveSameDigits(int n) {
+		List<byte[]> multipleDigits = new LinkedList<>();
+		for (int i=2 ; i<=6 ; multipleDigits.add(getDigits((i++)*n)));
+
+		Iterator<byte[]> it   = multipleDigits.iterator();
+		byte[]           prev = it.next();
+		while (it.hasNext()) {
+			byte[] next = it.next();
+			if (!Arrays.equals(prev,next)) return false;
+			prev = next;
+		}
+		return true;
+	}
+	
+	private static byte[] getDigits(int n) {
+		byte[] digits = new byte[10];
+		while (n > 0) {
+			digits[n % 10]++;
+			n /= 10;
+		}
+		return digits;
+	}
+	
+	/**
+	 * There are exactly ten ways of selecting three from five, 12345: 123, 124, 125, 134, 135, 145, 234, 235, 245, and 345
+	 * In combinatorics, we use the notation, 5_C3 = 10. In general, n_Cr = n!/(r!(n−r)!) ,where r ≤ n, n! = n×(n−1)×...×3×2×1, and 0! = 1.
+	 * It is not until n = 23, that a value exceeds one-million: 23C10 = 1144066.
+	 * How many, not necessarily distinct, values of nCr, for 1 ≤ n ≤ 100, are greater than one-million?
+	 */
+	public static int problem53() {
+		int     count   = 0;
+		Integer million = 1_000_000;
+		
+		Deque<Integer> coeffs = new LinkedList<>();
+		coeffs.push(1);
+		for (int i=2 ; i<=100 ; i++) {
+			Deque<Integer>    tmp  = new LinkedList<>();
+			Iterator<Integer> it   = coeffs.iterator();
+			Integer           prev = it.next();     
+			while (it.hasNext()) {
+				Integer next = it.next();
+				Integer toInsert = Math.min(million,prev + next);
+				if (toInsert >= million) count += 2;
+				tmp.addLast(toInsert);
+				prev = next;
+			}
+			tmp.addLast(1);
+			if (i % 2 == 0) { 
+				Integer toInsert = Math.min(million,2*coeffs.peek());
+				tmp.addFirst(toInsert);
+				if (toInsert >= million) count++;
+			}
+			coeffs = tmp;
+		}
+		return count;
+	}
+
+	public static int problem53_bis() {
+		return Problems_46_to_60_Scala.problem53(100);
+	}
+	
+	public static int problem54() {
+		return 0;
+	}
+	
+	/**
+	 * If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
+	 * 
+	 * Not all numbers produce palindromes so quickly. For example,
+	 * 
+	 * 349 + 943 = 1292, 1292 + 2921 = 4213 4213 + 3124 = 7337
+	 * 
+	 * That is, 349 took three iterations to arrive at a palindrome.
+	 * 
+	 * Although no one has proved it yet, it is thought that some numbers, like
+	 * 196, never produce a palindrome. A number that never forms a palindrome
+	 * through the reverse and add process is called a Lychrel number. Due to
+	 * the theoretical nature of these numbers, and for the purpose of this
+	 * problem, we shall assume that a number is Lychrel until proven otherwise.
+	 * In addition you are given that for every number below ten-thousand, it
+	 * will either (i) become a palindrome in less than fifty iterations, or,
+	 * (ii) no one, with all the computing power that exists, has managed so far
+	 * to map it to a palindrome. In fact, 10677 is the first number to be shown
+	 * to require over fifty iterations before producing a palindrome:
+	 * 4668731596684224866951378664 (53 iterations, 28-digits).
+	 * 
+	 * Surprisingly, there are palindromic numbers that are themselves Lychrel
+	 * numbers; the first example is 4994.
+	 * 
+	 * How many Lychrel numbers are there below ten-thousand?
+	 */
+	public static int problem55() {
+		Set<BigInteger> nonLychrelNumbers = new HashSet<>(100);
+		
+		int count = 0;
+		
+		for (int i=10 ; i<=10000 ; i++) {
+			if (isLychrel(new BigInteger(String.valueOf(i)),nonLychrelNumbers)) count++;
+		}
+		return count;
+	}
+
+	private static boolean isLychrel(BigInteger n, Set<BigInteger> nonLychrelNumbers) {
+		BigInteger nrev = reverse(n);
+		int j = 0;
+		List<BigInteger> serie = new LinkedList<>();
+		
+		boolean isCachedNonLychrel = false;
+		do {
+			serie.add(n);
+			serie.add(nrev);
+			
+			n    = n.add(nrev);
+			nrev = reverse(n);
+			
+			if (isCachedNonLychrel = (nonLychrelNumbers.contains(n) || nonLychrelNumbers.contains(nrev))) break;
+			
+			j++;
+		} while (j <= 25 && !nrev.equals(n));
+		
+		if (isCachedNonLychrel || nrev.equals(n)) 
+			nonLychrelNumbers.addAll(serie);
+		
+		return !isCachedNonLychrel && !nrev.equals(n);
+	}
+	
+	/**
+	 * By replacing the 1st digit of the 2-digit number *3, it turns out that
+	 * six of the nine possible values: 13, 23, 43, 53, 73, and 83, are all
+	 * prime.
+	 * 
+	 * By replacing the 3rd and 4th digits of 56**3 with the same digit, this
+	 * 5-digit number is the first example having seven primes among the ten
+	 * generated numbers, yielding the family: 56003, 56113, 56333, 56443,
+	 * 56663, 56773, and 56993. Consequently 56003, being the first member of
+	 * this family, is the smallest prime with this property.
+	 * 
+	 * Find the smallest prime which, by replacing part of the number (not
+	 * necessarily adjacent digits) with the same digit, is part of an eight
+	 * prime value family.
+	 */
 	public static long problem(String s) {
 		switch (s) {
 			case "46"      : return problem46     ();
@@ -182,33 +353,35 @@ public class Problems_46_to_60_Java {
 			case "48_bis"  : return problem48_bis ();
 			case "49"      : return problem49     ();
 			case "50"      : return problem50     ();
+			case "52"      : return problem52     ();
+			case "53"      : return problem53     ();
+			case "53_bis"  : return problem53_bis ();
+			case "54"      : return problem54     ();
+			case "55"      : return problem55     ();
 		}
 		throw new IllegalArgumentException(String.format("Problem %s doesn't exist",s));
 	}
 	
-	public static void test(String pb, long result) {
-		long start = System.nanoTime();
-		long r     = problem(pb);
+	public static void test(String pb, long expected) {
+		long start  = System.nanoTime();
+		long actual = problem(pb);
 		try {
-			assert(r == result);
+			assert(actual == expected);
 			System.out.println(String.format("Problem %s passed (execution time : %.2f ms)",pb,(System.nanoTime() - start)/1e6d));
 		} catch (AssertionError ae) {
-			System.err.println(String.format("Problem %s failed (execution time : %.2f ms, returned %d)",pb,(System.nanoTime() - start)/1e6d,r));
+			System.err.println(String.format("Problem %s failed (execution time : %.2f ms, returned %d)",pb,(System.nanoTime() - start)/1e6d,actual));
 		}
 	}
 	
-	public static void main(String[] args) {
-		String[] tests   = { "46","47","48","48_bis","49","50" };
-		long[]   results = { 5777,134043,9110846700L,9110846700L,296962999629L,997651 };
+	public static void testAll() {
+		String[] tests   = { "46","47","48","48_bis","49","50","52","53","53_bis","55" };
+		long[]   results = { 5777,134043,9110846700L,9110846700L,296962999629L,997651,142857,4075,4075,249 };
 		
-//		for (int i = 0; i < tests.length; i++)
-//			test(tests[i],results[i]);
-		test("50",997651);
-//		long n = 1000000000L;
-//		long p = 16;
-//		System.out.println(new BigInteger("16").modPow(new BigInteger(p + ""),new BigInteger(n + "")));
-//		System.out.println(powMod(16,p,n));
-//		System.out.println(powMod1(16,p,n));
+		for (int i = 0; i < tests.length; i++)
+			test(tests[i],results[i]);
 	}
-
+	
+	public static void main(String[] args) { 
+		testAll(); 
+	}
 }

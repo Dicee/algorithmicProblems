@@ -1,7 +1,7 @@
 package projectEuler.utils;
 
-import static projectEuler.utils.ExtendedMath.reverse;
-import static projectEuler.utils.ExtendedMath.swap;
+import static miscellaneous.CollectionUtils.reverse;
+import static miscellaneous.CollectionUtils.swap;
 
 import java.util.Arrays;
 import java.util.Comparator;
