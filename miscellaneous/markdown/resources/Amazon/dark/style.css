@@ -19,16 +19,23 @@
     padding: 15px;
     padding-left: 25px;
     padding-right: 25px;
-    background-color: rgb(255,153,0);
+    background-color: black;
+	color: white;
     margin-top: -7px;
     margin-bottom: -7px;
-    border: black solid 3px;
+}
+
+h1, h2 , h3, h4, h5, h6 {
+	color: rgb(255,153,0);
+	text-shadow: 0px 0px 1px rgb(255,153,0);
 }
 
 body {
-    background-image: url("icon.png");
+    background-image: url("logo.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     /* font-family: 'Palatino Linotype', 'Book Antiqua’, Palatino, serif; */
     font-family: Century Gothic, sans-serif;
+	background-color: black;
+	background-position: 12px 50px;
 }

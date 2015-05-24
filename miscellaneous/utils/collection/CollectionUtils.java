@@ -1,4 +1,4 @@
-package miscellaneous;
+package miscellaneous.utils.collection;
 
 import java.util.Map;
 import java.util.function.Function;
