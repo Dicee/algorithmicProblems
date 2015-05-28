@@ -6,6 +6,7 @@ bak
 ## Eclipse
 #################
 
+*.class
 *.pydevproject
 .project
 .metadata

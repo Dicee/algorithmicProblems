@@ -13,8 +13,8 @@ object md2html extends App {
 		
 	try {
 		if (args.length == 0) exitWithError("missing input file name")
-		
-	    val path = FileUtils.toCanonicalPath(args(0))
+
+        val path = FileUtils.toCanonicalPath(args(0))
 	    if (!checkExtension(path)) exitWithError("the input file should have .md or .mardown extension")
 	    
 	    val options  = DEFAULT_THEME.toMap ++ parseOptions(args.toList.drop(1).map(_.trim)) 

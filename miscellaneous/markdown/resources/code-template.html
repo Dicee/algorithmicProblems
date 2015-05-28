@@ -1,12 +1,13 @@
 <form class="code-form">
 	<textarea id="code${id}" name="code${id}" readonly>${code}</textarea>
-	<script>
+	<script type="text/javascript">
 		var editor${id} = CodeMirror.fromTextArea(document.getElementById("code${id}"), {
 			lineNumbers : true,
 			matchBrackets : true,
 			readOnly: true,
 			mode : "${mime}",
-			theme : "${theme}"
+			theme : "${theme}",
+			viewportMargin: Infinity
 		});
 	</script>
 </form>

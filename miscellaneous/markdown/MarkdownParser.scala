@@ -9,19 +9,19 @@ import scala.collection.mutable.LinkedHashSet
 import miscellaneous.utils.check.Check
 
 object MarkdownParser {
-	val doc = new Document()
+	val doc = new Document
 	
 	def parse(file: File) = {
+		doc.includeCss("http://codemirror.net/theme/%s.css".format(System.getProperty("editorTheme")))
 		doc.includeJsOrCss(
 				"""<link rel="stylesheet" href="style.css">""", //
-				"""<script src="http://codemirror.net/lib/codemirror.js"></script>""", //
-				"""<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">""")
+				"""<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">""", //
+				"""<script src="http://codemirror.net/lib/codemirror.js"></script>""")
 				
 		optimizeBr(HTMLNode.parse(Source.fromFile(file).getLines.toList))
         	.map(_.elt)
         	.foreach(doc.appendChild(_))
-        	
-        doc.includeCss("http://codemirror.net/theme/%s.css".format(System.getProperty("editorTheme")))
+        doc.includeRawCss(".CodeMirror {\n\tborder: 1px solid #eee;\n\theight: auto;\n}")
         doc
 	}
         	
