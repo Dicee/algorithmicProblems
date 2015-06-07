@@ -23,7 +23,7 @@ class Document(private var _theme: Theme=Themes.AMAZON_LIGHT) {
 	def includeJsOrCss(seq: String*) = includes ++= seq
 	def includeJs(s: String)         = includes += s"""<script src="$s"></script>"""
 	def includeCss(s: String)        = includes += s"""<link rel="stylesheet" href="$s">"""
-    def includeRawCss(s: String)     = includes += s"""<style type="text/css">$s</style>"""
+    def includeRawCss(s: String)     = includes += s"""<style type="text/css">\n$s\n</style>"""
 	def create(tagName: String)      = doc.createElement(tagName) 
 	def html                         = { includes.foreach(doc.head.append(_)); "<!doctype html>\n" + doc.html }
 }

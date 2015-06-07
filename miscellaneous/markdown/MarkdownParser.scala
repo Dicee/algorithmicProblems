@@ -11,10 +11,10 @@ import miscellaneous.utils.check.Check
 object MarkdownParser {
 	val doc = new Document
 	
-	def parse(file: File) = {
+	def parse(file: File, style: File) = {
 		doc.includeCss("http://codemirror.net/theme/%s.css".format(System.getProperty("editorTheme")))
+		doc.includeRawCss(Source.fromFile(style).getLines.mkString("\n"))
 		doc.includeJsOrCss(
-				"""<link rel="stylesheet" href="style.css">""", //
 				"""<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">""", //
 				"""<script src="http://codemirror.net/lib/codemirror.js"></script>""")
 				
@@ -71,7 +71,6 @@ object MarkdownParser {
 	            case Nil    => Nil
 	        }
 	    }
-	       
 	    private def parseSingleLine(s: String): HTMLNode = if (s.isBlank   ) Br()             else parseNonEmpty (s)
 	    private def parseNonEmpty  (s: String): HTMLNode = if (s.isListItem) parseListItem(s) else tryTitle      (s)
 	    private def tryTitle       (s: String): HTMLNode = if (s.isTitle   ) parseTitle   (s) else parseParagraph(s)
@@ -84,13 +83,20 @@ object MarkdownParser {
 	    }
 	      
 	    private def parseParagraph(s: String) = P(parseStyledText(s))
-	    private def parseStyledText(s: String)  = s
-	        .replaceAll("\\s+" .wrapBy("(\\*){2}"),""                                       )
-	        .replaceAll("\\s+" .wrapBy("\\*"     ),""                                       )
-	        .replaceAll("\\s+" .wrapBy("~~"      ),""                                       )
-	        .replaceAll("(.*?)".wrapBy("(\\*){2}"),"<span class=\"important\">$2</span>"    )
-	        .replaceAll("(.*?)".wrapBy("\\*"     ),"<span class=\"emphasize\">$1</span>"    )
-	        .replaceAll("(.*?)".wrapBy("~~"      ),"<span class=\"strikethrough\">$1</span>")
+	    
+	    private val EMAIL_REGEX = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
+	    private val URL_REGEX   = "((https?:\\/\\/|www\\.)([\\w\\._-]+)\\.([a-z\\.]{2,6})|localhost)(:\\d+)?([\\/\\w\\-]*)*(\\?(([\\w-_]+=[\\w-_]*&)*[\\w-_]+=[\\w-_]*)?|\\/?)"
+	    private def parseStyledText(s: String)  =  
+	    	s.replaceAll("\\s+" .wrapBy("(\\*){2}"),""                                       )
+	         .replaceAll("\\s+" .wrapBy("\\*"     ),""                                       )
+	         .replaceAll("\\s+" .wrapBy("~~"      ),""                                       )
+	         .replaceAll("\\s+" .wrapBy("`"       ),""                                       )
+	         .replaceAll("(.*?)".wrapBy("`"       ),"<code class=\"inline-code\">$1</code>"  )
+	         .replaceAll("(.*?)".wrapBy("(\\*){2}"),"<span class=\"important\">$2</span>"    )
+	         .replaceAll("(.*?)".wrapBy("\\*"     ),"<span class=\"emphasize\">$1</span>"    )
+	         .replaceAll("(.*?)".wrapBy("~~"      ),"<span class=\"strikethrough\">$1</span>")
+	         .replaceAll(EMAIL_REGEX               ,"<a href=\"mailto:$0\">$0</a>"           )
+	         .replaceAll(URL_REGEX                 ,"<a href=\"$0\">$0</a>"                  )
 	}
 	    
     private case class Br  (                                 ) extends HTMLNode(doc.create("br"       ))

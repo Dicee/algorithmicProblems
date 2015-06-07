@@ -39,3 +39,12 @@ body {
 	background-color: black;
 	background-position: 12px 50px;
 }
+
+.inline-code {
+	background-color: rgb(255,153,0);
+	color: black;
+}
+
+a {
+	color: rgb(255,153,0);
+}
