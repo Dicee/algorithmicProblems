@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import miscellaneous.CollectionUtils;
+import miscellaneous.utils.collection.CollectionUtils;
 
 public class Ball {
 	public static void main(String[] args) {
