@@ -1,8 +1,8 @@
 package projectEuler.pb_16_to_30;
 
+import static miscellaneous.utils.collection.CollectionUtils.reverse;
+import static miscellaneous.utils.collection.CollectionUtils.swap;
 import static projectEuler.pb_1_to_15.Problems_1_to_15_Scala.isPrime;
-import static miscellaneous.CollectionUtils.reverse;
-import static miscellaneous.CollectionUtils.swap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import projectEuler.utils.ExtendedMath;
 
 public class Problems_16_to_30_Java {
 

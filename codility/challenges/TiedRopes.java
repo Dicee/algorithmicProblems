@@ -1,7 +1,5 @@
 package codility.challenges;
 
-import java.util.*;
-
 /**
  * Level : hard
  * This code obtained a 83% score (100% functionnality, 75% scalability) and a silver award.

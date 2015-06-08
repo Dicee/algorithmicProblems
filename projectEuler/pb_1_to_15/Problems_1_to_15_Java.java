@@ -1,14 +1,12 @@
 package projectEuler.pb_1_to_15;
 
-import static projectEuler.utils.ExtendedMath.isPrime;
+import static miscellaneous.utils.math.MathUtils.isPrime;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import projectEuler.utils.ExtendedMath;
 
 public class Problems_1_to_15_Java {
 
@@ -404,8 +402,8 @@ public class Problems_1_to_15_Java {
 		long[]   results = { 233168,4613732,6857,906609,232792560,25164150,104743,23514624000L,31875000,142913828922L,70600674,70600674,
 				76576500,76576500,5537376230L,837799,837799,137846528820L,137846528820L };
 		
-//		for (int i=0 ; i<tests.length ; i++) 
-//			test(tests[i],results[i]);
+		for (int i=0 ; i<tests.length ; i++) 
+			test(tests[i],results[i]);
 		test("9",results[8]);
 	}
 }

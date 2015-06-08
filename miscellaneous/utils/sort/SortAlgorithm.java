@@ -1,6 +1,6 @@
-package utils.sort;
+package miscellaneous.utils.sort;
 
-public interface SortAlgorithm {
-	public <T extends Comparable<T>> void sort(T[] arr);
+public interface SortAlgorithm<T extends Comparable<T>> {
+	public void sort(T[] arr);
 	public String getName();
 }

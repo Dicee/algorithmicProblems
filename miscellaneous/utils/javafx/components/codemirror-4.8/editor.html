@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<script src="http://codemirror.net/lib/codemirror.js"></script>
+	<link rel="stylesheet" href="http://codemirror.net/lib/codemirror.css">
+	<link rel="stylesheet" href="http://codemirror.net/theme/${theme}.css">
+	<script src="http://codemirror.net/mode/${language}"></script>
+</head>
+<body onload="doLoad()">
+	<form>
+		<textarea cols="100" rows="700" id="code" name="code" readonly disabled>${code}</textarea>
+	</form>
+	<script>
+		var editor;
+		function doLoad() {
+			editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+				lineNumbers: true,
+				matchBrackets: true,
+				mode: "${mime}",
+				theme:"${theme}"
+			});
+			editor.setOption("fullScreen",true);
+		}
+	</script>
+</body>
+</html>

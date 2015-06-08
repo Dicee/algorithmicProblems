@@ -1,7 +1,8 @@
 package projectEuler.pb_31_to_45
 
-import projectEuler.utils.ExtendedMath._
 import java.util.Arrays
+
+import miscellaneous.utils.math.MathUtils._;
 import projectEuler.utils.PermutationGenerator
 import scala.io.Source
 import projectEuler.utils.PermGen

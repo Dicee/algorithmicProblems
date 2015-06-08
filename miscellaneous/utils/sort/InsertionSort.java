@@ -1,10 +1,10 @@
-package utils.sort;
+package miscellaneous.utils.sort;
 
 import java.util.Arrays;
 
-public class InsertionSort implements SortAlgorithm {
+public class InsertionSort<T extends Comparable<T>> implements SortAlgorithm<T> {
 	@Override
-	public <T extends Comparable<T>> void sort(T[] arr) {
+	public void sort(T[] arr) {
 		T[] result = Arrays.copyOf(arr,arr.length);
 		result[0]  = arr[0];
 

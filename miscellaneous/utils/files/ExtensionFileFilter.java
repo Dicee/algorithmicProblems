@@ -1,4 +1,4 @@
-package utils.io;
+package miscellaneous.utils.files;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;

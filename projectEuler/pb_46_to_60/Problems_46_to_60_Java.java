@@ -1,8 +1,8 @@
 package projectEuler.pb_46_to_60;
 
-import static projectEuler.utils.ExtendedMath.ESieve;
-import static projectEuler.utils.ExtendedMath.isPrime;
-import static projectEuler.utils.ExtendedMath.reverse;
+import static miscellaneous.utils.math.MathUtils.ESieve;
+import static miscellaneous.utils.math.MathUtils.isPrime;
+import static miscellaneous.utils.math.MathUtils.reverse;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -14,8 +14,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import projectEuler.utils.ExtendedMath;
 
 public class Problems_46_to_60_Java {
 

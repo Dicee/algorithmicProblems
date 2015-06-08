@@ -1,4 +1,4 @@
-package utils;
+package miscellaneous.utils.javafx;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,16 +6,33 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Function;
+
 import javafx.beans.property.StringProperty;
 import javafx.beans.property.StringPropertyBase;
 
 public class ObservableProperties extends Properties {
+	private static final long	serialVersionUID	= 1L;
+	
 	private final Map<String,StringProperty> properties = new HashMap<>();
 		
 	public StringProperty getObservableProperty(String key) {
 		if (!containsKey(key))
 			throw new IllegalArgumentException("No such property : " + key);
 		return properties.get(key);
+	}
+	
+	@Override 
+	public void putAll(Map<? extends Object,? extends Object> that) {
+		putAll(that,Function.identity(),Function.identity());
+	}
+	
+	public void putAll(Map<? extends Object,? extends Object> that, Function<String,String> mapKeys, Function<String,String> mapValues) {
+		for (Map.Entry<? extends Object,? extends Object> entry : that.entrySet()) {
+			if (!(entry.getKey() instanceof String) || !(entry.getValue() instanceof String))
+				throw new IllegalArgumentException("Parameter 'that' must be a Map<String,String>");
+			setProperty(mapKeys.apply((String) entry.getKey()),mapValues.apply((String) entry.getValue()));
+		}
 	}
 	
 	@Override
@@ -76,6 +93,11 @@ public class ObservableProperties extends Properties {
 		@Override
 		public String getName() {
 			return name;
-		}			
+		}		
+		
+		@Override
+		public String toString() {
+			return bean.getProperty(name);
+		}
 	}
 }

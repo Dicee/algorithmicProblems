@@ -5,10 +5,9 @@ package codility.lesson99;
  */
 class Solution {
     public int solution(int N) {
-        boolean counting = false;
-        int     max      = 0;
-        int     count    = 0;
-        int     last     = -1;
+        int     max   = 0;
+        int     count = 0;
+        int     last  = -1;
         while (N > 0) {
             int digit = N % 2;
             

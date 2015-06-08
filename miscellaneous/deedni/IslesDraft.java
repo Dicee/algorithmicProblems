@@ -72,11 +72,6 @@ public class IslesDraft {
 		Map<Isle,Bridge> explored = new HashMap<>();
 		Set<Pair<Bridge,Isle>> boundary = from.bridges.stream().map(bridge -> new Pair<>(bridge,from)).collect(Collectors.toSet());
 		
-		Scanner sc = new Scanner(System.in);
-		
-//		System.out.println("init " + from + " to " + to);
-//		printAndWait(explored,boundary,sc);
-		
 		Optional<Bridge> minimaxBridge = Optional.empty();
 		while (!boundary.isEmpty()) {
 			Set<Pair<Bridge,Isle>> newBoundary = new HashSet<>();
@@ -98,13 +93,6 @@ public class IslesDraft {
 		}
 		minimaxBridge.ifPresent(bridge -> bridge.from.destroyBridge(bridge.to));
 		System.out.println(minimaxBridge.isPresent() ? "YES " + minimaxBridge.get().creationDate : "NO");
-	}
-
-	private static void printAndWait(Map<Isle, Bridge> explored2, Set<Pair<Bridge, Isle>> boundary, Scanner sc) {
-		System.out.println(explored2);
-		System.out.println(boundary);
-		System.out.println();
-		sc.nextLine();
 	}
 
 	private static class Isle {

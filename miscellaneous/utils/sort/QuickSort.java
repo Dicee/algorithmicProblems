@@ -1,11 +1,11 @@
-package utils.sort;
+package miscellaneous.utils.sort;
 
-import java.util.Arrays;
+import static miscellaneous.utils.collection.CollectionUtils.swap;
+import static miscellaneous.utils.math.MathUtils.lowerThan;
+
 import java.util.Random;
 
-import utils.various.Sofia;
-
-public class QuickSort implements SortAlgorithm {
+public class QuickSort<T extends Comparable<T>> implements SortAlgorithm<T> {
 	private Random	rd;
 
 	public QuickSort() {
@@ -13,27 +13,39 @@ public class QuickSort implements SortAlgorithm {
 	}
 	
 	@Override
-	public <T extends Comparable<T>> void sort(T[] arr) {
+	public void sort(T[] arr) {
 		sort(arr,0,arr.length - 1);
 	}
 	
-	private <T extends Comparable<T>> void sort(T[] arr, int start, int end) {
-		if (start < end) {
-			int index = pivot(arr,start,end);
-			sort(arr,start,index - 1);
-			sort(arr,index + 1,end);
+	private void sort(T[] arr, int min, int max) {
+		if (min < max) {
+			int index = pivot(arr,min,max);
+			sort(arr,min,index);
+			sort(arr,index + 1,max);
 		}
 	}
 	
-	private <T extends Comparable<T>> int pivot(T[] arr, int start, int end) {
-		T pivot    = arr[start + rd.nextInt(end - start + 1)];
-		int result = start;
-		for (int i=start ; i<=end ; i++) 
-			if (arr[i].compareTo(pivot) < 0)
-				Sofia.swap(arr,i,result++);
-		Sofia.swap(arr,result,end);
+	private int pivot(T[] arr, int min, int max) {
+		T pivot    = arr[min + rd.nextInt(max - min)];
+		int result = min;
+		for (int i=min ; i<max ; i++) 
+			if (lowerThan(arr[i],pivot)) swap(arr,i,result++);
+		swap(arr,result,max);
 		return result;
 	}
+	
+	public T kthElement(T[] arr, int k) {
+		return kthElement(arr,k,0,arr.length);
+	}
+	
+	private T kthElement(T[] arr, int k, int min, int max) {
+		if (min < max - 1) {
+			int p = pivot(arr,min,max);
+			return p == k - 1 ? arr[p]                      : 
+				   p <  k - 1 ? kthElement(arr,k,p + 1,max) : kthElement(arr,k,min,p);
+		}
+		return arr[Math.min(min,max)];
+ 	}
 	
 	@Override
 	public String getName() {

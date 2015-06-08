@@ -1,10 +1,10 @@
 package projectEuler.pb_31_to_45;
 
 
-import static projectEuler.utils.ExtendedMath.isPalindrome;
-import static projectEuler.utils.ExtendedMath.isPandigital;
-import static projectEuler.utils.ExtendedMath.isPrime;
-import static projectEuler.utils.ExtendedMath.reverse;
+import static miscellaneous.utils.math.MathUtils.isPalindrome;
+import static miscellaneous.utils.math.MathUtils.isPandigital;
+import static miscellaneous.utils.math.MathUtils.isPrime;
+import static miscellaneous.utils.math.MathUtils.reverse;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,8 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import projectEuler.utils.ExtendedMath;
-import projectEuler.utils.PermutationGenerator;
+import miscellaneous.utils.math.PermutationGenerator;
 
 public class Problems_31_to_45_Java {
 	/**
