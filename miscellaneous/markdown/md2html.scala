@@ -28,7 +28,7 @@ object md2html extends App {
 	    pw.close()     
 	    
 	    val destPath = new File(path).getAbsoluteFile.getParent + File.separator
-	    copyFiles(theme.logo,destPath + "logo.png" )
+	    copyFiles(theme.logo,destPath + "logo.png")
 	} catch {
 		case t: Throwable => exitWithError(t.getMessage)
 	}
