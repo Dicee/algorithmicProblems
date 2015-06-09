@@ -14,11 +14,11 @@ public class QuickSort<T extends Comparable<T>> implements SortAlgorithm<T> {
 	
 	@Override
 	public void sort(T[] arr) {
-		sort(arr,0,arr.length - 1);
+		sort(arr,0,arr.length);
 	}
 	
 	private void sort(T[] arr, int min, int max) {
-		if (min < max) {
+		if (min + 1 < max) {
 			int index = pivot(arr,min,max);
 			sort(arr,min,index);
 			sort(arr,index + 1,max);
@@ -26,12 +26,13 @@ public class QuickSort<T extends Comparable<T>> implements SortAlgorithm<T> {
 	}
 	
 	private int pivot(T[] arr, int min, int max) {
-		T pivot    = arr[min + rd.nextInt(max - min)];
-		int result = min;
+		int pivot = min + rd.nextInt(max - min);
+		swap(arr,pivot,max - 1);
+		pivot = min;
 		for (int i=min ; i<max ; i++) 
-			if (lowerThan(arr[i],pivot)) swap(arr,i,result++);
-		swap(arr,result,max);
-		return result;
+			if (lowerThan(arr[i],arr[max - 1])) swap(arr,i,pivot++); 
+		swap(arr,max - 1,pivot);		
+		return pivot;
 	}
 	
 	public T kthElement(T[] arr, int k) {

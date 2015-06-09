@@ -131,6 +131,10 @@ public class MathUtils {
 	}
 	
 	public static <T> boolean lowerThan(Comparable<T> c0, T c1) {
+		return c0.compareTo(c1) < 0;
+	}
+	
+	public static <T> boolean lowerOrEqual(Comparable<T> c0, T c1) {
 		return c0.compareTo(c1) <= 0;
 	}
 	
