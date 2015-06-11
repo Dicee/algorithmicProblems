@@ -4,11 +4,15 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import miscellaneous.utils.system.SystemProperties;
+
+
 public final class FileUtils {
 	private FileUtils() { }
 	
 	public static String getResourceAbsolutePath(String localPath, Class<?> clazz) {
-		return clazz.getResource(localPath).getPath().substring(1);
+		String path = clazz.getResource(localPath).getPath();
+		return SystemProperties.isWindows() ? path.substring(1) : path;
 	}
 	
 	/**
@@ -40,3 +44,4 @@ public final class FileUtils {
 		return new File((lastDot < 0 ? path : path.substring(0,lastDot)) + extension);
 	}
 }
+
