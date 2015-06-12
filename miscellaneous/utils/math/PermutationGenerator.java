@@ -1,7 +1,7 @@
 package miscellaneous.utils.math;
 
-import static miscellaneous.utils.collection.CollectionUtils.reverse;
-import static miscellaneous.utils.collection.CollectionUtils.swap;
+import static miscellaneous.utils.collection.ArrayUtils.reverse;
+import static miscellaneous.utils.collection.ArrayUtils.swap;
 
 import java.util.Arrays;
 import java.util.Comparator;

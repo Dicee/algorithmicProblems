@@ -1,10 +1,10 @@
 package miscellaneous.deedni;
 
+import static miscellaneous.utils.collection.ArrayUtils.swap;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import miscellaneous.utils.collection.CollectionUtils;
 
 public class Ball {
 	public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class Ball {
 		for (int i=0 ; i<n ; i++) {
 			int l = sc.nextInt() - 1;
 			int r = sc.nextInt() - 1;
-			CollectionUtils.swap(balls,l,r);
+			swap(balls,l,r);
 		}
 		
 		StringBuilder sb = new StringBuilder();

@@ -36,6 +36,7 @@ public class ActionManagerImpl implements StateObserver, ActionManager {
 		else                 throw new NoSuchElementException("No action to redo");
 	}
 	
+	@Override
 	public void reset() {
 		clearNext();
 		clearPrev();
@@ -57,8 +58,8 @@ public class ActionManagerImpl implements StateObserver, ActionManager {
 	 } 
 	
 	public BooleanProperty hasPreviousProperty() { return hasPrevious; }
-	public BooleanProperty hasNextProperty() { return hasNext; }
-	public BooleanProperty isSavedProperty() { return isSaved; }
+	public BooleanProperty hasNextProperty    () { return hasNext    ; }
+	public BooleanProperty isSavedProperty    () { return isSaved    ; }
 	
 	private CancelableAction popPrevious() { return pop(previous,hasPrevious); }
 	private CancelableAction popNext    () { return pop(next    ,hasNext    ); }

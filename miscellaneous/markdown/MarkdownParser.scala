@@ -1,12 +1,14 @@
 package miscellaneous.markdown
 
+import java.io.File
+
+import scala.collection.JavaConversions
+import scala.collection.mutable.LinkedHashSet
+import scala.io.Source
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import scala.io.Source
-import scala.collection.JavaConversions
-import java.io.File
-import scala.collection.mutable.LinkedHashSet
-import miscellaneous.utils.check.Check
+import miscellaneous.utils.regex.Patterns._;
 
 object MarkdownParser {
 	val doc = new Document
@@ -83,9 +85,6 @@ object MarkdownParser {
 	    }
 	      
 	    private def parseParagraph(s: String) = P(parseStyledText(s))
-	    
-	    private val EMAIL_REGEX = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
-	    private val URL_REGEX   = "((https?:\\/\\/|www\\.)([\\w\\._-]+)\\.([a-z\\.]{2,6})|localhost)(:\\d+)?([\\/\\w\\-]*)*(\\?(([\\w-_]+=[\\w-_]*&)*[\\w-_]+=[\\w-_]*)?|\\/?)"
 	    private def parseStyledText(s: String)  =  
 	    	s.replaceAll("\\s+" .wrapBy("(\\*){2}"),""                                       )
 	         .replaceAll("\\s+" .wrapBy("\\*"     ),""                                       )
@@ -95,8 +94,8 @@ object MarkdownParser {
 	         .replaceAll("(.*?)".wrapBy("(\\*){2}"),"<span class=\"important\">$2</span>"    )
 	         .replaceAll("(.*?)".wrapBy("\\*"     ),"<span class=\"emphasize\">$1</span>"    )
 	         .replaceAll("(.*?)".wrapBy("~~"      ),"<span class=\"strikethrough\">$1</span>")
-	         .replaceAll(EMAIL_REGEX               ,"<a href=\"mailto:$0\">$0</a>"           )
-	         .replaceAll(URL_REGEX                 ,"<a href=\"$0\">$0</a>"                  )
+	         .replaceAll(EMAIL.regex               ,"<a href=\"mailto:$0\">$0</a>"           )
+	         .replaceAll(URL.regex                 ,"<a href=\"$0\">$0</a>"                  )
 	}
 	    
     private case class Br  (                                 ) extends HTMLNode(doc.create("br"       ))

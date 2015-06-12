@@ -1,6 +1,6 @@
 package miscellaneous.utils.sort;
 
-import static miscellaneous.utils.collection.CollectionUtils.swap;
+import static miscellaneous.utils.collection.ArrayUtils.swap;
 import static miscellaneous.utils.math.MathUtils.lowerThan;
 
 import java.util.Random;

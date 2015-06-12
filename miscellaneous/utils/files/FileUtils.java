@@ -1,6 +1,8 @@
 package miscellaneous.utils.files;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,6 +13,16 @@ public final class FileUtils {
 		return clazz.getResource(localPath).getPath().substring(1);
 	}
 	
+	public static Path getPathRelativeToClass(Class<?> clazz, String path) {
+		String name = clazz.getCanonicalName();
+		return Paths.get(currentDirectory()).resolve(Paths.get(name.substring(0,name.lastIndexOf('.') + 1).replace('.','/') + path));
+	}
+	
+	public static String currentDirectory() {
+		String path = new File(".").getAbsolutePath();
+		return path.substring(0,path.length() - 1);
+	}
+
 	/**
 	 * Transforms a potentially system-dependent path into its canonical representation
 	 * @param path potentially system-dependent path

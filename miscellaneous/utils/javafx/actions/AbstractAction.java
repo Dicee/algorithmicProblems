@@ -10,12 +10,9 @@ abstract class AbstractAction implements ObservableAction {
 	protected abstract void doAction();
 	
 	public Action before(Action after) {
-		return new Action() {
-			@Override
-			public void perform(StateObserver observer) {
-				perform(observer);
-				after.perform(observer);
-			}
+		return observer -> {
+			perform(observer);
+			after.perform(observer);
 		};
 	}
 }

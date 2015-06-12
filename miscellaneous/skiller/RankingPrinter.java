@@ -1,4 +1,4 @@
-package miscellaneous;
+package miscellaneous.skiller;
 
 import static java.util.stream.Collectors.groupingBy;
 

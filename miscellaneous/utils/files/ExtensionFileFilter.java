@@ -15,7 +15,7 @@ public class ExtensionFileFilter extends FileFilter {
 		private Locale(String file) { this.file = file; }
 	}
 
-	public ExtensionFileFilter(Locale localization, String...extensions) {
+	public ExtensionFileFilter(Locale localization, String... extensions) {
 		StringBuilder sbDes = new StringBuilder();
 		StringBuilder sbReg = new StringBuilder();
 		sbDes.append(localization.file).append(" ");

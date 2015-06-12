@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.function.Predicate;
 
 public class MathUtils {
-	public final static double	EPSILON	= 0.00001;
+	public static final double	EPSILON			= 0.00001d;
+	public static final float 	FLOAT_PRECISION = 0.00001f;
 	
 	public static boolean isPrime1(int n) {
 		if (n % 2 == 0 && n != 2)
@@ -145,6 +146,14 @@ public class MathUtils {
 	public static int epsilonCompare(double x, double y) {
 		double d = Math.abs(x - y);
 		return d < EPSILON ? 0 : Double.compare(x,y);
+	}
+	
+	public static boolean isZero(float f) {
+		return epsilonCompare(f,0f) == 0;
+	}
+	
+	public static int epsilonCompare(float f0, float f1) {
+		return Math.abs(f0 - f1) < FLOAT_PRECISION ? 0 : Float.compare(f0,f1);
 	}
 	
 	public static boolean isZero(double x) {

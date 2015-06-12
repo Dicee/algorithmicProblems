@@ -1,6 +1,6 @@
 package miscellaneous.utils.sort;
 
-import miscellaneous.utils.collection.CollectionUtils;
+import static miscellaneous.utils.collection.ArrayUtils.swap;
 
 public class SelectionSort<T extends Comparable<T>> implements SortAlgorithm<T> {
 	@Override
@@ -9,7 +9,7 @@ public class SelectionSort<T extends Comparable<T>> implements SortAlgorithm<T> 
 			int min = i;
 			for (int j=i+1 ; j<arr.length ; j++) 
 				min = arr[j].compareTo(arr[min]) < 0 ? j : min;
-			CollectionUtils.swap(arr,i,min);
+			swap(arr,i,min);
 		}	
 	}
 	
