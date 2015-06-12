@@ -1,7 +1,7 @@
 package projectEuler.pb_16_to_30;
 
-import static miscellaneous.utils.collection.CollectionUtils.reverse;
-import static miscellaneous.utils.collection.CollectionUtils.swap;
+import static miscellaneous.utils.collection.ArrayUtils.reverse;
+import static miscellaneous.utils.collection.ArrayUtils.swap;
 import static projectEuler.pb_1_to_15.Problems_1_to_15_Scala.isPrime;
 
 import java.io.BufferedReader;
