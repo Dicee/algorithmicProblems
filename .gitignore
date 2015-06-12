@@ -1,11 +1,10 @@
 update.ini
-update.py
 bak
 
 #################
 ## Eclipse
 #################
-
+src/
 *.class
 *.pydevproject
 .project
