@@ -1,6 +1,7 @@
 package miscellaneous.utils.exceptions;
 
 import java.io.Closeable;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -15,6 +16,20 @@ public class IgnoreCheckedExceptions {
 	
 	public static interface ThrowingFunction<INPUT,OUTPUT> {
 		public OUTPUT apply(INPUT input) throws Exception;
+	}
+	
+	public static interface ThrowingConsumer<INPUT> {
+		public void accept(INPUT input) throws Exception;
+	}
+	
+	public static <INPUT> Consumer<INPUT> ignoreCheckedExceptionConsumer(ThrowingConsumer<INPUT> consumer) {
+		return input -> {
+			try {
+				consumer.accept(input);
+			} catch (Exception e) {
+				throw Throwables.propagate(e);
+			}
+		};
 	}
 	
 	public static <RESOURCE extends Closeable,OUTPUT> OUTPUT withCloseableResource(ThrowingSupplier<RESOURCE> resourceSupplier, //

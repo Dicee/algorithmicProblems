@@ -1,6 +1,7 @@
 package miscellaneous.skiller.indexation.factories;
 
 import static miscellaneous.skiller.indexation.model.DBManager.prefixTablesByDatabaseName;
+import static miscellaneous.skiller.indexation.model.Table.WORDS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,11 +9,15 @@ import java.sql.SQLException;
 import miscellaneous.skiller.indexation.entities.TextualContent.SourceType;
 import miscellaneous.skiller.indexation.entities.WordCount;
 import miscellaneous.skiller.indexation.model.DBManager;
+import miscellaneous.utils.collection.ArrayUtils;
 
 public final class WordCountFactory extends AbstractDBFactory<Long,WordCount> {
 	@Override
 	public void persist(WordCount wordCount) {
-		DBManager.persist("words",wordCount.id(),wordCount.getSourceType(),wordCount.getSourceId(),wordCount.getWord(),wordCount.getCount());
+		DBManager.persist(
+				WORDS,
+				ArrayUtils.of("type","source_id","word","count"),
+				ArrayUtils.of(wordCount.getSourceType().name().toLowerCase(),wordCount.getSourceId(),wordCount.getWord(),wordCount.getCount()));
 	}
 
 	@Override
@@ -26,5 +31,5 @@ public final class WordCountFactory extends AbstractDBFactory<Long,WordCount> {
 	}
 
 	@Override
-	protected String selectByKeyQuery(Long key) { return prefixTablesByDatabaseName("select * from %s.words where id=" + key); }
+	protected String selectByKeyQuery(Long key) { return prefixTablesByDatabaseName("select * from %s." + WORDS.getName() +  " where id=" + key); }
 }

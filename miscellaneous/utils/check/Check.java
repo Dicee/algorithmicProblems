@@ -6,6 +6,7 @@ public final class Check {
 	private static final String	SHOULD_BE_EQUAL		= "These objects should be equal";
 	private static final String	SHOULD_NOT_BE_EQUAL	= "These objects should not be equal";
 	private static final String	SHOULD_NOT_BE_EMPTY	= "This array should not be empty";
+	private static final String	SHOULD_NOT_BE_BLANK	= "This string should not be blank";
 	
 	private Check() { }
 	
@@ -30,7 +31,7 @@ public final class Check {
 	}
 	
 	public static <T> T notNull(T t, String msg) {
-		check(t == null,msg);
+		check(t != null,msg);
 		return t;
 	}
 
@@ -50,6 +51,15 @@ public final class Check {
 		check(!o1.equals(o2),msg);
 	}
  	
+	public static String notBlank(String s) {
+		return notBlank(s,SHOULD_NOT_BE_BLANK);
+	}
+
+	public static String notBlank(String s, String msg) {
+		check(s != null && !s.isEmpty(),msg);
+		return s;
+	}
+
 	private static void check(boolean test, String msg) {
 		if (!test) throw new CheckException(msg);
 	}

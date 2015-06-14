@@ -3,15 +3,19 @@ package miscellaneous.utils.collection;
 import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import miscellaneous.utils.check.Check;
 
 public class ArrayUtils {
 	private ArrayUtils() { }
+	
+	@SafeVarargs
+	public static <T> T[] of(T... ts) {
+		Check.notNull(ts);
+		return ts;
+	}
 	
 	public static <T> T[] ofDim(Class<T> clazz, int length) {
 		return ofDim(clazz,length,null);

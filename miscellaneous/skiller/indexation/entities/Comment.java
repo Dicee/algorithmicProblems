@@ -12,8 +12,9 @@ public class Comment extends AbstractTextualContent {
 		this.author     = author;
 	}
 
-	public long   getQuestionId() { return questionId; }
-	public String getAuthor    () { return author    ; }
+	public long       getQuestionId()        { return questionId; }
+	public String     getAuthor    ()        { return author    ; }
+	public final void setId        (Long id) { this.id = id     ; }
 
 	@Override
 	public String toString() {

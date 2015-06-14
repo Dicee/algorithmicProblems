@@ -17,6 +17,7 @@ import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import miscellaneous.utils.check.Check;
 import miscellaneous.utils.collection.ArrayUtils;
 import miscellaneous.utils.collection.StreamUtils;
 import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
@@ -27,14 +28,15 @@ public class DBManager {
 	static {
 		try {
 			connectionProp.load(DBManager.class.getResourceAsStream("db.properties"));
-		} catch (IOException e) {
+			connect();
+		} catch (IOException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private static Connection conn;
 	
-	public static void connect() throws SQLException {
+	private static void connect() throws SQLException {
 		conn = DriverManager.getConnection(
 			format("jdbc:mysql://%s:%s/",connectionProp.getProperty("server_name"),connectionProp.getProperty("port_number")),connectionProp);
 		System.out.println("Connected to database");
@@ -53,14 +55,34 @@ public class DBManager {
 		return StreamUtils.iteratorToStream(iterate(executeQuery(query)));
 	}
 
-	public static void persist(String table, Object... values) {
+	public static void persist(Table table, Object... values) {
 		withStatement(stmt -> stmt.executeUpdate(
 			String.format("insert into %s.%s values (%s)",
 				databaseName(),
-				table,
+				table.getName(),
 				join(", ",DBManager::formatDataType,values))
 			)
 		);
+	}
+	
+	public static void persist(Table table, String names[], Object[] values) {
+		Check.areEqual(names.length,values.length,"The two parameter arrays should have the same length");
+		withStatement(stmt -> stmt.executeUpdate(
+			String.format("insert into %s.%s (%s) values (%s)",
+				databaseName(),
+				table.getName(),
+				join(", ",names),
+				join(", ",DBManager::formatDataType,values))
+			)
+		);
+	}
+	
+	public static long newLongId(Table table) {
+		Check.notBlank(table.getName());
+		return withStatement(stmt -> {
+			ResultSet rs = stmt.executeQuery(String.format("select id, max(id) as max from %s.%s",databaseName(),table.getName()));
+			return rs.first() ? rs.getLong("max") + 1 : 0;
+		});
 	}
 	
 	private static String formatDataType(Object obj) {
@@ -75,7 +97,7 @@ public class DBManager {
 		return executeQueryAndGetStream(query).map(mapper).findFirst().orElseThrow(NoSuchElementException::new);
 	}
 	
-	public static String databaseName() { return connectionProp.getProperty("db.name"); }
+	public static String databaseName() { return connectionProp.getProperty("db_name"); }
 	
 	public static String prefixTablesByDatabaseName(String formattedQuery) { 
 		int      count = StringUtils.count(formattedQuery, "%s");

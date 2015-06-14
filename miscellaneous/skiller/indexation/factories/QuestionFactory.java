@@ -1,6 +1,7 @@
 package miscellaneous.skiller.indexation.factories;
 
 import static miscellaneous.skiller.indexation.model.DBManager.prefixTablesByDatabaseName;
+import static miscellaneous.skiller.indexation.model.Table.QUESTIONS;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ import miscellaneous.skiller.indexation.model.DBManager;
 public class QuestionFactory extends AbstractDBFactory<Long,Question> {
 	@Override
 	public void persist(Question question) {
-		DBManager.persist("questions",question.id(),question.getAuthor());
+		DBManager.persist(QUESTIONS,question.id(),question.getAuthor());
 	}
 
 	@Override
@@ -22,6 +23,6 @@ public class QuestionFactory extends AbstractDBFactory<Long,Question> {
 	}
 
 	@Override
-	protected String selectByKeyQuery(Long key) { return prefixTablesByDatabaseName("select * from %s.questions where id=" + key); }
+	protected String selectByKeyQuery(Long key) { return prefixTablesByDatabaseName("select * from %s." + QUESTIONS.getName() + " where id=" + key); }
 }
 

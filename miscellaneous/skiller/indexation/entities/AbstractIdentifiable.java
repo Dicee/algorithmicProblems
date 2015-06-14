@@ -1,7 +1,7 @@
 package miscellaneous.skiller.indexation.entities;
 
 public class AbstractIdentifiable<K> implements Identifiable<K> {
-	private final K id;
+	protected K id;
 
 	public AbstractIdentifiable(K id) { this.id = id; }
 	
