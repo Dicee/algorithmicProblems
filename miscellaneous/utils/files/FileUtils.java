@@ -10,7 +10,8 @@ public final class FileUtils {
 	private FileUtils() { }
 	
 	public static String getResourceAbsolutePath(String localPath, Class<?> clazz) {
-		return clazz.getResource(localPath).getPath().substring(1);
+		String path = clazz.getResource(localPath).getPath();
+		return SystemProperties.isWindows() ? path.substring(1) : path;
 	}
 	
 	public static Path getPathRelativeToClass(Class<?> clazz, String path) {
