@@ -59,4 +59,12 @@ public final class FileUtils {
 		int lastDot = path.lastIndexOf('.');
 		return new File((lastDot < 0 ? path : path.substring(0,lastDot)) + extension);
 	}
+	
+	private static String readAllFile(String path) throws IOException {
+    		StringBuilder sb    = new StringBuilder();
+    		File          input = new File(path);
+	    	for (String line : Files.readAllLines(Paths.get(input.toURI()))) sb.append(line);
+	    	String lines = sb.toString();
+    		return lines;
+    }
 }
