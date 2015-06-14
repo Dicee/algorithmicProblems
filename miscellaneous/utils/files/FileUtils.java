@@ -23,6 +23,13 @@ public final class FileUtils {
 		String path = new File(".").getAbsolutePath();
 		return path.substring(0,path.length() - 1);
 	}
+	
+	public static String canonicalCurrentDirectory() { return toCanonicalPath(currentDirectory()); }
+	
+	public static void ensureExists(String dirPath) {
+		File dir = new File(dirPath);
+		if(!dir.exists()) dir.mkdirs();
+	}
 
 	/**
 	 * Transforms a potentially system-dependent path into its canonical representation
