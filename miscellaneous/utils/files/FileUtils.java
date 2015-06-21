@@ -1,10 +1,14 @@
 package miscellaneous.utils.files;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+
+import miscellaneous.utils.system.SystemProperties;
 
 public final class FileUtils {
 	private FileUtils() { }
@@ -60,11 +64,11 @@ public final class FileUtils {
 		return new File((lastDot < 0 ? path : path.substring(0,lastDot)) + extension);
 	}
 	
-	private static String readAllFile(String path) throws IOException {
-    		StringBuilder sb    = new StringBuilder();
-    		File          input = new File(path);
-	    	for (String line : Files.readAllLines(Paths.get(input.toURI()))) sb.append(line);
-	    	String lines = sb.toString();
-    		return lines;
+	public static String readAllFile(String path) throws IOException {
+		StringBuilder sb    = new StringBuilder();
+		File          input = new File(path);
+    	for (String line : Files.readAllLines(Paths.get(input.toURI()))) sb.append(line);
+    	String lines = sb.toString();
+		return lines;
     }
 }

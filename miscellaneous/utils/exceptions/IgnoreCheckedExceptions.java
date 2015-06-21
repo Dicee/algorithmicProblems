@@ -1,6 +1,7 @@
 package miscellaneous.utils.exceptions;
 
 import java.io.Closeable;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -18,8 +19,16 @@ public class IgnoreCheckedExceptions {
 		public OUTPUT apply(INPUT input) throws Exception;
 	}
 	
+	public static interface ThrowingBiFunction<INPUT1,INPUT2,OUTPUT> {
+		public OUTPUT apply(INPUT1 input1, INPUT2 input2) throws Exception;
+	}
+
 	public static interface ThrowingConsumer<INPUT> {
 		public void accept(INPUT input) throws Exception;
+	}
+	
+	public static interface ThrowingRunnable {
+		public void run() throws Exception;
 	}
 	
 	public static <INPUT> Consumer<INPUT> ignoreCheckedExceptionConsumer(ThrowingConsumer<INPUT> consumer) {
@@ -76,5 +85,33 @@ public class IgnoreCheckedExceptions {
 		} catch (Exception e) {
 			throw Throwables.propagate(e);
 		}
+	}
+	
+	public static void ignoreCheckedExceptions(ThrowingRunnable runnable) {
+		try {
+			runnable.run();
+		} catch (Exception e) {
+			throw Throwables.propagate(e);
+		}
+	}
+	
+	public static Runnable ignoreCheckedExceptionsRunnable(ThrowingRunnable runnable) {
+		return () -> {
+			try {
+				runnable.run();
+			} catch (Exception e) {
+				throw Throwables.propagate(e);
+			}
+		};
+	}
+
+	public static <INPUT1,INPUT2,OUTPUT> BiFunction<INPUT1,INPUT2,OUTPUT> ignoreCheckedExceptionsBiFunction(ThrowingBiFunction<INPUT1,INPUT2,OUTPUT> biFunction) {
+		return (a,b) -> {
+			try {
+				return biFunction.apply(a,b);
+			} catch (Exception e) {
+				throw Throwables.propagate(e);
+			}
+		};
 	}
 }

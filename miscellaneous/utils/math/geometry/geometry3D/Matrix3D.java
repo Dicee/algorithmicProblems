@@ -3,13 +3,11 @@ package miscellaneous.utils.math.geometry.geometry3D;
 import static java.util.stream.Collectors.toList;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
 import miscellaneous.utils.check.Check;
 import miscellaneous.utils.math.geometry.BaseMatrix;
-import miscellaneous.utils.math.geometry.Matrix;
 
 public class Matrix3D extends BaseMatrix<Double> {
 	protected double[][] mat;

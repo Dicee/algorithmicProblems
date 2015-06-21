@@ -131,12 +131,20 @@ public class MathUtils {
 		return true; 
 	}
 	
-	public static <T> boolean lowerThan(Comparable<T> c0, T c1) {
-		return c0.compareTo(c1) < 0;
+	public static <T extends Comparable<T>> boolean greaterThan(T t0, T t1) {
+		return !lowerOrEqual(t0,t1);
 	}
 	
-	public static <T> boolean lowerOrEqual(Comparable<T> c0, T c1) {
-		return c0.compareTo(c1) <= 0;
+	public static <T extends Comparable<T>> boolean lowerThan(T t0, T t1) {
+		return !greaterOrEqual(t0,t1);
+	}
+	
+	public static <T extends Comparable<T>> boolean greaterOrEqual(T t0, T t1) {
+		return 0 <= t0.compareTo(t1);
+	}
+	
+	public static <T extends Comparable<T>> boolean lowerOrEqual(T t0, T t1) {
+		return t0.compareTo(t1) <= 0;
 	}
 	
 	public static int signum(double d) {
