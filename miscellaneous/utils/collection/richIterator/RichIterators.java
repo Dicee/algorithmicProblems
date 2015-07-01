@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.Iterator;
@@ -22,7 +23,9 @@ import com.google.common.base.Throwables;
 public class RichIterators {
 	private RichIterators() { }
 	
-	public static RichIterator<String> iterateLines(File f) {
+	public static <T> RichIterator<T> fromCollection(Collection<T> collection) { return wrap(collection.iterator()); }
+	
+	public static RichIterator<String> fromLines(File f) {
 		BufferedReader br = null;
 		try {
 			br = Files.newBufferedReader(f.toPath());
@@ -57,48 +60,23 @@ public class RichIterators {
 	}
 	
 	@SuppressWarnings("resource")
-	public static <T> RichIterator<T> iterateSerializedRecords(File f, Class<T> clazz) {
+	public static <T> RichIterator<T> fromSerializedRecords(File f, Class<T> clazz) {
 		FileInputStream   fis = null; 
 		ObjectInputStream ois = null;
 		try {
 			fis = new FileInputStream(f);
 			ois = new ObjectInputStream(fis);
 			final ObjectInputStream source = ois;
-			return new RichIterator<T>() {
-				private Deque<T> buffer = new LinkedList<>();
-				
+			return new BufferedRichIterator<T>(new LookAheadIterator<T>() {
 				@Override
-				protected T nextInternal() {
-					if (!hasNext()) throw new NoSuchElementException();
-					return !buffer.isEmpty() ? buffer.pop() : ignoreCheckedExceptions(this::readNext);
-				}
-				
-				@Override
-				protected boolean hasNextInternal() {
-					if (!buffer.isEmpty()) return true;
-					try {
-						buffer.addLast(readNext());
-						return true;
-					} catch (EOFException e) {
-						return false;
-					}
-				}
-
-				private T readNext() throws EOFException {
+				public T readNext() throws EOFException, IOException { 
 					try {
 						return clazz.cast(source.readObject());
-					} catch (EOFException e) {
-						throw e;
-					} catch (Exception e) {
-						throw Throwables.propagate(e);
-					}
+					} catch (ClassNotFoundException e) {
+						throw new IOException(e);
+					} 
 				}
-
-				@Override
-				protected void closeInternal() throws IOException {
-					source.close();
-				}
-			};
+			});
 		} catch (EOFException e) { 
 			return emptyIterator();  
 		} catch (IOException e) {

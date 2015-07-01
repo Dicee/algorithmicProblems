@@ -36,7 +36,7 @@ public class BoundMemorySort<T extends Comparable<T> & Serializable> {
 		fillBuffer(source);
 		T[] sorted = sortBuffer();
 		merge(sorted);
-		return source.hasNext() ? sort(source) : RichIterators.iterateSerializedRecords(merged,clazz);
+		return source.hasNext() ? sort(source) : RichIterators.fromSerializedRecords(merged,clazz);
 	}
 
 	private T[] sortBuffer() {
@@ -48,7 +48,7 @@ public class BoundMemorySort<T extends Comparable<T> & Serializable> {
 	private void merge(T[] toSort) {
 		File newMerged = tempMergeFile();
 		try (FileOutputStream fos = new FileOutputStream(newMerged) ; ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-			Iterator<T> it0 = RichIterators.iterateSerializedRecords(merged,clazz);
+			Iterator<T> it0 = RichIterators.fromSerializedRecords(merged,clazz);
 			Iterator<T> it1 = Arrays.asList(toSort).iterator();
 			Optional<T> next0 = Optional.empty(), next1 = Optional.empty();
 			

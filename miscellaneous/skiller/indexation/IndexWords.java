@@ -41,7 +41,7 @@ public class IndexWords extends AbstractIndexer {
 	private static final String	QUESTION_IDS		= "data/questionIds.txt";
 	private static final String	QUESTION_IDS_BACKUP	= QUESTION_IDS + ".bak";
 	private static final String	BASE_URL			= "http://skiller.fr/question/";
-	private static final int	ID_MAX				= 9000;
+	private static final int	ID_MAX				= 10000;
 	
 	public static void main(String[] args) throws IOException {
 		backupQuestionIds();

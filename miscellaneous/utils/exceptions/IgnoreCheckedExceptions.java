@@ -2,6 +2,7 @@ package miscellaneous.utils.exceptions;
 
 import java.io.Closeable;
 import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -17,11 +18,15 @@ public class IgnoreCheckedExceptions {
 	
 	public static interface ThrowingFunction<INPUT,OUTPUT> {
 		public OUTPUT apply(INPUT input) throws Exception;
+		
+		public static <X> ThrowingFunction<X,X> identity() { return x -> x; }
 	}
 	
 	public static interface ThrowingBiFunction<INPUT1,INPUT2,OUTPUT> {
 		public OUTPUT apply(INPUT1 input1, INPUT2 input2) throws Exception;
 	}
+	
+	public static interface ThrowingBinaryOperator<X> extends ThrowingBiFunction<X,X,X> { }
 
 	public static interface ThrowingConsumer<INPUT> {
 		public void accept(INPUT input) throws Exception;
@@ -29,6 +34,10 @@ public class IgnoreCheckedExceptions {
 	
 	public static interface ThrowingRunnable {
 		public void run() throws Exception;
+	}
+	
+	public static interface ThrowingPredicate<INPUT> {
+		public boolean test(INPUT input) throws Exception;
 	}
 	
 	public static <INPUT> Consumer<INPUT> ignoreCheckedExceptionConsumer(ThrowingConsumer<INPUT> consumer) {
@@ -109,6 +118,16 @@ public class IgnoreCheckedExceptions {
 		return (a,b) -> {
 			try {
 				return biFunction.apply(a,b);
+			} catch (Exception e) {
+				throw Throwables.propagate(e);
+			}
+		};
+	}
+	
+	public static <X> BinaryOperator<X> ignoreCheckedExceptionsBinaryOperator(ThrowingBinaryOperator<X> binaryOp) {
+		return (a,b) -> {
+			try {
+				return binaryOp.apply(a,b);
 			} catch (Exception e) {
 				throw Throwables.propagate(e);
 			}

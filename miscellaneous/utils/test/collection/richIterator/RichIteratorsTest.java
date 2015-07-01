@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.Iterator;
-import java.util.stream.Collectors;
 
 import miscellaneous.utils.collection.richIterator.RichIterators;
 
@@ -26,7 +25,7 @@ public class RichIteratorsTest {
 			oos.writeObject("are");
 			oos.writeObject("you");
 		}
-		Iterator<String> it = RichIterators.iterateSerializedRecords(tmp,String.class);
+		Iterator<String> it = RichIterators.fromSerializedRecords(tmp,String.class);
 		assertThat(it.next(),is("hey"));
 		assertThat(it.next(),is("how"));
 		assertThat(it.next(),is("are"));
@@ -42,7 +41,7 @@ public class RichIteratorsTest {
 			bw.write("how are you\n");
 			bw.write("man ?");
 		}
-		Iterator<String> it = RichIterators.iterateLines(tmp);
+		Iterator<String> it = RichIterators.fromLines(tmp);
 		assertThat(it.next(),is("hey"));
 		assertThat(it.next(),is("how are you"));
 		assertThat(it.next(),is("man ?"));
