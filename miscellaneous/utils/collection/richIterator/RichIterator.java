@@ -1,5 +1,6 @@
 package miscellaneous.utils.collection.richIterator;
 
+import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsSupplier;
 import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
 
 import java.io.Closeable;
@@ -26,7 +27,7 @@ public abstract class RichIterator<T> implements Iterator<T>, Iterable<T>, Close
 
 	@Override
 	public boolean hasNext() {
-		return !closed && ignoreCheckedExceptions(this::hasNextInternal);
+		return !closed && ignoreCheckedExceptionsSupplier(this::hasNextInternal).get();
 	}
 
 	@Override
