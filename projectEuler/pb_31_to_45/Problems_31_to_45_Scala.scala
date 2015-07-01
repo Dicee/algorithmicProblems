@@ -4,6 +4,7 @@ import java.util.Arrays
 import miscellaneous.utils.math.MathUtils._
 import scala.io.Source
 import miscellaneous.utils.math.PermGen
+import miscellaneous.utils.math.MathUtils._
 
 object Problems_31_to_45_Scala {
 	def problem33 = {

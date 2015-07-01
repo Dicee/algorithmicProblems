@@ -1,5 +1,6 @@
 package miscellaneous.utils.collection.richIterator;
 
+import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsSupplier;
 import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
 import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsBinaryOperator;
 
@@ -33,7 +34,10 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 	}
 
 	@Override
-	public boolean hasNext() { return !closed && ignoreCheckedExceptions(this::hasNextInternal); }
+        // stupid Eclipse compiler cannot infer correctly
+	public boolean hasNext() {
+		return !closed && ignoreCheckedExceptionsSupplier(this::hasNextInternal).get();
+	}
 
 	@Override
 	public final X next() {

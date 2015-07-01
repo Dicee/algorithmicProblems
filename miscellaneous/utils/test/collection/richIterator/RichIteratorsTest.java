@@ -1,7 +1,7 @@
 package miscellaneous.utils.test.collection.richIterator;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.junit.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThat;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,6 +14,8 @@ import java.util.Iterator;
 import miscellaneous.utils.collection.richIterator.RichIterators;
 
 import org.junit.Test;
+
+import miscellaneous.utils.collection.richIterator.RichIterators;
 
 public class RichIteratorsTest {
 	@Test
