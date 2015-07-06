@@ -13,12 +13,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 object AnalyseLog extends App {
-    implicit class RichInputStream(stream: InputStream) {
-        def concat(that: InputStream) = new SequenceInputStream(stream,that)
-    }
-    implicit class RichFile(file: File) {
-        def inputStream = new FileInputStream(file)   
-    }
+    implicit class RichInputStream(stream: InputStream) { def concat(that: InputStream) = new SequenceInputStream(stream,that) }
+    implicit class RichFile       (file  : File       ) { def inputStream = new FileInputStream(file)                          }
     
     try {
        if (args.length < 1) exitWithMessage("Missing input file parameter")

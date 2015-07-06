@@ -1,0 +1,14 @@
+package miscellaneous.utils.collection.richIterator;
+
+class ArrayRichIterator<T> extends RichIterator<T> {
+	private final T[] arr;
+	private int i = 0;
+
+	public ArrayRichIterator(T[] arr) { this.arr = arr; }
+	
+	@Override
+	protected boolean hasNextInternal() throws Exception { return i < arr.length; }
+
+	@Override
+	protected T nextInternal() throws Exception { return arr[i++]; }
+}

@@ -9,15 +9,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.util.Pair;
-import miscellaneous.utils.check.Check;
 import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
 
 public class PairRichIterator<K,V> extends RichIterator<Pair<K,V>> {
 	private final RichIterator<Pair<K,V>> it;
 
 	static <X,K,V> PairRichIterator<K,V> create(RichIterator<X> it, ThrowingFunction<X,K> keyFunction, ThrowingFunction<X,V> valueFunction) {
-		Check.notNull(keyFunction);
-		Check.notNull(valueFunction);
+		notNull(keyFunction);
+		notNull(valueFunction);
 		return new PairRichIterator<>(it.map(x -> new Pair<>(keyFunction.apply(x),valueFunction.apply(x))));
 	}
 	
@@ -47,7 +46,5 @@ public class PairRichIterator<K,V> extends RichIterator<Pair<K,V>> {
 		return new PairRichIterator<>(RichIterators.wrap(map.entrySet().stream().map(entry ->  new Pair<>(entry.getKey(),entry.getValue())).iterator()));
 	}
 	
-	public Map<K,V> toMap() {
-		return stream().collect(Collectors.toMap(Pair::getKey,Pair::getValue));
-	}
+	public Map<K,V> toMap() { return stream().collect(Collectors.toMap(Pair::getKey,Pair::getValue)); }
 }

@@ -2,14 +2,18 @@ package miscellaneous.utils.test.collection.richIterator;
 
 import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction.identity;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javafx.util.Pair;
+import miscellaneous.utils.collection.richIterator.RichIntIterator;
 import miscellaneous.utils.collection.richIterator.RichIterator;
 import miscellaneous.utils.collection.richIterator.RichIterators;
 
@@ -67,5 +71,98 @@ public class RichIteratorTest {
 	@Test
 	public void testZip() {
 		assertThat(it.zip(RichIterators.fromCollection(Arrays.asList("coucou","non"))).toList(),equalTo(Arrays.asList(new Pair<>(3,"coucou"),new Pair<>(8,"non"))));
+	}
+	
+	@Test
+	public void testTakeWhile() {
+		assertThat(it.takeWhile(x -> x >= 3).toList(),equalTo(Arrays.asList(3,8,5,6,7,9)));
+	}
+	
+	@Test
+	public void testTakeUntil() {
+		assertThat(it.takeUntil(x -> x == 7).toList(),equalTo(Arrays.asList(3,8,5,6,7)));
+	}
+	
+	@Test 
+	public void testDistinct() {
+		assertThat(it.map(i -> i % 3).distinct().toList(),equalTo(Arrays.asList(0,2,1)));
+	}
+	
+	@Test(expected=ClassCastException.class) 
+	public void testSorted_throwsExceptionIfNotComparable() {
+		RichIterators.fromCollection(Arrays.asList(1,"hey",new Object(),2)).sorted().toList();
+	}
+	
+	@Test 
+	public void testSorted_isLazy() {
+		CustomComparable c0 = new CustomComparable(1);
+		CustomComparable c1 = new CustomComparable(2);
+		RichIterator<CustomComparable> it = RichIterators.fromCollection(Arrays.asList(c0,c1)).sorted();
+		assertThat(!c0.hasBeenCompared() && !c1.hasBeenCompared(),is(true));
+		it.toList();
+		assertThat(c0.hasBeenCompared() && c1.hasBeenCompared(),is(true));
+	}
+
+	@Test 
+	public void testSorted_sortsCorrectly() {
+		assertThat(it.sorted().toList(),equalTo(Arrays.asList(1,3,5,6,7,8,9,15)));
+	}
+	
+	@Test 
+	public void testFind() {
+		assertThat(it.findFirst(i -> i > 6),equalTo(Optional.of(8)));
+		assertThat(it.findFirst(i -> i > 150),equalTo(Optional.empty()));
+	}
+	
+	@Test 
+	public void testFindIndex() {
+		assertThat(it.indexWhere(i -> i > 6),equalTo(1));
+		assertThat(it.indexWhere(i -> i > 150),equalTo(-1));
+	}
+	
+	@Test
+	public void testForall_1() {
+		assertThat(it.forall(i -> i > 0),is(true));
+	}
+	
+	@Test
+	public void testForall_2() {
+		assertThat(it.forall(i -> i > 2),is(false));
+	}
+	
+	@Test
+	public void testExists_1() {
+		assertThat(it.exists(i -> i > 0),is(true));
+	}
+	
+	@Test
+	public void testExists_2() {
+		assertThat(it.exists(i -> i < 0),is(false));
+	}
+	
+	@Test
+	public void testFlatMap() {
+		assertThat(it.flatMap(i -> RichIntIterator.counter(1).takeWhile(j -> 3*j < i)).toList(),equalTo(Arrays.asList(1,2,1,1,1,2,1,2,1,2,3,4)));
+	}
+	
+	@Test
+	public void testFlatMap_handlesEmptyIterators() {
+		assertThat(it.flatMap(i -> RichIterators.emptyIterator()).hasNext(),is(false));
+	}
+	
+	private static class CustomComparable implements Comparable<CustomComparable> {
+		private final AtomicBoolean	hasBeenCompared	= new AtomicBoolean(false);
+		private final int			value;
+		
+		public CustomComparable(int value) { this.value = value; }
+		
+		@Override
+		public int compareTo(CustomComparable that) {
+			hasBeenCompared.set(true);
+			that.hasBeenCompared.set(true);
+			return Integer.compare(value,that.value);
+		}
+		
+		public boolean hasBeenCompared() { return hasBeenCompared.get(); }
 	}
 }

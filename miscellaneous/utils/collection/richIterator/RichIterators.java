@@ -23,7 +23,9 @@ import com.google.common.base.Throwables;
 public class RichIterators {
 	private RichIterators() { }
 	
-	public static <T> RichIterator<T> fromCollection(Collection<T> collection) { return wrap(collection.iterator()); }
+	@SafeVarargs
+	public static <T> RichIterator<T> of(T... elts)                            { return new ArrayRichIterator<>(elts); }
+	public static <T> RichIterator<T> fromCollection(Collection<T> collection) { return wrap(collection.iterator())  ; }
 	
 	public static RichIterator<String> fromLines(File f) {
 		BufferedReader br = null;

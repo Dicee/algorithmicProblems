@@ -6,6 +6,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 import com.google.common.base.Throwables;
 
@@ -27,6 +28,8 @@ public class IgnoreCheckedExceptions {
 	}
 	
 	public static interface ThrowingBinaryOperator<X> extends ThrowingBiFunction<X,X,X> { }
+	
+	public static interface ThrowingUnaryOperator<X> extends ThrowingFunction<X,X> { }
 
 	public static interface ThrowingConsumer<INPUT> {
 		public void accept(INPUT input) throws Exception;
@@ -38,16 +41,7 @@ public class IgnoreCheckedExceptions {
 	
 	public static interface ThrowingPredicate<INPUT> {
 		public boolean test(INPUT input) throws Exception;
-	}
-	
-	public static <INPUT> Consumer<INPUT> ignoreCheckedExceptionConsumer(ThrowingConsumer<INPUT> consumer) {
-		return input -> {
-			try {
-				consumer.accept(input);
-			} catch (Exception e) {
-				throw Throwables.propagate(e);
-			}
-		};
+		public default ThrowingPredicate<INPUT> negate() { return input -> !test(input); }
 	}
 	
 	public static <RESOURCE extends Closeable,OUTPUT> OUTPUT withCloseableResource(ThrowingSupplier<RESOURCE> resourceSupplier, //
@@ -66,6 +60,16 @@ public class IgnoreCheckedExceptions {
 		} catch (Exception e) {
 			throw Throwables.propagate(e);
 		}
+	}
+	
+	public static <INPUT> Consumer<INPUT> ignoreCheckedExceptionsConsumer(ThrowingConsumer<INPUT> consumer) {
+		return input -> {
+			try {
+				consumer.accept(input);
+			} catch (Exception e) {
+				throw Throwables.propagate(e);
+			}
+		};
 	}
 	
 	public static <OUTPUT> Supplier<OUTPUT> ignoreCheckedExceptionsSupplier(ThrowingSupplier<OUTPUT> supplier) {
@@ -128,6 +132,16 @@ public class IgnoreCheckedExceptions {
 		return (a,b) -> {
 			try {
 				return binaryOp.apply(a,b);
+			} catch (Exception e) {
+				throw Throwables.propagate(e);
+			}
+		};
+	}
+	
+	public static <X> UnaryOperator<X> ignoreCheckedExceptionsUnaryOperator(ThrowingUnaryOperator<X> unaryOp) {
+		return a -> {
+			try {
+				return unaryOp.apply(a);
 			} catch (Exception e) {
 				throw Throwables.propagate(e);
 			}

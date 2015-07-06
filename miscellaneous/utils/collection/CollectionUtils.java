@@ -1,10 +1,14 @@
 package miscellaneous.utils.collection;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import miscellaneous.utils.check.Check;
 
 public class CollectionUtils {
 	private CollectionUtils() { }
@@ -20,5 +24,13 @@ public class CollectionUtils {
 	public static <T> List<T> reverse(List<T> list) {
 		Collections.reverse(list);
 		return list;
+	}
+	
+	@SafeVarargs
+	public static <T> Set<T> setOf(T... elts) { 
+		Check.notNull(elts,"This array should contain at least one element");
+		HashSet<T> res = new HashSet<>(elts.length);
+		for (T elt : elts) res.add(elt);
+		return Collections.unmodifiableSet(res);
 	}
 }

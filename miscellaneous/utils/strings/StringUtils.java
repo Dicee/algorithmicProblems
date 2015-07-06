@@ -1,5 +1,7 @@
 package miscellaneous.utils.strings;
 
+import static java.util.stream.Collectors.joining;
+
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -21,10 +23,18 @@ public class StringUtils {
 		return count;
 	}
 	
+	public static <T> String join(String first, String sep, String last, Collection<T> collection) { 
+		return join(first,sep,last,Object::toString,collection);
+	}
+	
+	public static <T> String join(String first, String sep, String last, Function<T,String> toString, Collection<T> collection) { 
+		return collection.stream().map(toString).collect(joining(first,sep,last));
+	}
+	
 	@SafeVarargs
 	public static <T> String join(String sep, Function<T,String> toString, T... values) { 
 		Check.notEmpty(values);
-		return Stream.of(values).map(toString).collect(Collectors.joining(sep));
+		return Stream.of(values).map(toString).collect(joining(sep));
 	}
 	
 	@SafeVarargs
@@ -33,7 +43,7 @@ public class StringUtils {
 	}
 	
 	public static <T> String join(String sep, Function<T,String> toString, Collection<T> collection) {
-		return collection.stream().map(toString).collect(Collectors.joining(sep));
+		return collection.stream().map(toString).collect(joining(sep));
 	}
 	
 	public static <T> String join(String sep, Collection<T> collection) {

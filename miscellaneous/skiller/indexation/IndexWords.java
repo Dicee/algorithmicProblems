@@ -3,7 +3,7 @@ package miscellaneous.skiller.indexation;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static miscellaneous.skiller.indexation.model.Table.QUESTIONS;
 import static miscellaneous.utils.collection.CollectionUtils.reverse;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionConsumer;
+import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsConsumer;
 import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
 import static miscellaneous.utils.files.FileUtils.getPathRelativeToClass;
 
@@ -46,7 +46,7 @@ public class IndexWords extends AbstractIndexer {
 	public static void main(String[] args) throws IOException {
 		backupQuestionIds();
 		discoverNewQuestions();
-		getMissingQuestions().forEach(ignoreCheckedExceptionConsumer(id -> {
+		getMissingQuestions().forEach(ignoreCheckedExceptionsConsumer(id -> {
 			Document doc = Jsoup.connect(BASE_URL + id).get();
 			updateRecords(extractQuestion(doc, id),extractComments(doc,id));
 		}));

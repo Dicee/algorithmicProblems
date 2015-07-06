@@ -18,9 +18,14 @@ public final class FileUtils {
 		return SystemProperties.isWindows() ? path.substring(1) : path;
 	}
 	
+	@Deprecated
 	public static Path getPathRelativeToClass(Class<?> clazz, String path) {
+		return Paths.get(currentDirectory()).resolve(Paths.get(getPathToPackage(clazz) + path));
+	}
+
+	public static String getPathToPackage(Class<?> clazz) {
 		String name = clazz.getCanonicalName();
-		return Paths.get(currentDirectory()).resolve(Paths.get(name.substring(0,name.lastIndexOf('.') + 1).replace('.','/') + path));
+		return name.substring(0,name.lastIndexOf('.') + 1).replace('.','/');
 	}
 	
 	public static String currentDirectory() {

@@ -15,8 +15,6 @@ import miscellaneous.utils.collection.richIterator.RichIterators;
 
 import org.junit.Test;
 
-import miscellaneous.utils.collection.richIterator.RichIterators;
-
 public class RichIteratorsTest {
 	@Test
 	public void testDeserializerIterator() throws IOException {

@@ -1,6 +1,6 @@
 package miscellaneous.utils.sort;
 
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionConsumer;
+import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsConsumer;
 import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
 import static miscellaneous.utils.math.MathUtils.lowerOrEqual;
 
@@ -69,7 +69,7 @@ public class BoundMemorySort<T extends Comparable<T> & Serializable> {
 			RichIterator<T> remaining =    hasNext(it0,next0) ? 
 					remaining(it0,next0) : hasNext(it1,next1) ? 
 					remaining(it1,next1) : RichIterators.emptyIterator();
-			remaining.forEach(ignoreCheckedExceptionConsumer(oos::writeObject));
+			remaining.forEach(ignoreCheckedExceptionsConsumer(oos::writeObject));
 			remaining.close();
 			
 			merged = newMerged;
