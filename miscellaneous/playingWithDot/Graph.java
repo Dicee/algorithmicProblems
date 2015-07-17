@@ -82,7 +82,7 @@ public class Graph {
 
 	public String toDot(int level) { return join("digraph {","}",level); }
 	
-	public String toClusterDot(int level) { 
+	public String toClusterDot(int level) {
 		
 		return join("digraph {","}",level); 
 	}

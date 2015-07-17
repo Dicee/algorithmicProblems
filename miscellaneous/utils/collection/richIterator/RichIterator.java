@@ -35,6 +35,7 @@ import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingPredicate;
 import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingUnaryOperator;
 /**
  * - sliding
+ * - grouped
  * - max, min
  * - lastIndexWhere
  * - drop, dropWhile, dropUntil
@@ -175,7 +176,7 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 		ensureValidState();
 		return new UntilRichIterator<>(this,predicate);
 	}
-	
+
 	public final RichIterator<X> distinct() {
 		ensureValidState();
 		return new DistinctRichIterator<>(this);
@@ -220,21 +221,19 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 			}
 		}
 	}
-	
-	public final Optional<X> findAny(ThrowingPredicate<X> predicate) {
-		ensureValidState();
-		Optional<X> res = filter(predicate).stream().findAny();
-		ignoreCheckedExceptions(this::close);
-		return res;
-	}
-	
+
 	/**
 	 * Finds the first element of the RichIterator matching a predicate
 	 * @note Important : this is NOT a terminal operation in the general case. It will only close the RichIterator if all
-	 * 		 its elements have been consumed during the search. Thus, you can safely repeat 
+	 * 		 its elements have been consumed during the search. Thus, you can safely repeat
 	 * @param predicate
 	 * @return the first element of the RichIterator matching the predicate or Optional.empty() if no match was found
 	 */
+	public final Optional<X> findAny(ThrowingPredicate<X> predicate) {
+		ensureValidState();
+		return filter(predicate).stream().findAny();
+	}
+	
 	public final Optional<X> findFirst(ThrowingPredicate<X> predicate) {
 		ensureValidState();
 		return filter(predicate).stream().findFirst();
