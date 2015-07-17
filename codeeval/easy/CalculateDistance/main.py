@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.easy.CalculateDistance;
+
+import sys
 import re
 from math import sqrt
 lines = open(sys.argv[1], 'r')

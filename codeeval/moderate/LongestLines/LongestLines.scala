@@ -1,4 +1,6 @@
-﻿import scala.collection.mutable.PriorityQueue;
+package codeeval.moderate.LongestLines;
+
+import scala.collection.mutable.PriorityQueue;
 
 object Main extends App {
     val order = new Ordering[String] { 

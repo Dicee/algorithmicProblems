@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.moderate.LowestCommonAncestor;
+
+object Main extends App {
     val bst = (new BinarySearchTree[Int]) += (30,8,52,3,20,10,29)
     scala.io.Source.fromFile(args(0)).getLines
     	.filter(!_.isEmpty)

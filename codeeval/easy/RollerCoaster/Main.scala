@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.RollerCoaster;
+
+object Main extends App {
     val cases = Array((ch: Char) => ch.toUpper,(ch: Char) => ch.toLower)
     
     scala.io.Source.fromFile(args(0)).getLines

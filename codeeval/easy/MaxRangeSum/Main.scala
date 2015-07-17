@@ -1,3 +1,5 @@
+package codeeval.easy.MaxRangeSum;
+
 object Main extends App {
 	scala.io.Source.fromFile(args(0)).getLines
 		.map(line => {

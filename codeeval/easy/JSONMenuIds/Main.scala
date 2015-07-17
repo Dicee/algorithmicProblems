@@ -1,4 +1,6 @@
-﻿import java.util.regex.Pattern
+package codeeval.easy.JSONMenuIds;
+
+import java.util.regex.Pattern
 
 object Main extends App {
     val p = Pattern.compile("\"id\":\\s(\\d+),\\s\"label\"")

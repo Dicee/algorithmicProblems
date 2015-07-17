@@ -1,4 +1,6 @@
-﻿import java.io.*;
+package codeeval.easy.FizzBuzz;
+
+import java.io.*;
 import static java.lang.Integer.parseInt;
 
 public class Main {

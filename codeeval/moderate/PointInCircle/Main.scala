@@ -1,4 +1,6 @@
-﻿import scala.util.matching.Regex
+package codeeval.moderate.PointInCircle;
+
+import scala.util.matching.Regex
 
 object Main extends App {
     val pointReg  = new Regex("\\((.*?),\\s(.*?)\\)")

@@ -1,4 +1,6 @@
-﻿import scala.collection.mutable.ArrayBuffer
+package codeeval.moderate.FindASquare;
+
+import scala.collection.mutable.ArrayBuffer
 import java.util.regex.Pattern
 import scala.util.matching.Regex
 

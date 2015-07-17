@@ -5,10 +5,11 @@ import java.util.Scanner;
 class ShadowsOfTheKnight_Level1 {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        @SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
         int w = in.nextInt();
         int h = in.nextInt();
-        int n = in.nextInt();
+        in.nextInt();
         int x = in.nextInt();
         int y = in.nextInt();
         

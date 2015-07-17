@@ -1,3 +1,5 @@
+package codeeval.moderate.PrimeNumbers;
+
 import sys
 import math
 

@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.WorkingExperience;
+
+object Main extends App {
 	def computeIntersections(p: Period, periods: List[Period]): List[Period] = {
 	    def aux(periods: List[Period]): (List[Period],Option[Period]) = periods match {
 	    	case h::q => 

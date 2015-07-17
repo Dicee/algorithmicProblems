@@ -1,3 +1,5 @@
+package codeeval.moderate.ReverseAndAdd;
+
 import sys
 import math
 

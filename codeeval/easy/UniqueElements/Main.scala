@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.UniqueElements;
+
+object Main extends App {
     val source = scala.io.Source.fromFile(args(0))
     val lines = source.getLines.filter(!_.isEmpty).foreach(l => {
         val split = l.split(",")

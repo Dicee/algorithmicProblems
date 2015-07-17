@@ -1,6 +1,8 @@
+package codility.lesson99;
+
 /**
  * Level : painless
  */
-object Solution {
-    def solution(T : Tree) : Int = if (T == null) -1 else 1 + Math.max(solution(T.l),solution(T.r))    
-}
+//object SolutionScala2 {
+//    def solution(T : Tree) : Int = if (T == null) -1 else 1 + Math.max(solution(T.l),solution(T.r))    
+//}

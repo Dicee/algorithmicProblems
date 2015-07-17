@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.easy.ShortestRepetition;
+
+import sys
 import re
 
 lines = open(sys.argv[1], 'r')

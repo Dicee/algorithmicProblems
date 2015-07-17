@@ -1,4 +1,6 @@
-﻿package testouille
+package codeeval.easy.WorkingExperience;
+
+package testouille
 
 object Main extends App {
 	

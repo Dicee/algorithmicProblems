@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.easy.NiceAngles;
+
+import sys
 lines = open(sys.argv[1], 'r')
 for line in lines:
 	i           = line.find(".")

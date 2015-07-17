@@ -1,4 +1,4 @@
-import java.util.*;
+package codility.challenges;
 
 /**
  * Level : hard

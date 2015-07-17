@@ -1,3 +1,5 @@
+package codeeval.moderate.DecimalToBinary;
+
 import sys
 import re
 

@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.BeautifulStrings
+
+object Main extends App {
     scala.io.Source.fromFile(args(0)).getLines.filter(!_.isEmpty)
     	.foreach(line => {
     		val map = new scala.collection.mutable.HashMap[Char,Int]

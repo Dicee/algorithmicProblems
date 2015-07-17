@@ -1,4 +1,6 @@
-﻿import scala.io.Source;
+package codeeval.easy.SlangFlavor;
+
+import scala.io.Source;
 
 object Main extends App {
     val replacements = Array(", yeah!",", this is crazy, I tell ya.",", can U believe this?",", eh?",

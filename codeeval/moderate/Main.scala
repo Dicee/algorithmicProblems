@@ -1,3 +1,5 @@
+package codeeval.moderate;
+
 object Main extends App {
 	def pascalSeries(n: Int, sb: StringBuilder): List[Int] = {
 		if (n == 1)	{ 

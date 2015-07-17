@@ -1,3 +1,5 @@
+package codeeval.moderate.Pangrams;
+
 object Main extends App {
 	val alphabet = (for (ch <- Range('a','z' + 1)) yield ch.toChar).toSet
 	scala.io.Source.fromFile(args(0)).getLines

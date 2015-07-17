@@ -1,4 +1,6 @@
-﻿package testouille
+package codeeval.moderate.Sudoku;
+
+package testouille
 
 import scala.util.matching.Regex
 import scala.collection.immutable.Stack

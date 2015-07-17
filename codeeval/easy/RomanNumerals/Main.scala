@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.easy.RomanNumerals;
+
+object Main extends App {
     val num = Array("I","V","X","L","C","D","M")
 	scala.io.Source.fromFile(args(0)).getLines
     	.map(line => {

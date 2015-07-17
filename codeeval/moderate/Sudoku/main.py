@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.Sudoku;
+
+import sys
 import math
 with open(sys.argv[1],'r') as lines:
 	def getRow(grid,i):

@@ -1,4 +1,6 @@
-﻿import scala.io.Source
+package codeeval.easy.Lowercase;
+
+import scala.io.Source
 
 object Main extends App {
     // for small files

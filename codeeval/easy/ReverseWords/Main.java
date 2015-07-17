@@ -1,4 +1,6 @@
-﻿import java.io.*;
+package codeeval.easy.ReverseWords;
+
+import java.io.*;
 public class Main {
     public static void main (String[] args) throws IOException {
         File file = new File(args[0]);

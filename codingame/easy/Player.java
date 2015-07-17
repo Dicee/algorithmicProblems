@@ -1,12 +1,11 @@
 package codingame.easy;
-import java.util.*;
-import java.io.*;
-import java.math.*;
+import java.util.Scanner;
 
 class Player {
 
     public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
+        @SuppressWarnings("resource")
+		Scanner in = new Scanner(System.in);
 
         int nNodes = in.nextInt();
         int nLinks = in.nextInt();
@@ -42,7 +41,7 @@ class Player {
         			min  = steps[exit];
         			imin = exit;
         		}
-            System.out.println("0 1");
+            System.out.println("0 1" + imin);
         }
     }
 }

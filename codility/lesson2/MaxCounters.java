@@ -1,4 +1,4 @@
-import java.util.*;
+package codility.lesson2;
 
 /**
  *   Level : respectable 

@@ -1,3 +1,5 @@
+package codility.lesson11
+
 import scala.math.pow
 
 /**

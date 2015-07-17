@@ -1,4 +1,6 @@
-﻿import scala.collection.mutable.Set
+package codeeval.easy.SetIntersection;
+
+import scala.collection.mutable.Set
 import scala.collection.mutable.TreeSet
 
 object Main extends App {

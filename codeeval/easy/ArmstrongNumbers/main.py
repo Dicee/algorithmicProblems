@@ -1,3 +1,5 @@
+package codeeval.easy.ArmstrongNumbers;
+
 import sys
 import math
 with open(sys.argv[1],'r') as lines:

@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.StringRotation;
+
+import sys
 with open(sys.argv[1],'r') as lines:
 	for line in lines:
 		split                    = [ s.strip() for s in line.split(",") ]

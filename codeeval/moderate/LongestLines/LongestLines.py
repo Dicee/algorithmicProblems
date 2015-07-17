@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.LongestLines;
+
+import sys
 from heapq import *
 
 class StringWrapper:

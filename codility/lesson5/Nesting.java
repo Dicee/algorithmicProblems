@@ -1,3 +1,5 @@
+package codility.lesson5;
+
 import java.util.*;
 
 /**

@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.CountingPrimes;
+
+import sys
 with open(sys.argv[1],'r') as lines:
 	queries = []
 	nmax    = 0

@@ -1,4 +1,6 @@
-﻿import sys
+package codeeval.moderate.DetectingCycles;
+
+import sys
 from math import sqrt
 with open(sys.argv[1], 'r') as lines:
 	for line in lines:

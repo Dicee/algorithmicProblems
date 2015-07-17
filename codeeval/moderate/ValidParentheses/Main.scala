@@ -1,4 +1,6 @@
-﻿object Main extends App {
+package codeeval.moderate.ValidParentheses;
+
+object Main extends App {
     val corresponding = Map('(' -> ')','[' -> ']','{' -> '}')
     
     def isValid(s: String): String = {

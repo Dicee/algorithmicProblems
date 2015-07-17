@@ -1,3 +1,5 @@
+package codeeval.moderate.FilenamePattern;
+
 import java.util.regex.Pattern
 import scala.collection.mutable.ArrayBuffer
 

@@ -1,6 +1,8 @@
-﻿import java.util.Arrays
+package codeeval.hard.StringPermutations;
 
-object Main extends App {
+import java.util.Arrays
+
+object MainScala extends App {
 	def swap[T](arr: Array[T], i: Int, j: Int) = {
 	    val tmp = arr(i)
 	    arr(i)  = arr(j)

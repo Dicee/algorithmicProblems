@@ -1,0 +1,8 @@
+5 7
+build 1 2
+check 1 2
+build 2 3
+check 1 2
+build 3 4
+check 2 4
+check 1 5
