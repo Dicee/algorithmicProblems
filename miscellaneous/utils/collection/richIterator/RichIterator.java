@@ -221,7 +221,14 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 			}
 		}
 	}
-	
+
+	/**
+	 * Finds the first element of the RichIterator matching a predicate
+	 * @note Important : this is NOT a terminal operation in the general case. It will only close the RichIterator if all
+	 * 		 its elements have been consumed during the search. Thus, you can safely repeat
+	 * @param predicate
+	 * @return the first element of the RichIterator matching the predicate or Optional.empty() if no match was found
+	 */
 	public final Optional<X> findAny(ThrowingPredicate<X> predicate) {
 		ensureValidState();
 		return filter(predicate).stream().findAny();

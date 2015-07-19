@@ -1,7 +1,5 @@
 package miscellaneous.utils.logProcessing
 
-package analyse
-
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream

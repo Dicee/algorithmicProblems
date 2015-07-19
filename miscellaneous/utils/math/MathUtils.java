@@ -164,6 +164,14 @@ public class MathUtils {
 		return Math.abs(f0 - f1) < FLOAT_PRECISION ? 0 : Float.compare(f0,f1);
 	}
 	
+	public static boolean isBetween(int low, int mid, int high) {
+		return low <= mid && mid < high;
+	}
+	
+	public static boolean isBetweenClosed(int low, int mid, int high) {
+		return low <= mid && mid <= high;
+	}
+	
 	public static boolean isZero(double x) {
 		return epsilonCompare(x,0) == 0;
 	}

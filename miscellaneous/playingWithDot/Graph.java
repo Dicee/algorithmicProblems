@@ -82,6 +82,11 @@ public class Graph {
 
 	public String toDot(int level) { return join("digraph {","}",level); }
 	
+	public String toClusterDot(int level) {
+		
+		return join("digraph {","}",level); 
+	}
+	
 	@Override
 	public String toString() { return join("Graph [","]",DEFAULT_LEVEL); }
 	private String join(String before, String after, int level) { 
