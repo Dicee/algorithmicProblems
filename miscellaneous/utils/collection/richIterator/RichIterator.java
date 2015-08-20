@@ -5,7 +5,6 @@ import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptions;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedBinaryOperator;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedConsumer;
-import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedSupplier;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedUnaryOperator;
 
 import java.io.BufferedWriter;
@@ -29,7 +28,6 @@ import java.util.stream.Stream;
 
 import javafx.util.Pair;
 import miscellaneous.utils.collection.StreamUtils;
-import miscellaneous.utils.exceptions.ExceptionUtils;
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingBinaryOperator;
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingConsumer;
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
@@ -72,8 +70,7 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 	}
 
 	@Override
-    // stupid Eclipse compiler cannot infer correctly
-	public final boolean hasNext() { return !closed && uncheckedSupplier(this::hasNextInternal).get(); }
+	public final boolean hasNext() { return !closed && uncheckExceptionsAndGet(this::hasNextInternal); }
 
 	@Override
 	public final X next() {
