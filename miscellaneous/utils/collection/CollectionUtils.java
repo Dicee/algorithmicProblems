@@ -1,5 +1,8 @@
 package miscellaneous.utils.collection;
 
+import static miscellaneous.utils.check.Check.notNull;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -32,5 +35,11 @@ public class CollectionUtils {
 		HashSet<T> res = new HashSet<>(elts.length);
 		for (T elt : elts) res.add(elt);
 		return Collections.unmodifiableSet(res);
+	}
+
+	@SafeVarargs
+	public static <T> List<T> listOf(T... elts) {
+		notNull(elts,"This array should contain at least one element");
+		return Collections.unmodifiableList(Arrays.asList(elts));
 	}
 }

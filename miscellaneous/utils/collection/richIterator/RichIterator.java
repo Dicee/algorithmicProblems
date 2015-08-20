@@ -1,11 +1,12 @@
 package miscellaneous.utils.collection.richIterator;
 
 import static java.util.stream.Collectors.joining;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsBinaryOperator;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsConsumer;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsSupplier;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsUnaryOperator;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptions;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedBinaryOperator;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedConsumer;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedSupplier;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedUnaryOperator;
 
 import java.io.BufferedWriter;
 import java.io.Closeable;
@@ -28,11 +29,12 @@ import java.util.stream.Stream;
 
 import javafx.util.Pair;
 import miscellaneous.utils.collection.StreamUtils;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingBinaryOperator;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingConsumer;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingPredicate;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingUnaryOperator;
+import miscellaneous.utils.exceptions.ExceptionUtils;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingBinaryOperator;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingConsumer;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingUnaryOperator;
 /**
  * - sliding
  * - grouped
@@ -42,7 +44,7 @@ import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingUnaryOpera
  */
 public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Closeable, AutoCloseable {
 	public static <X> RichIterator<X> iterate(X seed, ThrowingUnaryOperator<X> throwingOp) {
-		UnaryOperator<X> op = ignoreCheckedExceptionsUnaryOperator(throwingOp);
+		UnaryOperator<X> op = uncheckedUnaryOperator(throwingOp);
 		return RichIterators.wrap(new Iterator<X>() {
 			private X current = seed;
 			
@@ -71,26 +73,27 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 
 	@Override
     // stupid Eclipse compiler cannot infer correctly
-	public final boolean hasNext() { return !closed && ignoreCheckedExceptionsSupplier(this::hasNextInternal).get(); }
+	public final boolean hasNext() { return !closed && uncheckedSupplier(this::hasNextInternal).get(); }
 
 	@Override
 	public final X next() {
 		ensureNotClosed();
 		if (!hasNext()) throw new NoSuchElementException();
-		X next = ignoreCheckedExceptions(this::nextInternal);
-		if (!hasNext()) ignoreCheckedExceptions(this::close);
+		X next = uncheckExceptionsAndGet(this::nextInternal);
+		if (!hasNext()) uncheckExceptions(this::close);
 		count++;
 		return next;
 	}
 	
 	@Override
 	public final void close() throws IOException {
-		closed = true;
+		if (closed) return;
 		try {
 			closeInternal();
 		} catch (Exception e) {
 			throw new IOException(e);
 		} finally {
+			closed = true;
 			try {
 				if (onClose != null) onClose.accept(count);
 			} catch (Exception e) {
@@ -195,8 +198,8 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 		return res;
 	}
 	
-	public final Optional<X> reduce(ThrowingBinaryOperator<X> binaryOp) { return stream().reduce(ignoreCheckedExceptionsBinaryOperator(binaryOp)); }
-	public final void foreach(ThrowingConsumer<X> consumer)             { stream().forEach(ignoreCheckedExceptionsConsumer(consumer)); }
+	public final Optional<X> reduce(ThrowingBinaryOperator<X> binaryOp) { return stream().reduce(uncheckedBinaryOperator(binaryOp)); }
+	public final void foreach(ThrowingConsumer<X> consumer)             { stream().forEach(uncheckedConsumer(consumer)); }
 	public final long count()                                           { return stream().count(); }
 	
 	public final String mkString()                                      { return mkString("");                                                        }

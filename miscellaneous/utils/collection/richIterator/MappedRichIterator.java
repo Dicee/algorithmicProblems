@@ -1,7 +1,7 @@
 package miscellaneous.utils.collection.richIterator;
 
 import static miscellaneous.utils.check.Check.notNull;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
 
 class MappedRichIterator<INPUT,OUTPUT> extends RichIteratorDecorator<INPUT,OUTPUT> {
 	private final ThrowingFunction<INPUT, OUTPUT> mapper;

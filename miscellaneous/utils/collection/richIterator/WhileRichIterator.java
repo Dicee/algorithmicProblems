@@ -3,7 +3,7 @@ package miscellaneous.utils.collection.richIterator;
 import java.io.EOFException;
 import java.io.IOException;
 
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingPredicate;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
 public class WhileRichIterator<X> extends BufferedRichIterator<X> {
 	public WhileRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) {

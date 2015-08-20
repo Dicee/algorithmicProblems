@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javafx.util.Pair;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
 
 public class PairRichIterator<K,V> extends RichIterator<Pair<K,V>> {
 	private final RichIterator<Pair<K,V>> it;

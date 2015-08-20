@@ -1,17 +1,16 @@
 package miscellaneous.utils.collection.richIterator;
 
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
 
-public abstract class GroupedRichIterator<T> extends RichIterator<RichIterator<T>> {
-	public static <T> GroupedRichIterator<T> create(RichIterator<RichIterator<T>> it) {
-		return new GroupedRichIterator<T>() {
-			@Override
-			protected boolean hasNextInternal() throws Exception { return it.hasNext(); }
+public class GroupedRichIterator<T> extends RichIteratorDecorator<RichIterator<T>, RichIterator<T>> {
+	public static <T> GroupedRichIterator<T> create(RichIterator<RichIterator<T>> it) { return new GroupedRichIterator<>(it); }
+	private GroupedRichIterator(RichIterator<RichIterator<T>> it) { super(it); }
+	
+	@Override
+	protected boolean hasNextInternal() throws Exception { return it.hasNext(); }
 
-			@Override
-			protected RichIterator<T> nextInternal() throws Exception { return it.next(); }
-		};
-	}
+	@Override
+	protected RichIterator<T> nextInternal() throws Exception { return it.next(); }
 	
 	public RichIterator<T> flatten() { return flatMap(ThrowingFunction.identity()); }
 }

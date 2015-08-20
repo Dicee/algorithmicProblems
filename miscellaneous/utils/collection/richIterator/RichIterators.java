@@ -1,6 +1,6 @@
 package miscellaneous.utils.collection.richIterator;
 
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -26,6 +26,9 @@ public class RichIterators {
 	@SafeVarargs
 	public static <T> RichIterator<T> of(T... elts)                            { return new ArrayRichIterator<>(elts); }
 	public static <T> RichIterator<T> fromCollection(Collection<T> collection) { return wrap(collection.iterator())  ; }
+	public static <T> GroupedRichIterator<T> from2DArray(T[][] arr) { 
+		return GroupedRichIterator.create(new ArrayRichIterator<>(arr).map(col -> new ArrayRichIterator<>(col))); 
+	}
 	
 	public static RichIterator<String> fromLines(File f) {
 		BufferedReader br = null;
@@ -38,14 +41,14 @@ public class RichIterators {
 				@Override
 				protected String nextInternal() {
 					if (!hasNext()) throw new NoSuchElementException();
-					return !buffer.isEmpty() ? buffer.pop() : ignoreCheckedExceptions(source::readLine);
+					return !buffer.isEmpty() ? buffer.pop() : uncheckExceptionsAndGet(source::readLine);
 				}
 				
 				@Override
 				protected boolean hasNextInternal() {
 					if (!buffer.isEmpty()) return true;
 					
-					String line = ignoreCheckedExceptions(source::readLine);
+					String line = uncheckExceptionsAndGet(source::readLine);
 					if (line != null) buffer.addLast(line);
 					return line != null;
 				}
