@@ -4,7 +4,6 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 
-import miscellaneous.utils.check.Check.CheckException;
 import miscellaneous.utils.collection.richIterator.RichLongIterator;
 
 import org.hamcrest.Matchers;
@@ -16,7 +15,7 @@ public class RichLongIteratorTest {
 		assertThat(RichLongIterator.range(0,3).toList(), Matchers.equalTo(Arrays.asList(0L,1L,2L)));
 	}
 	
-	@Test(expected = CheckException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testRangeFailsIfEmptyRange() {
 		RichLongIterator.range(0,0);
 	}

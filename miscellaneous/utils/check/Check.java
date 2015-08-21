@@ -3,13 +3,14 @@ package miscellaneous.utils.check;
 public final class Check {
 	private static final String	SHOULD_NOT_BE_NULL			= "This variable should not be null";
 	private static final String	SHOULD_BE_NULL				= "This variable should be null";
-	private static final String	SHOULD_BE_EQUAL				= "These objects should be equal";
 	private static final String	SHOULD_NOT_BE_EQUAL			= "These objects should not be equal";
 	private static final String	SHOULD_NOT_BE_EMPTY			= "This array should not be empty";
 	private static final String	SHOULD_NOT_BE_BLANK			= "This string should not be blank";
 	private static final String	SHOULD_BE_GREATER			= "The first parameter should be greater than the second one";
 	private static final String	SHOULD_BE_GREATER_OR_EQUAL	= "The first parameter should be greater (or equal) than the second one";
 	private static final String SHOULD_BE_POSITIVE			= "This variable should be positive";
+	private static String SHOULD_BE_BETWEEN(int low, int high) { return String.format("This number should be between %d and %d",low,high); }
+	private static String SHOULD_BE_EQUAL(Object o1, Object o2) { return String.format("Expected : %s, got: %s",o1,o2); }
 	
 	private Check() { }
 	
@@ -35,9 +36,21 @@ public final class Check {
 	public static void isGreaterOrEqual(long a, long b, String msg) { check(a >= b,msg); }
 	public static void isGreaterOrEqual(int a, int b) { isGreaterOrEqual(a,b,SHOULD_BE_GREATER_OR_EQUAL); }
 	public static void isGreaterOrEqual(int a, int b, String msg) { check(a >= b,msg); }
+	public static void isGreaterOrEqual(byte a, byte b) { isGreaterOrEqual(a,b,SHOULD_BE_GREATER_OR_EQUAL); }
+	public static void isGreaterOrEqual(byte a, byte b, String msg) { check(a >= b,msg); }
 	
-	public static void areEqual(Object o1, Object o2) { areEqual(o1,o2,SHOULD_BE_EQUAL); }
+	public static void isBetween(int low, int mid, int high) { isBetween(low,mid,high,SHOULD_BE_BETWEEN(low,high)); }
+
+	public static void isBetween(int low, int mid, int high, String msg) { check(low <= mid && mid < high,msg); }
+	
+	public static void areEqual(Object o1, Object o2) { areEqual(o1,o2,SHOULD_BE_EQUAL(o1,o2)); }
 	public static void areEqual(Object o1, Object o2, String msg) { check(o1.equals(o2),msg); }
+	public static void areEqual(long o1, long o2) { areEqual(o1,o2,SHOULD_BE_EQUAL(o1,o2)); }
+	public static void areEqual(long o1, long o2, String msg) { check(o1 == o2,msg); }
+	public static void areEqual(int o1, int o2) { areEqual(o1,o2,SHOULD_BE_EQUAL(o1,o2)); }
+	public static void areEqual(int o1, int o2, String msg) { check(o1 == o2,msg); }
+	public static void areEqual(byte o1, byte o2) { areEqual(o1,o2,SHOULD_BE_EQUAL(o1,o2)); }
+	public static void areEqual(byte o1, byte o2, String msg) { check(o1 == o2,msg); }
 	
 	public static void notEqual(Object o1, Object o2) { notEqual(o1,o2,SHOULD_NOT_BE_EQUAL); }
 	public static void notEqual(Object o1, Object o2, String msg) { check(!o1.equals(o2),msg); }
@@ -49,12 +62,6 @@ public final class Check {
 	}
 
 	private static void check(boolean test, String msg) {
-		if (!test) throw new CheckException(msg);
-	}
-	
-	public static class CheckException extends RuntimeException {
-		private static final long	serialVersionUID = 1L;
-		public CheckException(String msg) { super(msg); }
-		public CheckException() { super(); }
+		if (!test) throw new IllegalArgumentException(msg);
 	}
 }
