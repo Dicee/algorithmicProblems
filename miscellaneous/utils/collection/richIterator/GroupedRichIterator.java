@@ -13,4 +13,6 @@ public class GroupedRichIterator<T> extends RichIteratorDecorator<RichIterator<T
 	protected RichIterator<T> nextInternal() throws Exception { return it.next(); }
 	
 	public RichIterator<T> flatten() { return flatMap(ThrowingFunction.identity()); }
+	
+	public <S> GroupedRichIterator<S> mapGroups(IteratorTransformation<T, S> transformation) { return create(map(transformation)); }
 }
