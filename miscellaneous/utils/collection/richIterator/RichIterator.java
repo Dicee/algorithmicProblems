@@ -162,6 +162,44 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 		});
 	}
 	
+	public final GroupedRichIterator<X> grouped(Comparator<X> cmp) {
+		ensureValidState();
+		RichIterator<X> thizz = this;
+		return GroupedRichIterator.create(new RichIterator<RichIterator<X>>() {
+			private X previous = null;
+			
+			@Override
+			protected boolean hasNextInternal() throws Exception {
+				return thizz.hasNext();
+			}
+
+			@Override
+			protected RichIterator<X> nextInternal() throws Exception {
+				X current = thizz.next();
+				if (previous == null) {
+					System.out.println("null");
+					previous = current;
+					return thizz.hasNext() ? nextInternal() : RichIterators.singleton(current);
+				}
+				Deque<X> buffer = new LinkedList<>();
+				buffer.push(previous);
+				System.out.println("buffer " + buffer);
+				
+				while (cmp.compare(previous, current) == 0) {
+					buffer.push(current);
+					if (thizz.hasNext()) current = thizz.next(); 
+					else                 break;
+				}
+				if (cmp.compare(previous, current) > 0) throw new IllegalStateException("RichIterator not sorted");
+				previous = current;
+				return RichIterators.fromCollection(buffer);
+			}
+			
+			@Override
+			protected void closeInternal() throws IOException { thizz.close(); }
+		});
+	}
+	
 	public final RichIterator<X> take(int n) {
 		ensureValidState();
 		return new LimitedIterator<>(this,n);

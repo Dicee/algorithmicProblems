@@ -1,6 +1,8 @@
 package miscellaneous.utils.test.collection.richIterator;
 
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction.identity;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction.identity;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.junit.MatcherAssert.assertThat;
@@ -164,5 +166,17 @@ public class RichIteratorTest {
 		}
 		
 		public boolean hasBeenCompared() { return hasBeenCompared.get(); }
+	}
+	
+	@Test
+	public void testGroupedByComparator_correctness() {
+		List<RichIterator<String>> iterators = RichIterators.of("a", "a", "b", "d", "e", "e").grouped(String.CASE_INSENSITIVE_ORDER).toList();
+		assertThat(iterators.stream().map(RichIterator::toList).collect(toList()), 
+				equalTo(asList(asList("a", "a"), asList("b"), asList("d"), asList("e", "e"))));
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void testGroupedByComparator_failsIfNotSorted() {
+		RichIterators.of("b", "a", "c").grouped(String.CASE_INSENSITIVE_ORDER).toList();
 	}
 }

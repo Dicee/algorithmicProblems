@@ -1,5 +1,6 @@
 package miscellaneous.utils.collection.richIterator;
 
+import static miscellaneous.utils.check.Check.notNull;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 
 import java.io.BufferedReader;
@@ -16,6 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+import miscellaneous.utils.check.Check;
 import miscellaneous.utils.io.IOUtils;
 
 import com.google.common.base.Throwables;
@@ -91,6 +93,8 @@ public class RichIterators {
 		}
 	}
 
+	public static <T> RichIterator<T> singleton(T elt) { return wrap(Collections.singleton(notNull(elt)).iterator()); }
+	
 	public static <T> RichIterator<T> wrap(Iterator<T> it) {
 		return new RichIterator<T>() {
 			@Override protected boolean hasNextInternal()                    { return it.hasNext()         ; }

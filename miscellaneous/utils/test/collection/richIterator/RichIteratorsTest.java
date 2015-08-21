@@ -1,5 +1,7 @@
 package miscellaneous.utils.test.collection.richIterator;
 
+import static miscellaneous.utils.collection.CollectionUtils.listOf;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -11,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.util.Iterator;
 
+import miscellaneous.utils.collection.richIterator.RichIterator;
 import miscellaneous.utils.collection.richIterator.RichIterators;
 
 import org.junit.Test;
@@ -46,5 +49,11 @@ public class RichIteratorsTest {
 		assertThat(it.next(),is("how are you"));
 		assertThat(it.next(),is("man ?"));
 		assertThat(it.hasNext(),is(false));
+	}
+	
+	@Test
+	public void testArray2DIterator() {
+		Integer[][] arr = { { 1,2 },{ 3,4 } };
+		assertThat(RichIterators.from2DArray(arr).flatMap(RichIterator::toList).toList(), equalTo(listOf(1,2,3,4)));
 	}
 }
