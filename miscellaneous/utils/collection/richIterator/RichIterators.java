@@ -17,7 +17,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-import miscellaneous.utils.check.Check;
 import miscellaneous.utils.io.IOUtils;
 
 import com.google.common.base.Throwables;
