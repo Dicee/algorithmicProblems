@@ -95,6 +95,7 @@ public class RichIterators {
 	public static <T> RichIterator<T> singleton(T elt) { return wrap(Collections.singleton(notNull(elt)).iterator()); }
 	
 	public static <T> RichIterator<T> wrap(Iterator<T> it) {
+		if (it instanceof RichIterator) return (RichIterator<T>) it;
 		return new RichIterator<T>() {
 			@Override protected boolean hasNextInternal()                    { return it.hasNext()         ; }
 			@Override protected T       nextInternal   ()                    { return it.next()            ; }
