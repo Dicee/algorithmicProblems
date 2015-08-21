@@ -1,10 +1,12 @@
 package miscellaneous.skiller.indexation;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static miscellaneous.skiller.indexation.model.Table.QUESTIONS;
+import static miscellaneous.utils.check.Check.notBlank;
 import static miscellaneous.utils.collection.CollectionUtils.reverse;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptionsConsumer;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedConsumer;
 import static miscellaneous.utils.files.FileUtils.getPathRelativeToClass;
 
 import java.io.BufferedWriter;
@@ -16,6 +18,7 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -29,31 +32,38 @@ import miscellaneous.skiller.indexation.factories.CommentFactory;
 import miscellaneous.skiller.indexation.factories.QuestionFactory;
 import miscellaneous.skiller.indexation.factories.WordCountFactory;
 import miscellaneous.skiller.indexation.model.DBManager;
+import miscellaneous.utils.check.Check;
 import miscellaneous.utils.collection.StreamUtils;
 import miscellaneous.utils.strings.StringUtils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.google.common.base.Stopwatch;
+
 public class IndexWords extends AbstractIndexer {
+	private static final Log	LOG					= LogFactory.getLog(IndexWords.class);
+
 	private static final String	QUESTION_IDS		= "data/questionIds.txt";
 	private static final String	QUESTION_IDS_BACKUP	= QUESTION_IDS + ".bak";
 	private static final String	BASE_URL			= "http://skiller.fr/question/";
-	private static final int	ID_MAX				= 10000;
+	private static final int	ID_MAX				= 11000;
 	
 	public static void main(String[] args) throws IOException {
 		backupQuestionIds();
 		discoverNewQuestions();
-		getMissingQuestions().forEach(ignoreCheckedExceptionsConsumer(id -> {
+		getMissingQuestions().forEach(uncheckedConsumer(id -> {
 			Document doc = Jsoup.connect(BASE_URL + id).get();
 			updateRecords(extractQuestion(doc, id),extractComments(doc,id));
 		}));
 	}
 
 	private static Stream<Integer> getMissingQuestions() {
-		Scanner sc = ignoreCheckedExceptions(() -> new Scanner(new FileInputStream(getQuestionIdsPath(QUESTION_IDS).toFile())));
+		Scanner sc = uncheckExceptionsAndGet(() -> new Scanner(new FileInputStream(getQuestionIdsPath(QUESTION_IDS).toFile())));
 		return StreamUtils.iteratorToStream(new Iterator<Integer>() {
 			@Override
 			public boolean hasNext() { return sc.hasNextInt(); }
@@ -100,8 +110,18 @@ public class IndexWords extends AbstractIndexer {
 	}
 
 	private static File discoverNewQuestions() throws IOException {
+		LOG.info("Discovering questions...");
+		Stopwatch stopwatch = Stopwatch.createStarted();
+		
 		int           idMin       = (int) DBManager.newLongId(QUESTIONS);
-		List<Integer> questionIds = reverse(IntStream.range(idMin,ID_MAX).filter(i -> exists(BASE_URL + i)).boxed().collect(Collectors.toList()));
+		List<Integer> questionIds = reverse(IntStream.range(idMin,ID_MAX).filter(i -> { 
+			boolean exists = exists(BASE_URL + i);
+			if (exists) LOG.info("Discovered question : " + i);
+			return exists;
+		}).boxed().collect(Collectors.toList()));
+		
+		stopwatch.stop();
+		LOG.info(String.format("Discovered %d questions in %d seconds",questionIds.size()));
 		return writeToFile(questionIds);
 	}
 	
@@ -115,5 +135,35 @@ public class IndexWords extends AbstractIndexer {
 	
 	private static Path getQuestionIdsPath(String path) {
 		return getPathRelativeToClass(IndexWords.class,path);
+	}
+	
+	private static abstract class TimedRunnable implements Runnable {
+		private static final String	DEFAULT_START_MSG	= "Starting timed runnable";
+		private static final String	DEFAULT_END_MSG		= "Finished timed runnable";
+		
+		private final boolean isLoggingEnabled;
+		private String	startMessage;
+		private String	stopMessage ;
+		private Stopwatch	stopwatch;
+		
+		public TimedRunnable(String startMessage, String stopMessage) { this(startMessage,stopMessage,true); }
+		public TimedRunnable(boolean isLoggingEnabled) { this(DEFAULT_START_MSG,DEFAULT_END_MSG,isLoggingEnabled); }
+		
+		private TimedRunnable(String startMessage, String stopMessage, boolean isLoggingEnabled) {
+			this.startMessage     = notBlank(startMessage);
+			this.stopMessage      = notBlank(stopMessage);
+			this.isLoggingEnabled = isLoggingEnabled;
+			this.stopwatch        = Stopwatch.createUnstarted();
+		}
+		
+		@Override
+		public void run() {
+			if (isLoggingEnabled) LOG.info(startMessage);
+			doRun();
+			stopwatch.stop();
+			if (isLoggingEnabled) LOG.info(stopMessage + "in " + stopwatch.elapsed(SECONDS) + " seconds");
+		}
+
+		protected abstract void doRun();
 	}
 }

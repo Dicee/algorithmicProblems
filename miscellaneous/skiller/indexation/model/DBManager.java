@@ -1,8 +1,8 @@
 package miscellaneous.skiller.indexation.model;
 
 import static java.lang.String.format;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.withAutoCloseableResource;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
+import static miscellaneous.utils.exceptions.ExceptionUtils.withAutoCloseableResource;
 import static miscellaneous.utils.strings.StringUtils.join;
 
 import java.io.IOException;
@@ -17,13 +17,19 @@ import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import miscellaneous.skiller.indexation.IndexWords;
 import miscellaneous.utils.check.Check;
 import miscellaneous.utils.collection.ArrayUtils;
 import miscellaneous.utils.collection.StreamUtils;
-import miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ThrowingFunction;
+import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
 import miscellaneous.utils.strings.StringUtils;
 
 public class DBManager {
+	private static final Log LOG = LogFactory.getLog(IndexWords.class);
+	
 	public static final Properties connectionProp = new Properties();
 	static {
 		try {
@@ -39,7 +45,7 @@ public class DBManager {
 	private static void connect() throws SQLException {
 		conn = DriverManager.getConnection(
 			format("jdbc:mysql://%s:%s/",connectionProp.getProperty("server_name"),connectionProp.getProperty("port_number")),connectionProp);
-		System.out.println("Connected to database");
+		LOG.info("Connected to database");
 	}
 	
 	public static Connection getConnection() throws SQLException {
@@ -108,11 +114,11 @@ public class DBManager {
 	private static Iterator<ResultSet> iterate(ResultSet resultSet) {
 		return new Iterator<ResultSet>() {
 			@Override
-			public boolean hasNext() { return ignoreCheckedExceptions(resultSet::isAfterLast); }
+			public boolean hasNext() { return uncheckExceptionsAndGet(resultSet::isAfterLast); }
 
 			@Override
 			public ResultSet next() { 
-				ignoreCheckedExceptions(resultSet::next); 
+				uncheckExceptionsAndGet(resultSet::next); 
 				return resultSet;
 			}
 		};

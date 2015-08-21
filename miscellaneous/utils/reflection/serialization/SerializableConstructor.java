@@ -1,7 +1,7 @@
 package miscellaneous.utils.reflection.serialization;
 
 import static miscellaneous.utils.check.Check.notNull;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
@@ -17,6 +17,6 @@ public class SerializableConstructor<T> implements Serializable {
         this.parametersClasses = notNull(parametersClasses);
     }
 
-    public Constructor<T> get() { return ignoreCheckedExceptions(() -> targetClass.getConstructor(parametersClasses)); }
+    public Constructor<T> get() { return uncheckExceptionsAndGet(() -> targetClass.getConstructor(parametersClasses)); }
 }
 

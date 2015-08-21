@@ -1,7 +1,7 @@
 package miscellaneous.utils.reflection.serialization;
 
 import static miscellaneous.utils.check.Check.notNull;
-import static miscellaneous.utils.exceptions.IgnoreCheckedExceptions.ignoreCheckedExceptions;
+import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 
 import java.io.Serializable;
 
@@ -53,7 +53,7 @@ public abstract class SerializableFactory<T> implements Serializable {
         }
 
         @Override
-        public T create() { return ignoreCheckedExceptions(() -> constructor.get().newInstance(params)); }
+        public T create() { return uncheckExceptionsAndGet(() -> constructor.get().newInstance(params)); }
     }
 
     private static class CompoundFactory<T> extends SerializableFactory<T> {
@@ -70,7 +70,7 @@ public abstract class SerializableFactory<T> implements Serializable {
         public T create() {
             Object[] params = new Object[factories.length];
             for (int i=0 ; i<params.length ; i++) params[i] = factories[i].create();
-            return ignoreCheckedExceptions(() -> constructor.get().newInstance(params));
+            return uncheckExceptionsAndGet(() -> constructor.get().newInstance(params));
         }
     }
 }
