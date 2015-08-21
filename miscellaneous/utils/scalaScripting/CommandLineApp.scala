@@ -1,13 +1,14 @@
 package miscellaneous.utils.scalaScripting
 
 trait CommandLineApp extends App {
-  def main()
+	def main()
 
-  try {
-    main()
-  } catch {
-    case e: Exception => exitWithMessage(e.getMessage);
-  }
+	try {
+		main()
+		System.exit(0)
+	} catch {
+		case e: Exception => exitWithMessage(e.getMessage);
+	}
 
-  protected def exitWithMessage(msg: String) = { println("Error : " + msg); System.exit(0) }
+	protected def exitWithMessage(msg: String) = { println("Error : " + msg); System.exit(0) }
 }
