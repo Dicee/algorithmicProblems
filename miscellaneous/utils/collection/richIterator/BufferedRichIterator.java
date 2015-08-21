@@ -3,29 +3,31 @@ package miscellaneous.utils.collection.richIterator;
 import static miscellaneous.utils.check.Check.notNull;
 
 import java.io.EOFException;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import com.google.common.base.Throwables;
 
 class BufferedRichIterator<T> extends RichIterator<T> {
-	protected final Deque<T>			buffer	= new LinkedList<>();
+	protected T buffer = null;
 	private final LookAheadIterator<T>	it;
 	
 	public BufferedRichIterator(LookAheadIterator<T> it) { this.it = notNull(it); }
 
 	@Override
 	protected final T nextInternal() {
-		if (!hasNext()) throw new NoSuchElementException();
-		return !buffer.isEmpty() ? buffer.pop() : tryReadNext();
+		if (buffer != null) {
+			T res = buffer;
+			buffer = null;
+			return res;
+		} 
+		return tryReadNext();
 	}
 	
 	@Override
 	protected final boolean hasNextInternal() {
-		if (!buffer.isEmpty()) return true;
+		if (buffer != null) return true;
 		try {
-			buffer.addLast(tryReadNext());
+			buffer = tryReadNext();
 			return true;
 		} catch (NoSuchElementException e) {
 			return false;
