@@ -13,9 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Comparator;
-import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -145,59 +143,12 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 
 	public final GroupedRichIterator<X> grouped(int size) {
 		ensureValidState();
-		RichIterator<X> thizz = this;
-		return GroupedRichIterator.create(new RichIterator<RichIterator<X>>() {
-			@Override
-			protected RichIterator<X> nextInternal() throws Exception {
-				Deque<X> buffer = new LinkedList<>();
-				for (int i=0 ; i<size && thizz.hasNext() ; i++) buffer.add(thizz.next());
-				return RichIterators.fromCollection(buffer);
-			}
-			
-			@Override
-			protected boolean hasNextInternal() throws Exception { return thizz.hasNext(); }
-			
-			@Override
-			protected void closeInternal() throws IOException { thizz.close(); }
-		});
+		return GroupedRichIterator.create(new UniformBatchRichIterator<X>(this, size));
 	}
 	
 	public final GroupedRichIterator<X> grouped(Comparator<X> cmp) {
 		ensureValidState();
-		RichIterator<X> thizz = this;
-		return GroupedRichIterator.create(new RichIterator<RichIterator<X>>() {
-			private X previous = null;
-			
-			@Override
-			protected boolean hasNextInternal() throws Exception {
-				return thizz.hasNext();
-			}
-
-			@Override
-			protected RichIterator<X> nextInternal() throws Exception {
-				X current = thizz.next();
-				if (previous == null) {
-					System.out.println("null");
-					previous = current;
-					return thizz.hasNext() ? nextInternal() : RichIterators.singleton(current);
-				}
-				Deque<X> buffer = new LinkedList<>();
-				buffer.push(previous);
-				System.out.println("buffer " + buffer);
-				
-				while (cmp.compare(previous, current) == 0) {
-					buffer.push(current);
-					if (thizz.hasNext()) current = thizz.next(); 
-					else                 break;
-				}
-				if (cmp.compare(previous, current) > 0) throw new IllegalStateException("RichIterator not sorted");
-				previous = current;
-				return RichIterators.fromCollection(buffer);
-			}
-			
-			@Override
-			protected void closeInternal() throws IOException { thizz.close(); }
-		});
+		return GroupedRichIterator.create(new GroupByComparatorRichIterator<X>(this, cmp));
 	}
 	
 	public final RichIterator<X> take(int n) {

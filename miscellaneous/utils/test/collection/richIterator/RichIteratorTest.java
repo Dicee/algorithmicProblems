@@ -170,9 +170,16 @@ public class RichIteratorTest {
 	
 	@Test
 	public void testGroupedByComparator_correctness() {
-		List<RichIterator<String>> iterators = RichIterators.of("a", "a", "b", "d", "e", "e").grouped(String.CASE_INSENSITIVE_ORDER).toList();
+		List<RichIterator<String>> iterators = RichIterators.of("a", "a", "b", "d", "e", "E").grouped(String.CASE_INSENSITIVE_ORDER).toList();
 		assertThat(iterators.stream().map(RichIterator::toList).collect(toList()), 
-				equalTo(asList(asList("a", "a"), asList("b"), asList("d"), asList("e", "e"))));
+				equalTo(asList(asList("a", "a"), asList("b"), asList("d"), asList("e", "E"))));
+	}
+	
+	@Test
+	public void testGroupedByComparator_handlesLastElement() {
+		List<RichIterator<String>> iterators = RichIterators.of("a", "a", "b", "d", "e", "E", "x").grouped(String.CASE_INSENSITIVE_ORDER).toList();
+		assertThat(iterators.stream().map(RichIterator::toList).collect(toList()), 
+				equalTo(asList(asList("a", "a"), asList("b"), asList("d"), asList("e", "E"), asList("x"))));
 	}
 	
 	@Test(expected = IllegalStateException.class)
