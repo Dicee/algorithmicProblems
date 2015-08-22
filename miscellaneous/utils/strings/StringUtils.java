@@ -1,6 +1,7 @@
 package miscellaneous.utils.strings;
 
 import static java.util.stream.Collectors.joining;
+import static miscellaneous.utils.check.Check.notBlank;
 
 import java.util.Collection;
 import java.util.function.Consumer;
@@ -68,4 +69,6 @@ public class StringUtils {
 		Check.isGreaterOrEqual(length,toFill.length());
 		return toFill + repeat(length - toFill.length(),filler);
 	}
+	
+	public static char lastChar(String s) { return notBlank(s).charAt(s.length() - 1); }
 }
