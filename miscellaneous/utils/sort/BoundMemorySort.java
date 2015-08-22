@@ -79,7 +79,7 @@ public class BoundMemorySort<T extends Comparable<T> & Serializable> {
 	}
 
 	private RichIterator<T> remaining(Iterator<T> it, Optional<T> head) {
-		 return head.isPresent() ? RichIterators.prepend(it,head.get()) : RichIterators.wrap(it);
+		 return head.isPresent() ? RichIterators.prepend(head.get(),it) : RichIterators.wrap(it);
 	}
 
 	private File tempMergeFile() {

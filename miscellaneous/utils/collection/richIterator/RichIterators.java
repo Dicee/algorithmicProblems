@@ -1,5 +1,6 @@
 package miscellaneous.utils.collection.richIterator;
 
+import static java.util.stream.Collectors.toList;
 import static miscellaneous.utils.check.Check.notNull;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 
@@ -16,6 +17,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import miscellaneous.utils.io.IOUtils;
 
@@ -103,23 +105,13 @@ public class RichIterators {
 		};
 	}
 	
-	public static <T> RichIterator<T> prepend(Iterator<T> it, T value) { return prepend(wrap(it),value); }
+	public static <T> RichIterator<T> prepend(T value, Iterator<T> it) {
+		return singleton(notNull(value)).concat(wrap(it));
+	}
 	
-	public static <T> RichIterator<T> prepend(RichIterator<T> it, T value) {
-		return new RichIterator<T>() {
-			private boolean consumed = false;
-			@Override
-			protected boolean hasNextInternal() throws Exception { return !consumed || it.hasNextInternal(); }
-
-			@Override
-			protected T nextInternal() {
-				if (!consumed) {
-					consumed = true;
-					return value;
-				}
-				return it.next();
-			}
-		};
+	@SafeVarargs
+	public static <T> RichIterator<T> concatIterators(Iterator<T>... iterators) {
+		return new ConcatenatedRichIterators<>(Stream.of(iterators).map(RichIterators::wrap).collect(toList()));
 	}
 	
 	public static <T> RichIterator<T> emptyIterator() { return wrap(Collections.emptyIterator()); }

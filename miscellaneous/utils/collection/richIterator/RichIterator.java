@@ -1,6 +1,7 @@
 package miscellaneous.utils.collection.richIterator;
 
 import static java.util.stream.Collectors.joining;
+import static miscellaneous.utils.collection.CollectionUtils.listOf;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptions;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedBinaryOperator;
@@ -134,6 +135,11 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 	public final PairRichIterator<Integer,X> zipWithIndex() {
 		ensureValidState();
 		return new ZippedRichIterator<>(RichIntIterator.counter(),this);
+	}
+	
+	public final <Y extends X> RichIterator<X> concat(RichIterator<Y> that) {
+		ensureValidState();
+		return that.hasNext() ? new ConcatenatedRichIterators<>(listOf(this, that.map(y -> (X) y))) : this;
 	}
 	
 	public final <K> PairRichIterator<K,List<X>> groupBy(ThrowingFunction<X,K> classifier) {
