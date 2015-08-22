@@ -1,6 +1,5 @@
 package miscellaneous.utils.collection.toolbox;
 
-import static java.util.stream.Collectors.toList;
 import static miscellaneous.utils.check.Check.notNull;
 import static miscellaneous.utils.collection.richIterator.RichIterators.fromCollection;
 
