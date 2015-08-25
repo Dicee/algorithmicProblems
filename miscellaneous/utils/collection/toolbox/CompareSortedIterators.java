@@ -70,6 +70,6 @@ public abstract class CompareSortedIterators<X> {
 	}
 
 	private void consumeIterator(RichIterator<X> it, Consumer<X> updateReport) {
-		while (it.hasNext()) { X next = it.next();  System.out.println("consume " + next); updateReport.accept(next); }
+		while (it.hasNext()) updateReport.accept(it.next());
 	}
 }
