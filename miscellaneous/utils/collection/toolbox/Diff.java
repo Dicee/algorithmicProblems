@@ -3,11 +3,16 @@ package miscellaneous.utils.collection.toolbox;
 import static miscellaneous.utils.check.Check.notNull;
 
 import java.util.Objects;
+import java.util.Optional;
 
-public class Diff<T> {
+import javafx.util.Pair;
+
+public abstract class Diff<T> {
 	public static <T> Diff<T> diff      (T actual, T expected) { return new BasicDiff<T>            (actual, expected); }
 	public static <T> Diff<T> missing   (T expected)           { return new MissingElementDiff<T>   (expected)        ; }
 	public static <T> Diff<T> unexpected(T actual)             { return new UnexpectedElementDiff<T>(actual)          ; }
+	
+	public abstract Pair<Optional<T>, Optional<T>> showDiff();
 	
 	private static class BasicDiff<T> extends Diff<T> {
 		private final T actual, expected;
@@ -17,6 +22,9 @@ public class Diff<T> {
 			this.expected = notNull(expected);
 		}
 		
+		@Override
+		public Pair<Optional<T>, Optional<T>> showDiff() { return new Pair<>(Optional.of(actual), Optional.of(expected)); }
+
 		@Override
 		public int hashCode() { return Objects.hash(actual, expected); }
 
@@ -39,6 +47,9 @@ public class Diff<T> {
 		public MissingElementDiff(T missing) { this.missing = notNull(missing); }
 		
 		@Override
+		public Pair<Optional<T>, Optional<T>> showDiff() { return new Pair<>(Optional.empty(), Optional.of(missing)); }
+		
+		@Override
 		public int hashCode() { return missing.hashCode(); }
 
 		@Override
@@ -58,6 +69,9 @@ public class Diff<T> {
 	private static class UnexpectedElementDiff<T> extends Diff<T> {
 		private final T unexpected;
 		public UnexpectedElementDiff(T unexpected) { this.unexpected = notNull(unexpected); }
+		
+		@Override
+		public Pair<Optional<T>, Optional<T>> showDiff() { return new Pair<>(Optional.of(unexpected), Optional.empty()); }
 		
 		@Override
 		public int hashCode() { return unexpected.hashCode(); }
