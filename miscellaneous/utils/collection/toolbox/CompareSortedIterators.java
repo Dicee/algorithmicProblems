@@ -30,28 +30,27 @@ public abstract class CompareSortedIterators<X> {
 	protected boolean deepCheckValidity(X actual, X expected, DiffReport<X> report) { return false; }
 	
 	public final DiffReport<X> compare(Iterator<X> actual, Iterator<X> expected) { 
-		return compare(RichIterators.wrap(actual), RichIterators.wrap(expected));
+		return compare(actual, expected, new DiffReport<>());
 	}
-
-	public final DiffReport<X> compare(RichIterator<X> actual, RichIterator<X> expected) { 
-		return compareIterators(prepare(actual), prepare(expected));
+	
+	public final DiffReport<X> compare(Iterator<X> actual, Iterator<X> expected, DiffReport<X> report) { 
+		return compareIterators(prepare(RichIterators.wrap(actual)), prepare(RichIterators.wrap(expected)), report);
 	}
 	
 	private RichIterator<X> prepare(RichIterator<X> it) {
 		return it.grouped(cmp).mapGroups(this::applyStrictOrderWithinGroup).flatten();
 	}
 	
-	private DiffReport<X> compareIterators(RichIterator<X> actualIt, RichIterator<X> expectedIt) {
+	private DiffReport<X> compareIterators(RichIterator<X> actualIt, RichIterator<X> expectedIt, DiffReport<X> report) {
 		final BoundedBuffer<X> actualBuffer = new BoundedBuffer<>(1), expectedBuffer = new BoundedBuffer<>(1);
 		
-		DiffReport<X> report = new DiffReport<>();
 		while ((!actualBuffer  .isEmpty() || actualIt  .hasNext()) && 
 			   (!expectedBuffer.isEmpty() || expectedIt.hasNext())){
 			
 			if (actualBuffer  .isEmpty()) actualBuffer  .push(actualIt  .next());
 			if (expectedBuffer.isEmpty()) expectedBuffer.push(expectedIt.next());
 			
-			int comparison = cmp.compare(actualBuffer  .peek(), expectedBuffer.peek());
+			int comparison = cmp.compare(actualBuffer.peek(), expectedBuffer.peek());
 			if (comparison == 0) {
 				X actual   = actualBuffer  .pop();
 				X expected = expectedBuffer.pop(); 
