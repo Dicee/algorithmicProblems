@@ -47,16 +47,16 @@ public final class DiffReport<T> {
 	}
 	
 	public Pair<File, File> makeDiffFiles(Function<T, String> toString) throws IOException {
-		File actual   = File.createTempFile("diff-actual"  , null);
-		File expected = File.createTempFile("diff-expected", null);
+		File actual   = File.createTempFile("diff-actual"  , ".json");
+		File expected = File.createTempFile("diff-expected", ".json");
 		
 		try (BufferedWriter actualWriter   = Files.newBufferedWriter(actual  .toPath()) ; 
 			 BufferedWriter expectedWriter = Files.newBufferedWriter(expected.toPath())) {
 			diffs.stream()
 				 .map(Diff::showDiff).map(pair -> new Pair<>(pair.getKey().map(toString), pair.getValue().map(toString)))
 				 .forEach(uncheckedConsumer(pair -> {
-					 	if (pair.getKey  ().isPresent()) actualWriter  .write(pair.getKey  () + "\n");	
-					 	if (pair.getValue().isPresent()) expectedWriter.write(pair.getValue() + "\n");	
+					 	if (pair.getKey  ().isPresent()) actualWriter  .write(pair.getKey  ().get() + "\n");	
+					 	if (pair.getValue().isPresent()) expectedWriter.write(pair.getValue().get() + "\n");	
 				 }));
 		}
 		return new Pair<>(actual, expected);
