@@ -18,10 +18,18 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.google.common.base.Stopwatch;
 
 import miscellaneous.skiller.indexation.entities.AbstractTextualContent;
 import miscellaneous.skiller.indexation.entities.Comment;
@@ -32,18 +40,8 @@ import miscellaneous.skiller.indexation.factories.CommentFactory;
 import miscellaneous.skiller.indexation.factories.QuestionFactory;
 import miscellaneous.skiller.indexation.factories.WordCountFactory;
 import miscellaneous.skiller.indexation.model.DBManager;
-import miscellaneous.utils.check.Check;
 import miscellaneous.utils.collection.StreamUtils;
 import miscellaneous.utils.strings.StringUtils;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import com.google.common.base.Stopwatch;
 
 public class IndexWords extends AbstractIndexer {
 	private static final Log	LOG					= LogFactory.getLog(IndexWords.class);
