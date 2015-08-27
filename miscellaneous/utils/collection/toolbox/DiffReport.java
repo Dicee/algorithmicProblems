@@ -13,19 +13,19 @@ public final class DiffReport<T> {
 
 	public void reportDifference(T actual, T expected) {
 		reportNewRecord();
-		diffs.add(Diff.diff(actual,expected));
+		diffs.add(new NotEqualDiff<>(actual,expected));
 		diffCount++;
 	}
 
 	public void reportMissingElement(T missing) {
 		reportNewRecord();
-		diffs.add(Diff.missing(missing));
+		diffs.add(new MissingElementDiff<>(missing));
 		missingCount++;                                                    
 	}                                                                      
                                                                            
 	public void reportUnexpectedElement(T unexpected) {                    
 		reportNewRecord();                                                 
-		diffs.add(Diff.unexpected(unexpected));                            
+		diffs.add(new UnexpectedElementDiff<T>(unexpected));                            
 		unexpectedCount++;                                                 
 	}                                                                      
 	                                                                       

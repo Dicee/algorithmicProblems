@@ -16,6 +16,9 @@ import miscellaneous.utils.collection.richIterator.RichIterators;
 import miscellaneous.utils.collection.toolbox.CompareSortedIterators;
 import miscellaneous.utils.collection.toolbox.Diff;
 import miscellaneous.utils.collection.toolbox.DiffReport;
+import miscellaneous.utils.collection.toolbox.MissingElementDiff;
+import miscellaneous.utils.collection.toolbox.NotEqualDiff;
+import miscellaneous.utils.collection.toolbox.UnexpectedElementDiff;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,21 +43,21 @@ public class CompareSortedIteratorsTest {
 	public void testSimpleComparison() {
 		Iterator  <String> actual = RichIterators.of("z", "A", "ba", "xhtml");
 		DiffReport<String> report = compareSorted.compare(actual, expected);
-		assertReportEqualsTo(report, 1, 0, 0, 4, asList(diff("ba", "us")));
+		assertReportEqualsTo(report, 1, 0, 0, 4, asList(new NotEqualDiff<>("ba","us")));
 	}
 
 	@Test
 	public void testUnexpected() {
 		Iterator  <String> actual = RichIterators.of("z", "a", "r", "r", "us", "is", "xhtml");
 		DiffReport<String> report = compareSorted.compare(actual, expected);
-		assertReportEqualsTo(report, 0, 0, 3, 7, asList(unexpected("r"), unexpected("r"), unexpected("is")));
+		assertReportEqualsTo(report, 0, 0, 3, 7, asList(new UnexpectedElementDiff<String>("r"), new UnexpectedElementDiff<String>("r"), new UnexpectedElementDiff<String>("is")));
 	}
 
 	@Test
 	public void testMissing() {
 		Iterator  <String> actual = RichIterators.of("z", "us");
 		DiffReport<String> report = compareSorted.compare(actual, expected);
-		assertReportEqualsTo(report, 0, 2, 0, 4, asList(missing("a"), missing("xhtml")));
+		assertReportEqualsTo(report, 0, 2, 0, 4, asList(new MissingElementDiff<>("a"), new MissingElementDiff<>("xhtml")));
 	}
 
 	@Test
@@ -62,7 +65,7 @@ public class CompareSortedIteratorsTest {
 		Iterator  <String> actual   = RichIterators.of("z", "b", "r", "t", "us", "is", "qa", "di", "xhtml", "emlfp");
 		Iterator  <String> expected = RichIterators.of("Z", "a", "r", "T", "us", "is", "qi", "qi", "naa", "xhTml");
 		DiffReport<String> report   = compareSorted.compare(actual, expected);
-		assertReportEqualsTo(report, 2, 1, 1, 11, asList(diff("b", "a"), diff("qa", "qi"), missing("naa"), unexpected("emlfp")));
+		assertReportEqualsTo(report, 2, 1, 1, 11, asList(new NotEqualDiff<>("b","a"), new NotEqualDiff<>("qa","qi"), new MissingElementDiff<>("naa"), new UnexpectedElementDiff<String>("emlfp")));
 		assertThat(report.getEventCount(TextComparison.EQUALS_IGNORE_CASE), is(3L));
 		assertThat(report.getEventCount(TextComparison.LAST_CHAR_EQUAL)   , is(1L));
 	}
