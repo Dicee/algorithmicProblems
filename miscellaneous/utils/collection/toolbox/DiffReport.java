@@ -6,32 +6,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import miscellaneous.utils.strings.StringUtils;
+
 public final class DiffReport<T> {
 	private final List<Diff<T>>		diffs		= new ArrayList<>();
 	private final Map<String, Long>	eventsCount	= new HashMap<>();
 	private int						diffCount, missingCount, unexpectedCount, totalCount;
 
-	public void reportDifference(T actual, T expected) {
+	public Diff<T> reportDifference(T actual, T expected) {
 		reportNewRecord();
-		diffs.add(new NotEqualDiff<>(actual,expected));
+		Diff<T> diff = new NotEqualDiff<>(actual,expected);
+		diffs.add(diff);
 		diffCount++;
+		return diff;
 	}
 
-	public void reportMissingElement(T missing) {
+	public Diff<T> reportMissingElement(T missing) {
 		reportNewRecord();
-		diffs.add(new MissingElementDiff<>(missing));
-		missingCount++;                                                    
-	}                                                                      
-                                                                           
-	public void reportUnexpectedElement(T unexpected) {                    
-		reportNewRecord();                                                 
-		diffs.add(new UnexpectedElementDiff<T>(unexpected));                            
-		unexpectedCount++;                                                 
-	}                                                                      
-	          
-	public void reportEqual()                   { reportNewRecord(); }
+		Diff<T> diff = new MissingElementDiff<>(missing);
+		diffs.add(diff);
+		missingCount++;
+		return diff;
+	}
+
+	public Diff<T> reportUnexpectedElement(T unexpected) {
+		reportNewRecord();
+		Diff<T> diff = new UnexpectedElementDiff<>(unexpected);
+		diffs.add(diff);
+		unexpectedCount++;
+		return diff;
+	}
+	 
+	public  void reportEqual()                  { reportNewRecord(); }
 	private void reportNewRecord()              { totalCount++; }                        
-	public void reportEvent(String eventName)   { eventsCount.put(eventName, eventsCount.getOrDefault(eventName, 0L) + 1); }
+	public  void reportEvent(String eventName)  { eventsCount.put(eventName, eventsCount.getOrDefault(eventName, 0L) + 1); }
 	
 	public List<Diff<T>> getDiffs  ()           { return Collections.unmodifiableList(diffs); }
 	public int  getDiffCount       ()           { return diffCount                          ; }                                                                       
@@ -43,7 +51,13 @@ public final class DiffReport<T> {
 
 	@Override
 	public String toString() {
-		return "DiffReport [diffs=" + diffs + ", eventsCount=" + eventsCount + ", diffCount=" + diffCount + ", missingCount="
-				+ missingCount + ", unexpectedCount=" + unexpectedCount + ", totalCount=" + totalCount + "]";
+	    return "DiffReport [" +
+	            "\n\tdiffs=" + (diffs.isEmpty() ? "[]," : "\n\t\t" + StringUtils.join("\n\t\t", diffs)) +
+	            "\n\teventsCount=" + eventsCount + "," +
+	            "\n\tdiffCount=" + diffCount + "," +
+	            "\n\tmissingCount=" + missingCount + "," +
+	            "\n\tunexpectedCount=" + unexpectedCount + "," +
+	            "\n\ttotalCount=" + totalCount +
+	            "\n]";
 	}  
 }
