@@ -1,9 +1,6 @@
 package miscellaneous.utils.test.collection.toolbox;
 
 import static java.util.Arrays.asList;
-import static miscellaneous.utils.collection.toolbox.Diff.diff;
-import static miscellaneous.utils.collection.toolbox.Diff.missing;
-import static miscellaneous.utils.collection.toolbox.Diff.unexpected;
 import static miscellaneous.utils.strings.StringUtils.lastChar;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
