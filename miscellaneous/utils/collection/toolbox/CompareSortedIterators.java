@@ -56,7 +56,7 @@ public abstract class CompareSortedIterators<X> {
 				X actual   = actualBuffer  .pop();
 				X expected = expectedBuffer.pop(); 
 				if (!checkValidity(actual, expected, report)) report.reportDifference(actual, expected);
-				else                                          report.reportNewRecord();
+				else                                          report.reportEqual();
 			} else if (comparison < 0) {
 				report.reportUnexpectedElement(actualBuffer.pop()); 
 			} else {

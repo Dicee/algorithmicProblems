@@ -28,8 +28,9 @@ public final class DiffReport<T> {
 		diffs.add(new UnexpectedElementDiff<T>(unexpected));                            
 		unexpectedCount++;                                                 
 	}                                                                      
-	                                                                       
-	public void reportNewRecord()               { totalCount++; }                        
+	          
+	public void reportEqual()                   { reportNewRecord(); }
+	private void reportNewRecord()              { totalCount++; }                        
 	public void reportEvent(String eventName)   { eventsCount.put(eventName, eventsCount.getOrDefault(eventName, 0L) + 1); }
 	
 	public List<Diff<T>> getDiffs  ()           { return Collections.unmodifiableList(diffs); }
