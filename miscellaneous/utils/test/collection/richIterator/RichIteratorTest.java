@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toList;
 import static miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction.identity;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.junit.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,13 +14,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import javafx.util.Pair;
 import miscellaneous.utils.collection.richIterator.RichIntIterator;
 import miscellaneous.utils.collection.richIterator.RichIterator;
 import miscellaneous.utils.collection.richIterator.RichIterators;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class RichIteratorTest {
 	private RichIterator<Integer> it;
