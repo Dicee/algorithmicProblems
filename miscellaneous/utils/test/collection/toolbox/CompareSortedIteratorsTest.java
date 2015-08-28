@@ -23,45 +23,47 @@ import org.junit.Test;
 public class CompareSortedIteratorsTest {
 	private Iterator<String>	expected;
 	private TextComparison		compareSorted;
-
+	private DiffReport<String> 	report;
+	
 	@Before
 	public void setUp() {
 		this.compareSorted = new TextComparison();
 		this.expected      = RichIterators.of("z", "a", "us", "xhtml");
+		this.report        = new DiffReport<>();
 	}
 	
 	@Test(expected = IllegalStateException.class)
 	public void failsIfNotSorted() {
 		Iterator<String> actual = RichIterators.of("z", "a", "xhtml", "us");
-		compareSorted.compare(actual, expected);
+		compareSorted.compareFully(actual, expected, report);
 	}
 	
 	@Test
 	public void testSimpleComparison() {
-		Iterator  <String> actual = RichIterators.of("z", "A", "ba", "xhtml");
-		DiffReport<String> report = compareSorted.compare(actual, expected);
+		Iterator<String> actual = RichIterators.of("z", "A", "ba", "xhtml");
+		compareSorted.compareFully(actual, expected, report);
 		assertReportEqualsTo(report, 1, 0, 0, 4, asList(new NotEqualDiff<>("ba","us")));
 	}
 
 	@Test
 	public void testUnexpected() {
-		Iterator  <String> actual = RichIterators.of("z", "a", "r", "r", "us", "is", "xhtml");
-		DiffReport<String> report = compareSorted.compare(actual, expected);
-		assertReportEqualsTo(report, 0, 0, 3, 7, asList(new UnexpectedElementDiff<String>("r"), new UnexpectedElementDiff<String>("r"), new UnexpectedElementDiff<String>("is")));
+		Iterator<String> actual = RichIterators.of("z", "a", "r", "r", "us", "is", "xhtml");
+		compareSorted.compareFully(actual, expected, report);
+		assertReportEqualsTo(report, 0, 0, 3, 7, asList(new UnexpectedElementDiff<>("r"), new UnexpectedElementDiff<>("r"), new UnexpectedElementDiff<>("is")));
 	}
 
 	@Test
 	public void testMissing() {
-		Iterator  <String> actual = RichIterators.of("z", "us");
-		DiffReport<String> report = compareSorted.compare(actual, expected);
+		Iterator<String> actual = RichIterators.of("z", "us");
+		compareSorted.compareFully(actual, expected, report);
 		assertReportEqualsTo(report, 0, 2, 0, 4, asList(new MissingElementDiff<>("a"), new MissingElementDiff<>("xhtml")));
 	}
 
 	@Test
 	public void testVariousDiffs() {
-		Iterator  <String> actual   = RichIterators.of("z", "b", "r", "t", "us", "is", "qa", "di", "xhtml", "emlfp");
-		Iterator  <String> expected = RichIterators.of("Z", "a", "r", "T", "us", "is", "qi", "qi", "naa", "xhTml");
-		DiffReport<String> report   = compareSorted.compare(actual, expected);
+		Iterator<String> actual   = RichIterators.of("z", "b", "r", "t", "us", "is", "qa", "di", "xhtml", "emlfp");
+		Iterator<String> expected = RichIterators.of("Z", "a", "r", "T", "us", "is", "qi", "qi", "naa", "xhTml");
+		compareSorted.compareFully(actual, expected, report);
 		assertReportEqualsTo(report, 2, 1, 1, 11, asList(new NotEqualDiff<>("b","a"), new NotEqualDiff<>("qa","qi"), new MissingElementDiff<>("naa"), new UnexpectedElementDiff<String>("emlfp")));
 		assertThat(report.getEventCount(TextComparison.EQUALS_IGNORE_CASE), is(3L));
 		assertThat(report.getEventCount(TextComparison.LAST_CHAR_EQUAL)   , is(1L));
@@ -73,16 +75,15 @@ public class CompareSortedIteratorsTest {
 		assertThat(report.getUnexpectedCount(), is(unexpectedCount));
 		assertThat(report.getTotalCount     (), is(totalCount));
 		assertThat(report.getDiffs          (), equalTo(diffs));
-	}
+	} 
 	
 	private static class TextComparison extends CompareSortedIterators<String> {
 		private static final String EQUALS_IGNORE_CASE = "equals_ignore_case";
 		private static final String LAST_CHAR_EQUAL    = "last_char_equal";
 	
-		public TextComparison() { super((s0, s1) -> Integer.compare(s0.length(), s1.length())); }
+		public TextComparison() { super((s0, s1) -> Integer.compare(s0.length(), s1.length()), TextComparison::deepCheckValidity); }
 	
-		@Override
-		protected boolean deepCheckValidity(String actual, String expected, DiffReport<String> report) { 
+		private static boolean deepCheckValidity(String actual, String expected, DiffReport<String> report) { 
 			boolean isValid = false;
 			if      (isValid = actual.equalsIgnoreCase(expected))      report.reportEvent(EQUALS_IGNORE_CASE);
 			else if (isValid = lastChar(actual) == lastChar(expected)) report.reportEvent(LAST_CHAR_EQUAL);

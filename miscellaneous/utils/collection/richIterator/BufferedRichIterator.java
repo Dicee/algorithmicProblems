@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 import com.google.common.base.Throwables;
 
-class BufferedRichIterator<T> extends RichIterator<T> {
+public class BufferedRichIterator<T> extends RichIterator<T> {
 	protected T buffer = null;
 	private final LookAheadIterator<T>	it;
 	
