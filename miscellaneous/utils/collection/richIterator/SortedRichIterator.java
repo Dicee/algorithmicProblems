@@ -1,7 +1,5 @@
 package miscellaneous.utils.collection.richIterator;
 
-import static miscellaneous.utils.check.Check.notNull;
-
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -13,7 +11,7 @@ class SortedRichIterator<T> extends RichIteratorDecorator<T,T> {
 	public SortedRichIterator(RichIterator<T> it) { this(it,null); }
 	public SortedRichIterator(RichIterator<T> it, Comparator<? super T> cmp) { 
 		super(it); 
-		this.cmp = notNull(cmp);
+		this.cmp = cmp;
 	}
 
 	@Override
