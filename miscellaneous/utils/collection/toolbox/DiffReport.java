@@ -52,17 +52,16 @@ public final class DiffReport<T> {
 		diffs.stream().map(Diff::showDiff).map(pair -> new Pair<>(pair.getKey().map(toString),pair.getValue().map(toString)))
 				.forEach(uncheckedConsumer(pair -> {
 					Optional<String> actual = pair.getKey(), expected = pair.getValue();
-
 					// at least one of the optionals is non empty
-						if (actual.isPresent() && expected.isPresent()) {
-							appendLinesWithPrefix(sb,"found: ",actual.get());
-							appendLinesWithPrefix(sb,"expected: ",expected.get());
-						} else if (actual.isPresent()) {
-							appendLinesWithPrefix(sb,"+",actual.get());
-						} else {
-							appendLinesWithPrefix(sb,"-",expected.get());
-						}
-					}));
+					if (actual.isPresent() && expected.isPresent()) {
+						appendLinesWithPrefix(sb,"found: ",actual.get());
+						appendLinesWithPrefix(sb,"expected: ",expected.get());
+					} else if (actual.isPresent()) {
+						appendLinesWithPrefix(sb,"+",actual.get());
+					} else {
+						appendLinesWithPrefix(sb,"-",expected.get());
+					}
+				}));
 		return sb.toString();
 	}
 
