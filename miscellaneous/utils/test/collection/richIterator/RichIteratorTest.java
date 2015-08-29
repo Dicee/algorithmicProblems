@@ -3,6 +3,7 @@ package miscellaneous.utils.test.collection.richIterator;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction.identity;
+import static miscellaneous.utils.test.collection.richIterator.RichIteratorTestUtils.observable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -21,6 +22,7 @@ import javafx.util.Pair;
 import miscellaneous.utils.collection.richIterator.RichIntIterator;
 import miscellaneous.utils.collection.richIterator.RichIterator;
 import miscellaneous.utils.collection.richIterator.RichIterators;
+import miscellaneous.utils.test.collection.richIterator.RichIteratorTestUtils.ObservableRichIterator;
 
 public class RichIteratorTest {
 	private RichIterator<Integer> it;
@@ -185,5 +187,23 @@ public class RichIteratorTest {
 	@Test(expected = IllegalStateException.class)
 	public void testGroupedByComparator_failsIfNotSorted() {
 		RichIterators.of("b", "a", "c").grouped(String.CASE_INSENSITIVE_ORDER).toList();
+	}
+	
+	@Test
+	public void testBuffering() {
+		ObservableRichIterator<Integer> it         = observable(RichIterators.of(1, 2, 3, 4));
+		RichIterator          <Integer> bufferedIt = it.buffered(2);
+		assertThat(bufferedIt.next() , is(1));
+		assertThat(it.getNextCalls() , is(2));
+		                             
+		assertThat(bufferedIt.next() , is(2));
+		assertThat(it.getNextCalls() , is(2));
+		                             
+		assertThat(bufferedIt.next() , is(3));
+		assertThat(it.getNextCalls() , is(4));
+		                             
+		assertThat(bufferedIt.next() , is(4));
+		assertThat(it.getNextCalls() , is(4));
+		assertThat(it.getCloseCalls(), is(1));
 	}
 }

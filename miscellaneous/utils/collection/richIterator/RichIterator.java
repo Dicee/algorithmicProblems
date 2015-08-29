@@ -190,6 +190,11 @@ public abstract class RichIterator<X> implements Iterator<X>, Iterable<X>, Close
 		return res;
 	}
 	
+	public final RichIterator<X> buffered(int size) {
+		ensureValidState();
+		return new BufferedRichIterator<X>(this, size);
+	}
+	
 	public final Optional<X> reduce(ThrowingBinaryOperator<X> binaryOp) { return stream().reduce(uncheckedBinaryOperator(binaryOp)); }
 	public final void foreach(ThrowingConsumer<X> consumer)             { stream().forEach(uncheckedConsumer(consumer)); }
 	public final long count()                                           { return stream().count(); }
