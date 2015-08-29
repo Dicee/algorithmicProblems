@@ -6,6 +6,10 @@ import java.io.IOException;
 public class IOUtils {
 	private IOUtils() { }
 	
+	public static void closeQuietly(Closeable... resources) { 
+		for (Closeable resource : resources) closeQuietly(resource);
+	}
+	
 	public static void closeQuietly(Closeable resource) {
 		if (resource != null)
 			try { resource.close(); } catch (IOException e) { }

@@ -2,7 +2,6 @@ package miscellaneous.utils.collection.richIterator;
 
 import static java.util.stream.Collectors.toList;
 import static miscellaneous.utils.check.Check.notNull;
-import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -13,10 +12,7 @@ import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import miscellaneous.utils.io.IOUtils;
@@ -38,28 +34,8 @@ public class RichIterators {
 		try {
 			br = Files.newBufferedReader(f.toPath());
 			final BufferedReader source = br;
-			return new RichIterator<String>() {
-				private Deque<String> buffer = new LinkedList<>();
-				
-				@Override
-				protected String nextInternal() {
-					if (!hasNext()) throw new NoSuchElementException();
-					return !buffer.isEmpty() ? buffer.pop() : uncheckExceptionsAndGet(source::readLine);
-				}
-				
-				@Override
-				protected boolean hasNextInternal() {
-					if (!buffer.isEmpty()) return true;
-					
-					String line = uncheckExceptionsAndGet(source::readLine);
-					if (line != null) buffer.addLast(line);
-					return line != null;
-				}
-
-				@Override
-				protected void closeInternal() throws IOException {
-					source.close();
-				}
+			return new FromResourceRichIterator<String>(source) {
+				@Override protected String readNext() throws EOFException, IOException { return source.readLine(); }
 			};
 		} catch (IOException e) {
 			IOUtils.closeQuietly(br);
@@ -75,7 +51,7 @@ public class RichIterators {
 			fis = new FileInputStream(f);
 			ois = new ObjectInputStream(fis);
 			final ObjectInputStream source = ois;
-			return new LookAheadRichIterator<T>(new FromResourceRichIterator<T>() {
+			return new LookAheadRichIterator<T>(new FromResourceRichIterator<T>(fis, ois) {
 				@Override
 				public T readNext() throws EOFException, IOException { 
 					try {
@@ -88,8 +64,7 @@ public class RichIterators {
 		} catch (EOFException e) { 
 			return emptyIterator();  
 		} catch (IOException e) {
-			IOUtils.closeQuietly(fis);
-			IOUtils.closeQuietly(ois);
+			IOUtils.closeQuietly(fis, ois);
 			throw Throwables.propagate(e);
 		}
 	}
