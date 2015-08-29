@@ -1,7 +1,7 @@
 package miscellaneous.utils.collection;
 
 import static miscellaneous.utils.check.Check.notNull;
-import static miscellaneous.utils.collection.BoundedBuffer.SizeExceededPolicy.IGNORE;
+import static miscellaneous.utils.exceptions.UnknownEnumValueException.unknownEnumValue;
 
 import java.util.Collection;
 import java.util.Deque;
@@ -31,36 +31,32 @@ public class BoundedBuffer<T> implements Deque<T> {
 	public boolean isFull      ()    { return maxSize == buffer.size(); }
 	public boolean addIfNotFull(T t) { return !isFull() && add(t)     ; }
 	
-	@Override
-	public boolean addAll(Collection<? extends T> c) { 
-		ensureHasCpacity(c.size());
-		return buffer.addAll(c);
+	@Override public boolean addAll(Collection<? extends T> c) { 
+		switch (sizeExceededPolicy) {
+			case ERROR : return ensureHasCpacity(c.size()) && buffer.addAll(c); 
+			case IGNORE: 
+				boolean added = !isFull() || c.size() == 0;
+				Iterator<? extends T> it = c.iterator();
+				while (!isFull() && it.hasNext()) added = add(it.next()) || added;
+				return added;
+			default: throw unknownEnumValue(SizeExceededPolicy.class, sizeExceededPolicy);
+		}
 	}
+	
+	@Override public boolean add       (T t) { return ensureHasCpacity(1) && buffer.add(t)       ; }
+	@Override public boolean offerFirst(T t) { return ensureHasCpacity(1) && buffer.offerFirst(t); }
+	@Override public boolean offerLast (T t) { return ensureHasCpacity(1) && buffer.offerLast(t) ; }
+	@Override public void    addFirst  (T t) { if (ensureHasCpacity(1))      buffer.addFirst(t)  ; }
 
-	@Override 
-	public boolean add(T t) {
-		ensureHasCpacity(1);
-		return buffer.add(t);
+	private boolean ensureHasCpacity(int toAdd) { 
+		if (toAdd + buffer.size() > maxSize)
+			switch (sizeExceededPolicy) {
+				case IGNORE: return false;
+				case ERROR : throw new SizeExceededException();
+				default    : throw unknownEnumValue(SizeExceededPolicy.class, sizeExceededPolicy);
+			}
+		return true;
 	}
-
-	@Override 
-	public void addFirst(T t) {
-		ensureHasCpacity(1);
-		buffer.addFirst(t);
-	}
-
-	@Override
-	public boolean offerFirst(T t) {
-		ensureHasCpacity(1);
-		return buffer.offerFirst(t);
-	}
-	@Override
-	public boolean offerLast(T t) {
-		ensureHasCpacity(1);
-		return buffer.offerLast(t);
-	}
-
-	private void ensureHasCpacity(int toAdd) { if (sizeExceededPolicy != IGNORE && toAdd + buffer.size() > maxSize) throw new SizeExceededException(); }
 	
 	@Override public void        clear()                         {        buffer.clear()                 ; }
 	@Override public boolean     containsAll(Collection<?> c)    { return buffer.containsAll(c)          ; }
