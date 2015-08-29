@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import miscellaneous.utils.check.Check;
@@ -42,4 +43,6 @@ public class CollectionUtils {
 		notNull(elts,"This array should contain at least one element");
 		return Collections.unmodifiableList(Arrays.asList(elts));
 	}
+
+	public static <T> Collector<T, List<T>, List<T>> collectList() { return Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList); }
 }

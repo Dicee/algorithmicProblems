@@ -2,6 +2,7 @@ package miscellaneous.utils.collection.toolbox;
 
 import static miscellaneous.utils.check.Check.notNull;
 import static miscellaneous.utils.collection.CollectionUtils.collectList;
+import static miscellaneous.utils.collection.toolbox.DiffReport.NO_LIMIT;
 
 import java.util.List;
 
@@ -12,8 +13,6 @@ import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 
 public class SortedIteratorEqualMatcher<T> extends TypeSafeMatcher<RichIterator<T>> {
-	private static final int	NO_LIMIT	= -1;
-
 	public static <T> SortedIteratorEqualMatcher<T> sortedIteratorEqual(RichIterator<T> expected, CompareSortedIterators<T> compareSortedIterators) {
 		return new SortedIteratorEqualMatcher<>(expected, compareSortedIterators);
 	}

@@ -1,5 +1,8 @@
 package miscellaneous.utils.collection;
 
+import static miscellaneous.utils.check.Check.notNull;
+import static miscellaneous.utils.collection.BoundedBuffer.SizeExceededPolicy.IGNORE;
+
 import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
@@ -8,20 +11,26 @@ import java.util.LinkedList;
 import miscellaneous.utils.check.Check;
 
 public class BoundedBuffer<T> implements Deque<T> {
-	private final int maxSize;
-	private final Deque<T> buffer;
+	public static enum SizeExceededPolicy { ERROR, IGNORE }
 	
-	public BoundedBuffer(int maxSize) {
-		this.maxSize = Check.isPositive(maxSize);
-		this.buffer  = new LinkedList<>();
+	private final int					maxSize;
+	private final Deque<T>				buffer;
+	private final SizeExceededPolicy	sizeExceededPolicy;
+	
+	public BoundedBuffer(int maxSize, SizeExceededPolicy sizeExceededPolicy) {
+		this.maxSize            = Check.isPositive(maxSize);
+		this.buffer             = new LinkedList<>();
+		this.sizeExceededPolicy = sizeExceededPolicy;
 	}
 	
-	public BoundedBuffer(int maxSize, Collection<T> buffer) {
-		Check.isGreaterOrEqual(maxSize, buffer.size());
-		this.maxSize = maxSize;
-		this.buffer  = new LinkedList<>(Check.notNull(buffer));
+	public BoundedBuffer(int maxSize, Collection<T> buffer, SizeExceededPolicy sizeExceededPolicy) {
+		this(maxSize, sizeExceededPolicy);
+		addAll(notNull(buffer));
 	}
 
+	public boolean isFull      ()    { return maxSize == buffer.size(); }
+	public boolean addIfNotFull(T t) { return !isFull() && add(t)     ; }
+	
 	@Override
 	public boolean addAll(Collection<? extends T> c) { 
 		ensureHasCpacity(c.size());
@@ -51,7 +60,7 @@ public class BoundedBuffer<T> implements Deque<T> {
 		return buffer.offerLast(t);
 	}
 
-	private void ensureHasCpacity(int toAdd) { if (toAdd + buffer.size() > maxSize) throw new SizeExceededException(); }
+	private void ensureHasCpacity(int toAdd) { if (sizeExceededPolicy != IGNORE && toAdd + buffer.size() > maxSize) throw new SizeExceededException(); }
 	
 	@Override public void        clear()                         {        buffer.clear()                 ; }
 	@Override public boolean     containsAll(Collection<?> c)    { return buffer.containsAll(c)          ; }

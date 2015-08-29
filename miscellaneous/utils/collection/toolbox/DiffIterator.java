@@ -1,6 +1,7 @@
 package miscellaneous.utils.collection.toolbox;
 
 import static miscellaneous.utils.check.Check.notNull;
+import static miscellaneous.utils.collection.BoundedBuffer.SizeExceededPolicy.ERROR;
 
 import java.util.Comparator;
 import java.util.Deque;
@@ -34,8 +35,8 @@ public class DiffIterator<T> extends BufferedRichIterator<Diff<T>> {
             this.report         = notNull(report);
             this.sortOrder      = notNull(sortOrder);
             this.deepValidator  = notNull(deepValidator);
-            this.actualBuffer   = new BoundedBuffer<>(1);
-            this.expectedBuffer = new BoundedBuffer<>(1);
+            this.actualBuffer   = new BoundedBuffer<>(1, ERROR);
+            this.expectedBuffer = new BoundedBuffer<>(1, ERROR);
         }
     	
         private boolean hasNext() {
