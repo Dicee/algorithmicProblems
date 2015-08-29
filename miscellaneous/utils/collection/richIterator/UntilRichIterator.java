@@ -7,7 +7,7 @@ import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
 public class UntilRichIterator<X> extends BufferedRichIterator<X> {
 	public UntilRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) {
-		super(new LookAheadIterator<X>() {
+		super(new FromResourceRichIterator<X>() {
 			private boolean found = false;
 			
 			@Override

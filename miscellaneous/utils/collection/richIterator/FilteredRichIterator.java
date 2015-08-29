@@ -7,7 +7,7 @@ import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
 public class FilteredRichIterator<T> extends BufferedRichIterator<T> {
 	public FilteredRichIterator(RichIterator<T> it, ThrowingPredicate<T> predicate) { 
-		super(new LookAheadIterator<T>() {
+		super(new FromResourceRichIterator<T>() {
 			@Override
 			public T readNext() throws EOFException, IOException {
 				try {

@@ -7,7 +7,7 @@ import java.util.Set;
 
 class DistinctRichIterator<T> extends BufferedRichIterator<T> {
 	public DistinctRichIterator(RichIterator<T> it) {
-		super(new LookAheadIterator<T>() {
+		super(new FromResourceRichIterator<T>() {
 			private final Set<T> elts = new HashSet<>();
 			
 			@Override

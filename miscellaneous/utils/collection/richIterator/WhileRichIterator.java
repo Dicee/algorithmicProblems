@@ -7,7 +7,7 @@ import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
 public class WhileRichIterator<X> extends BufferedRichIterator<X> {
 	public WhileRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) {
-		super(new LookAheadIterator<X>() {
+		super(new FromResourceRichIterator<X>() {
 			@Override
 			public X readNext() throws EOFException, IOException {
 				if (!it.hasNext()) return null;
