@@ -8,16 +8,16 @@ import java.util.NoSuchElementException;
 import com.google.common.base.Throwables;
 
 public class BufferedRichIterator<T> extends RichIterator<T> {
-	protected T buffer = null;
-	private final LookAheadIterator<T>	it;
+	protected T peeked = null;
+	private final FromResourceRichIterator<T>	it;
 	
-	public BufferedRichIterator(LookAheadIterator<T> it) { this.it = notNull(it); }
+	public BufferedRichIterator(FromResourceRichIterator<T> it) { this.it = notNull(it); }
 
 	@Override
 	protected final T nextInternal() {
-		if (buffer != null) {
-			T res = buffer;
-			buffer = null;
+		if (peeked != null) {
+			T res  = peeked;
+			peeked = null;
 			return res;
 		} 
 		return tryReadNext();
@@ -25,9 +25,9 @@ public class BufferedRichIterator<T> extends RichIterator<T> {
 	
 	@Override
 	protected final boolean hasNextInternal() {
-		if (buffer != null) return true;
+		if (peeked != null) return true;
 		try {
-			buffer = tryReadNext();
+			peeked = tryReadNext();
 			return true;
 		} catch (NoSuchElementException e) {
 			return false;
