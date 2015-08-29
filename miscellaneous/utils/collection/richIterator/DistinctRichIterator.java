@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-class DistinctRichIterator<T> extends BufferedRichIterator<T> {
+class DistinctRichIterator<T> extends LookAheadRichIterator<T> {
 	public DistinctRichIterator(RichIterator<T> it) {
 		super(new FromResourceRichIterator<T>() {
 			private final Set<T> elts = new HashSet<>();
@@ -20,5 +20,7 @@ class DistinctRichIterator<T> extends BufferedRichIterator<T> {
 			}
 		});
 	}
+	
+	
 }
 	

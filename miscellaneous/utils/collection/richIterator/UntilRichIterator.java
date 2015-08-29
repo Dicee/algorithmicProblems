@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
-public class UntilRichIterator<X> extends BufferedRichIterator<X> {
+public class UntilRichIterator<X> extends LookAheadRichIterator<X> {
 	public UntilRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) {
 		super(new FromResourceRichIterator<X>() {
 			private boolean found = false;

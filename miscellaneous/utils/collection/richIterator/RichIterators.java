@@ -75,7 +75,7 @@ public class RichIterators {
 			fis = new FileInputStream(f);
 			ois = new ObjectInputStream(fis);
 			final ObjectInputStream source = ois;
-			return new BufferedRichIterator<T>(new FromResourceRichIterator<T>() {
+			return new LookAheadRichIterator<T>(new FromResourceRichIterator<T>() {
 				@Override
 				public T readNext() throws EOFException, IOException { 
 					try {

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
-public class FilteredRichIterator<T> extends BufferedRichIterator<T> {
+public class FilteredRichIterator<T> extends LookAheadRichIterator<T> {
 	public FilteredRichIterator(RichIterator<T> it, ThrowingPredicate<T> predicate) { 
 		super(new FromResourceRichIterator<T>() {
 			@Override

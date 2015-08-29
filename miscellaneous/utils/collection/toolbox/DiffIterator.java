@@ -8,19 +8,18 @@ import java.util.Deque;
 import java.util.Iterator;
 
 import miscellaneous.utils.collection.BoundedBuffer;
-import miscellaneous.utils.collection.richIterator.BufferedRichIterator;
-import miscellaneous.utils.collection.richIterator.LookAheadIterator;
+import miscellaneous.utils.collection.richIterator.FromResourceRichIterator;
+import miscellaneous.utils.collection.richIterator.LookAheadRichIterator;
 import miscellaneous.utils.collection.richIterator.RichIterator;
 import miscellaneous.utils.collection.richIterator.RichIterators;
 import miscellaneous.utils.collection.toolbox.CompareSortedIterators.DeepValidator;
 
-public class DiffIterator<T> extends BufferedRichIterator<Diff<T>> {
-
-    public DiffIterator(Iterator<T> actualIt, Iterator<T> expectedIt, DiffReport<T> report, Comparator<T> sortOrder, DeepValidator<T> deepValidator) {
+class DiffIterator<T> extends LookAheadRichIterator<Diff<T>> {
+    DiffIterator(Iterator<T> actualIt, Iterator<T> expectedIt, DiffReport<T> report, Comparator<T> sortOrder, DeepValidator<T> deepValidator) {
         super(new DiffInternalIterator<>(actualIt, expectedIt, report, sortOrder, deepValidator));
     }
 
-    private static class DiffInternalIterator<T> implements LookAheadIterator<Diff<T>> {
+    private static class DiffInternalIterator<T> extends FromResourceRichIterator<Diff<T>> {
     	private final RichIterator <T>	actualIt;
     	private final RichIterator <T>	expectedIt;
     	private final DiffReport   <T>	report;
@@ -39,7 +38,7 @@ public class DiffIterator<T> extends BufferedRichIterator<Diff<T>> {
             this.expectedBuffer = new BoundedBuffer<>(1, ERROR);
         }
     	
-        private boolean hasNext() {
+        private boolean hasNextDiff() {
             boolean hasNextActual   = fillIfEmpty(actualIt  , actualBuffer  );
             boolean hasNextExpected = fillIfEmpty(expectedIt, expectedBuffer);
             return hasNextActual || hasNextExpected;
@@ -47,7 +46,7 @@ public class DiffIterator<T> extends BufferedRichIterator<Diff<T>> {
 
         @Override
         public Diff<T> readNext() {
-            while (hasNext()) {
+            while (hasNextDiff()) {
             	if (actualBuffer  .isEmpty()) return report.reportMissingElement   (expectedBuffer.pop());
             	if (expectedBuffer.isEmpty()) return report.reportUnexpectedElement(actualBuffer  .pop());
 
@@ -76,6 +75,4 @@ public class DiffIterator<T> extends BufferedRichIterator<Diff<T>> {
             return hasNext;
         }
     }
-    
-    
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
-public class WhileRichIterator<X> extends BufferedRichIterator<X> {
+public class WhileRichIterator<X> extends LookAheadRichIterator<X> {
 	public WhileRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) {
 		super(new FromResourceRichIterator<X>() {
 			@Override

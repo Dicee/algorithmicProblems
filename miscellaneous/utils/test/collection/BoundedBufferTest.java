@@ -4,11 +4,12 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 import miscellaneous.utils.collection.ArrayUtils;
 import miscellaneous.utils.collection.BoundedBuffer;
+import miscellaneous.utils.collection.BoundedBuffer.SizeExceededException;
+import miscellaneous.utils.collection.BoundedBuffer.SizeExceededPolicy;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class BoundedBufferTest {
 	
 	@Before
 	public void setUp() {
-		this.buffer = new BoundedBuffer<>(MAX_SIZE);
+		this.buffer = new BoundedBuffer<>(MAX_SIZE, SizeExceededPolicy.ERROR);
 		this.buffer.push(3);
 		this.buffer.push(6);
 	}
@@ -47,8 +48,8 @@ public class BoundedBufferTest {
 		buffer.add(5);
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = SizeExceededException.class)
 	public void constructorFromCollectionIsBounded() {
-		new BoundedBuffer<Integer>(MAX_SIZE, asList(ArrayUtils.ofDim(Integer.class, MAX_SIZE + 3)));
+		new BoundedBuffer<>(MAX_SIZE, asList(ArrayUtils.ofDim(Integer.class, MAX_SIZE + 3)), SizeExceededPolicy.ERROR);
 	}
 }

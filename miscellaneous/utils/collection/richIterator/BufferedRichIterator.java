@@ -1,48 +1,35 @@
 package miscellaneous.utils.collection.richIterator;
 
-import static miscellaneous.utils.check.Check.notNull;
+import miscellaneous.utils.check.Check;
+import miscellaneous.utils.collection.BoundedBuffer;
+import miscellaneous.utils.collection.BoundedBuffer.SizeExceededPolicy;
 
-import java.io.EOFException;
-import java.util.NoSuchElementException;
-
-import com.google.common.base.Throwables;
-
-public class BufferedRichIterator<T> extends RichIterator<T> {
-	protected T peeked = null;
-	private final FromResourceRichIterator<T>	it;
+public class BufferedRichIterator<X> extends RichIteratorDecorator<X, X> implements LookAheadIterator<X> {
+	private final BoundedBuffer<X> buffer;
 	
-	public BufferedRichIterator(FromResourceRichIterator<T> it) { this.it = notNull(it); }
+	public BufferedRichIterator(RichIterator<X> it, int size) { 
+		super(it);
+		Check.isGreaterThan(size, 0);
+		this.buffer = new BoundedBuffer<>(size, SizeExceededPolicy.ERROR); 
+	}
 
 	@Override
-	protected final T nextInternal() {
-		if (peeked != null) {
-			T res  = peeked;
-			peeked = null;
-			return res;
-		} 
-		return tryReadNext();
+	protected final boolean hasNextInternal() { return !buffer.isEmpty() || it.hasNext(); }
+
+	@Override
+	protected final X nextInternal() {
+		fillBufferIfNecessary();
+		return buffer.pop();
+	}
+
+	private void fillBufferIfNecessary() {
+		if (buffer.isEmpty())
+			while (it.hasNext() && !buffer.isFull()) buffer.addLast(it.next());
 	}
 	
 	@Override
-	protected final boolean hasNextInternal() {
-		if (peeked != null) return true;
-		try {
-			peeked = tryReadNext();
-			return true;
-		} catch (NoSuchElementException e) {
-			return false;
-		}
-	}
-	
-	private T tryReadNext() {
-		try {
-			T t = it.readNext();
-			if (t == null) throw new EOFException();
-			return t;
-		} catch (EOFException e) {
-			throw new NoSuchElementException();
-		} catch (Exception e) {
-			throw Throwables.propagate(e);
-		}
+	public X peek() { 
+		fillBufferIfNecessary();
+		return buffer.peek(); 
 	}
 }
