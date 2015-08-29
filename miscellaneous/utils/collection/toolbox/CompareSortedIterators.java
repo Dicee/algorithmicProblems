@@ -40,9 +40,8 @@ public class CompareSortedIterators<T> {
         return RichIterators.wrap(it).grouped(sortOrder).mapGroups(applyStrictOrderWithinGroup).flatten();
     }
 
-    private RichIterator<Diff<T>> compareIterators(Iterator<T> actualIt, Iterator<T> expectedIt, DiffReport<T> report) {
-    	DeepValidator<T> deepValidator = this::checkValidity; // fucking shitty Eclipse type inference forces me to do that
-        return new DiffIterator<>(actualIt, expectedIt, report, sortOrder, deepValidator);
+    public RichIterator<Diff<T>> compareIterators(Iterator<T> actualIt, Iterator<T> expectedIt, DiffReport<T> report) {
+        return new DiffIterator<>(actualIt, expectedIt, report, sortOrder, (DeepValidator<T>) this::checkValidity);
     }
     
     private boolean checkValidity(T actual, T expected, DiffReport<T> report) {
