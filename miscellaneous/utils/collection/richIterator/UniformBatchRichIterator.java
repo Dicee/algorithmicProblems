@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class UniformBatchRichIterator<X> extends RichIteratorDecorator<X, RichIterator<X>>{
+public class UniformBatchRichIterator<X> extends ClassicRichIteratorDecorator<X, RichIterator<X>>{
 	private final int batchSize;
 
 	protected UniformBatchRichIterator(RichIterator<X> it, int batchSize) {

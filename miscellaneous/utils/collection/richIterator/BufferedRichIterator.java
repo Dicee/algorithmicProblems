@@ -4,7 +4,7 @@ import miscellaneous.utils.check.Check;
 import miscellaneous.utils.collection.BoundedBuffer;
 import miscellaneous.utils.collection.BoundedBuffer.SizeExceededPolicy;
 
-public class BufferedRichIterator<X> extends RichIteratorDecorator<X, X> implements LookAheadIterator<X> {
+public class BufferedRichIterator<X> extends ClassicRichIteratorDecorator<X, X> implements LookAheadIterator<X> {
 	private final BoundedBuffer<X> buffer;
 	
 	public BufferedRichIterator(RichIterator<X> it, int size) { 

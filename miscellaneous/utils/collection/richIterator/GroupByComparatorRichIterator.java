@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.Deque;
 import java.util.LinkedList;
 
-class GroupByComparatorRichIterator<X> extends RichIteratorDecorator<X, RichIterator<X>> {
+class GroupByComparatorRichIterator<X> extends ClassicRichIteratorDecorator<X, RichIterator<X>> {
 	private X previous = null;
 	private final Comparator<X>	cmp;
 	

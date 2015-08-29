@@ -17,7 +17,7 @@ public class RichIteratorTestUtils {
 	
 	public static <X> ObservableRichIterator<X> observable(RichIterator<X> it) { return new ObservableRichIterator<>(it); } 
 
-	public static class ObservableRichIterator<X> extends RichIteratorDecorator<X, X> {
+	public static class ObservableRichIterator<X> extends RichIteratorDecorator<X, X, RichIterator<X>> {
 		private int nextCalls, hasNextCalls, closeCalls;
 		
 		protected ObservableRichIterator(RichIterator<X> it) { super(it); }

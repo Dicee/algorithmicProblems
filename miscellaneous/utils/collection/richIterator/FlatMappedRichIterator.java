@@ -6,7 +6,7 @@ import java.util.Iterator;
 import miscellaneous.utils.check.Check;
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
 
-class FlatMappedRichIterator<X,Y> extends RichIteratorDecorator<X,Y> {
+class FlatMappedRichIterator<X,Y> extends ClassicRichIteratorDecorator<X,Y> {
 	private final ThrowingFunction<X,? extends Iterable<Y>> mapper;
 	private Iterator<Y> current = Collections.emptyIterator();
 	

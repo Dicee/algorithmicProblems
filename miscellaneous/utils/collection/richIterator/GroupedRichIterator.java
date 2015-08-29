@@ -2,7 +2,7 @@ package miscellaneous.utils.collection.richIterator;
 
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
 
-public class GroupedRichIterator<T> extends RichIteratorDecorator<RichIterator<T>, RichIterator<T>> {
+public class GroupedRichIterator<T> extends ClassicRichIteratorDecorator<RichIterator<T>, RichIterator<T>> {
 	public static <T> GroupedRichIterator<T> create(RichIterator<RichIterator<T>> it) { return new GroupedRichIterator<>(it); }
 	private GroupedRichIterator(RichIterator<RichIterator<T>> it) { super(it); }
 	

@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
-class SortedRichIterator<T> extends RichIteratorDecorator<T,T> {
+class SortedRichIterator<T> extends ClassicRichIteratorDecorator<T,T> {
 	private Iterator<T>				elts;
 	private Comparator<? super T>	cmp;
 	

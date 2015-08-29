@@ -1,6 +1,6 @@
 package miscellaneous.utils.collection.richIterator;
 
-public class LimitedIterator<X> extends RichIteratorDecorator<X,X> {
+public class LimitedIterator<X> extends ClassicRichIteratorDecorator<X,X> {
 	private int limit;
 	
 	public LimitedIterator(RichIterator<X> it, int limit) {
