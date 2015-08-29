@@ -1,26 +1,24 @@
 package miscellaneous.utils.collection.richIterator;
 
-import java.io.EOFException;
-import java.io.IOException;
-
+import static miscellaneous.utils.check.Check.notNull;
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
-public class UntilRichIterator<X> extends LookAheadRichIterator<X> {
+public class UntilRichIterator<X> extends ClassicRichIteratorDecorator<X, X> {
+	private boolean found;
+	private final ThrowingPredicate<X>	predicate;
+	
 	public UntilRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) {
-		super(new FromResourceRichIterator<X>() {
-			private boolean found = false;
-			
-			@Override
-			public X readNext() throws EOFException, IOException {
-				if (found || !it.hasNext()) return null;
-				X next = it.next();
-				try {
-					found = predicate.test(next);
-					return next;
-				} catch (Exception e) {
-					throw new IOException(e);
-				}
-			}
-		});
+		super(it);
+		this.predicate = notNull(predicate);
+	}
+
+	@Override
+	protected boolean hasNextInternal() throws Exception { return !found && it.hasNext(); }
+
+	@Override
+	protected X nextInternal() throws Exception {
+		X next = it.next();
+		found  = predicate.test(next);
+		return next;
 	}
 }

@@ -35,7 +35,7 @@ public class RichIterators {
 			br = Files.newBufferedReader(f.toPath());
 			final BufferedReader source = br;
 			return new FromResourceRichIterator<String>(source) {
-				@Override protected String readNext() throws EOFException, IOException { return source.readLine(); }
+				@Override protected String tryReadNext() throws EOFException, IOException { return source.readLine(); }
 			};
 		} catch (IOException e) {
 			IOUtils.closeQuietly(br);
@@ -53,7 +53,7 @@ public class RichIterators {
 			final ObjectInputStream source = ois;
 			return new LookAheadRichIterator<T>(new FromResourceRichIterator<T>(fis, ois) {
 				@Override
-				public T readNext() throws EOFException, IOException { 
+				public T tryReadNext() throws EOFException, IOException { 
 					try {
 						return clazz.cast(source.readObject());
 					} catch (ClassNotFoundException e) {

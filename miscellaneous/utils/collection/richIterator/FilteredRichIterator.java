@@ -1,25 +1,24 @@
 package miscellaneous.utils.collection.richIterator;
 
-import java.io.EOFException;
-import java.io.IOException;
-
 import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingPredicate;
 
-public class FilteredRichIterator<T> extends LookAheadRichIterator<T> {
-	public FilteredRichIterator(RichIterator<T> it, ThrowingPredicate<T> predicate) { 
-		super(new FromResourceRichIterator<T>() {
-			@Override
-			public T readNext() throws EOFException, IOException {
-				try {
-					while (it.hasNext()) {
-						T next = it.next();
-						if (predicate.test(next)) return next;
-					}
-					return null;
-				} catch (Exception e) {
-					throw new IOException(e);
-				}
-			}
-		});
+final class FilteredRichIterator<X> extends RichIteratorDecorator<X, X, LookAheadRichIterator<X>> {
+	private final ThrowingPredicate<X> predicate;
+
+	public FilteredRichIterator(RichIterator<X> it, ThrowingPredicate<X> predicate) { 
+		super(new LookAheadRichIterator<>(it));
+		this.predicate = predicate;
 	}
+
+	@Override
+	protected boolean hasNextInternal() throws Exception {
+		while (it.peek() != null) {
+			if (predicate.test(it.peek())) return true;
+			it.next();
+		}
+		return false;
+	}
+
+	@Override
+	protected X nextInternal() throws Exception { return it.next(); }
 }
