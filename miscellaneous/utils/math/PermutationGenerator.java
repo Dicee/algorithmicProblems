@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import miscellaneous.utils.check.Check;
 
@@ -29,7 +30,17 @@ public class PermutationGenerator implements Iterable<Permutation> {
 	}
 	
 	@Override
-	public Iterator<Permutation> iterator() {
+	public Iterator<Permutation> iterator() { return iterator(Optional.empty()); }
+	
+	public <T> Iterator<T[]> generatePermutations(T[] data) { 
+		Iterator<Permutation> it = iterator(Optional.of(data));
+		return new Iterator<T[]>() {
+			@Override public boolean hasNext() { return it.hasNext()   ; }
+			@Override public T[]     next   () { it.next(); return data; }
+		};
+	}
+	
+	private <T> Iterator<Permutation> iterator(Optional<T[]> data) {
 		return new Iterator<Permutation>() {
 			private Integer[]	current = Arrays.copyOf(start.perm, start.perm.length);
 			private boolean		init	= true;
@@ -56,8 +67,10 @@ public class PermutationGenerator implements Iterable<Permutation> {
 					int k = index - 1;
 					while (index < n - 1 && cmp.compare(current[k], current[index + 1]) < 0) index++;
 					
-					swap(current,index,k);
-					reverse(current,k + 1,current.length-1);
+					swap(current, index, k);
+					reverse(current, k + 1, current.length - 1);
+					data.ifPresent(arr -> swap(arr, index, k));
+					data.ifPresent(arr -> reverse(arr, k + 1, current.length - 1));
 					
 					index  = k;
 					result = unsafePermutation(current);
