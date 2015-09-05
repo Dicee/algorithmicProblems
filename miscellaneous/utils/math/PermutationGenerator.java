@@ -8,10 +8,18 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import miscellaneous.utils.check.Check;
+
 public class PermutationGenerator implements Iterable<Integer[]> {
-	private Integer[] start;
-	private Integer[] goal;
-	private Comparator<Integer> cmp;
+	private final Integer[] start;
+	private final Integer[] goal;
+	private final Comparator<Integer> cmp;
+	
+	public PermutationGenerator() {
+		this(1,false);
+	}
+	
+	public PermutationGenerator with 
 	
 	public PermutationGenerator(int n) {
 		this(n,false);
@@ -51,21 +59,23 @@ public class PermutationGenerator implements Iterable<Integer[]> {
 	}
 	
 	private void checkPerm(Integer[] seed) {
+		Check.notEmpty(seed);
 		boolean[] seen = new boolean[seed.length];
-		for (Integer i : seed)
-			if (i < 0 || i >= seed.length || seen[i]) 
-				throw new IllegalArgumentException("Malformed permutation : " + Arrays.toString(seed));
-			else 
-				seen[i] = true;
+		for (Integer i : seed) {
+			if (i < 0 || i >= seed.length || seen[i]) throw new IllegalArgumentException("Malformed permutation : " + Arrays.toString(seed));
+			else                       				  seen[i] = true;
+		}
 	}
 
-	private static final Integer[] first(int n, boolean reverse) {
+	private static Integer[] first(int n, boolean reverse) {
+		Check.isGreaterThan(n,0);
 		Integer[] res = new Integer[n];
 		for (int i=0 ; i<n ; i++) res[i] = reverse ? n-i-1 : i;
 		return res;
 	}
 	
-	private static final Integer[] toIntArray(String seed) {
+	private static Integer[] toIntArray(String seed) {
+		Check.notBlank(seed);
 		char   [] digits = seed.toCharArray();
 		Integer[] res    = new Integer[digits.length];
 		for (int i=0 ; i<digits.length ; i++) res[i] = digits[i] - '0';
@@ -87,8 +97,7 @@ public class PermutationGenerator implements Iterable<Integer[]> {
 
 			@Override
 			public Integer[] next() {
-				if (ended)
-					throw new NoSuchElementException();
+				if (ended) throw new NoSuchElementException();
 				
 				if (init) {
 					init = false;

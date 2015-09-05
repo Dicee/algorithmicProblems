@@ -1,7 +1,8 @@
 package miscellaneous.utils.check;
 
 public final class Check {
-	private static final String	SHOULD_BE_TRUE				= "This expression should not be true";
+	private static final String	SHOULD_BE_TRUE				= "This expression should be true";
+	private static final String	SHOULD_BE_FALSE				= "This expression should be false";
 	private static final String	SHOULD_NOT_BE_NULL			= "This variable should not be null";
 	private static final String	SHOULD_BE_NULL				= "This variable should be null";
 	private static final String	SHOULD_NOT_BE_EQUAL			= "These objects should not be equal";
@@ -27,8 +28,10 @@ public final class Check {
 		return t;
 	}
 	
-	public static boolean isTrue(boolean b) { return isTrue(b,SHOULD_BE_TRUE); } 
-	public static boolean isTrue(boolean b, String msg) { check(b,msg); return b; } 
+	public static boolean isTrue (boolean b) { return isTrue(b,SHOULD_BE_TRUE); } 
+	public static boolean isTrue (boolean b, String msg) { check(b,msg); return b; } 
+	public static boolean isFalse(boolean b) { return isFalse(b,SHOULD_BE_FALSE); }
+	public static boolean isFalse(boolean b, String msg) { return isTrue(!b,msg); }
 
 	public static int isPositive(int n) { check(n >= 0,SHOULD_BE_POSITIVE); return n; } 
 	public static int isPositive(int n, String msg) { check(n >= 0,msg); return n; } 
