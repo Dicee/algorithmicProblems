@@ -83,9 +83,7 @@ public class MathUtils {
 		return n;
 	}
 	
-	public static BigInteger reverse(BigInteger n) {
-		return new BigInteger(new StringBuilder(n.toString()).reverse().toString());
-	}
+	public static BigInteger reverse(BigInteger n) { return new BigInteger(new StringBuilder(n.toString()).reverse().toString()); }
 	
 	public static long reverse(long n, int b) {
 		long rev = 0;
@@ -105,13 +103,8 @@ public class MathUtils {
 		return rev;
 	}
 	
-	public static boolean isPalindrome(int n, int b) {
-		return reverse(n,b) == n;
-	}
-	
-	public static boolean isPandigital(long n) {
-		return isPandigital(n,9);
-	}
+	public static boolean isPalindrome(int n, int b) { return reverse(n,b) == n; }
+	public static boolean isPandigital(long n) { return isPandigital(n,9); }
 	
 	public static boolean isPandigital(long n, int nDigits) {
 		int digits = 0;
@@ -131,48 +124,21 @@ public class MathUtils {
 		return true; 
 	}
 	
-	public static <T extends Comparable<T>> boolean greaterThan(T t0, T t1) {
-		return !lowerOrEqual(t0,t1);
-	}
+	public static <T extends Comparable<T>> boolean greaterThan   (T t0, T t1) { return !lowerOrEqual    (t0,t1); }
+	public static <T extends Comparable<T>> boolean lowerThan     (T t0, T t1) { return !greaterOrEqual  (t0,t1); }
+	public static <T extends Comparable<T>> boolean greaterOrEqual(T t0, T t1) { return 0 <= t0.compareTo(t1)   ; }
+	public static <T extends Comparable<T>> boolean lowerOrEqual  (T t0, T t1) { return t0.compareTo(t1) <= 0   ; }
 	
-	public static <T extends Comparable<T>> boolean lowerThan(T t0, T t1) {
-		return !greaterOrEqual(t0,t1);
-	}
-	
-	public static <T extends Comparable<T>> boolean greaterOrEqual(T t0, T t1) {
-		return 0 <= t0.compareTo(t1);
-	}
-	
-	public static <T extends Comparable<T>> boolean lowerOrEqual(T t0, T t1) {
-		return t0.compareTo(t1) <= 0;
-	}
-	
-	public static int signum(double d) {
-		return d < 0 ? -1 : d == 0 ? 0 : 1;
-	}
+	public static int signum(double d) { return d < 0 ? -1 : d == 0 ? 0 : 1; }
 	
 	public static int epsilonCompare(double x, double y) {
 		double d = Math.abs(x - y);
 		return d < EPSILON ? 0 : Double.compare(x,y);
 	}
 	
-	public static boolean isZero(float f) {
-		return epsilonCompare(f,0f) == 0;
-	}
-	
-	public static int epsilonCompare(float f0, float f1) {
-		return Math.abs(f0 - f1) < FLOAT_PRECISION ? 0 : Float.compare(f0,f1);
-	}
-	
-	public static boolean isBetween(int low, int mid, int high) {
-		return low <= mid && mid < high;
-	}
-	
-	public static boolean isBetweenClosed(int low, int mid, int high) {
-		return low <= mid && mid <= high;
-	}
-	
-	public static boolean isZero(double x) {
-		return epsilonCompare(x,0) == 0;
-	}
+	public static boolean isZero(float f) { return epsilonCompare(f,0f) == 0; }
+	public static int epsilonCompare(float f0, float f1) { return Math.abs(f0 - f1) < FLOAT_PRECISION ? 0 : Float.compare(f0,f1); }
+	public static boolean isBetween(int low, int mid, int high) { return low <= mid && mid < high; }
+	public static boolean isBetweenClosed(int low, int mid, int high) { return low <= mid && mid <= high; }
+	public static boolean isZero(double x) { return epsilonCompare(x,0) == 0; }
 }
