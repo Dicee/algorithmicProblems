@@ -16,8 +16,8 @@ public final class Check {
 	
 	private Check() { }
 	
-	public static <T> void notEmpty(T[] arr) { notEmpty(arr,SHOULD_NOT_BE_EMPTY); }
-	public static <T> void notEmpty(T[] arr, String msg) { check(arr.length != 0,msg); }
+	public static <T> T[] notEmpty(T[] arr) { return notEmpty(arr,SHOULD_NOT_BE_EMPTY); }
+	public static <T> T[] notEmpty(T[] arr, String msg) { check(arr.length != 0,msg); return arr; }
 	
 	public static <T> void isNull(T t) { isNull(SHOULD_BE_NULL); }
 	public static <T> void isNull(T t, String msg) { check(t == null,msg); }
@@ -47,7 +47,6 @@ public final class Check {
 	public static void isGreaterOrEqual(byte a, byte b, String msg) { check(a >= b,msg); }
 	
 	public static void isBetween(int low, int mid, int high) { isBetween(low,mid,high,SHOULD_BE_BETWEEN(low,high)); }
-
 	public static void isBetween(int low, int mid, int high, String msg) { check(low <= mid && mid < high,msg); }
 	
 	public static void areEqual(Object o1, Object o2) { areEqual(o1,o2,SHOULD_BE_EQUAL(o1,o2)); }
