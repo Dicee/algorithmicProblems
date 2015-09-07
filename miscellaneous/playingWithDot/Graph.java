@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import miscellaneous.utils.collection.richIterator.RichIterators;
+import com.dici.collection.richIterator.RichIterators;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

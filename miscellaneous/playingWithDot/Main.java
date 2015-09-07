@@ -3,8 +3,8 @@ package miscellaneous.playingWithDot;
 import java.io.File;
 import java.io.IOException;
 
-import miscellaneous.utils.collection.richIterator.RichIterators;
-import miscellaneous.utils.files.FileUtils;
+import com.dici.collection.richIterator.RichIterators;
+import com.dici.files.FileUtils;
 
 public class Main {
 	private static final String	RESOURCES_PATH	= "src/" + FileUtils.getPathToPackage(Main.class) + "resources/";

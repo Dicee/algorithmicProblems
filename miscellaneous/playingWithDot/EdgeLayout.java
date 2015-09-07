@@ -3,7 +3,7 @@ package miscellaneous.playingWithDot;
 import java.util.HashMap;
 import java.util.Map;
 
-import miscellaneous.utils.check.Check;
+import com.dici.check.Check;
 
 public class EdgeLayout {
 	private final Map<String,Edge> clusterToEdges = new HashMap<>();

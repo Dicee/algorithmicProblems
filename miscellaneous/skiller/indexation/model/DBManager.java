@@ -1,9 +1,9 @@
 package miscellaneous.skiller.indexation.model;
 
 import static java.lang.String.format;
-import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
-import static miscellaneous.utils.exceptions.ExceptionUtils.withAutoCloseableResource;
-import static miscellaneous.utils.strings.StringUtils.join;
+import static com.dici.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
+import static com.dici.exceptions.ExceptionUtils.withAutoCloseableResource;
+import static com.dici.strings.StringUtils.join;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -21,11 +21,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import miscellaneous.skiller.indexation.IndexWords;
-import miscellaneous.utils.check.Check;
-import miscellaneous.utils.collection.ArrayUtils;
-import miscellaneous.utils.collection.StreamUtils;
-import miscellaneous.utils.exceptions.ExceptionUtils.ThrowingFunction;
-import miscellaneous.utils.strings.StringUtils;
+import com.dici.check.Check;
+import com.dici.collection.ArrayUtils;
+import com.dici.collection.StreamUtils;
+import com.dici.exceptions.ExceptionUtils.ThrowingFunction;
+import com.dici.strings.StringUtils;
 
 public class DBManager {
 	private static final Log LOG = LogFactory.getLog(IndexWords.class);

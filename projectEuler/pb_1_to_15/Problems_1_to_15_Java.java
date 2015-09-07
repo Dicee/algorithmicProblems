@@ -1,6 +1,6 @@
 package projectEuler.pb_1_to_15;
 
-import static miscellaneous.utils.math.MathUtils.isPrime;
+import static com.dici.math.MathUtils.isPrime;
 
 import java.io.IOException;
 import java.util.Arrays;

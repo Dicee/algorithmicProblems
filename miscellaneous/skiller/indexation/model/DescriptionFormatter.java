@@ -1,12 +1,12 @@
 package miscellaneous.skiller.indexation.model;
 
 import static java.util.stream.Collectors.toMap;
-import static miscellaneous.utils.check.Check.notNull;
+import static com.dici.check.Check.notNull;
 
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import miscellaneous.utils.check.Check;
+import com.dici.check.Check;
 
 public class DescriptionFormatter {
 	private final String	unformattedDescription;

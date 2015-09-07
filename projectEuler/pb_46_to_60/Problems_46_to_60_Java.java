@@ -1,8 +1,8 @@
 package projectEuler.pb_46_to_60;
 
-import static miscellaneous.utils.math.MathUtils.ESieve;
-import static miscellaneous.utils.math.MathUtils.isPrime;
-import static miscellaneous.utils.math.MathUtils.reverse;
+import static com.dici.math.MathUtils.ESieve;
+import static com.dici.math.MathUtils.isPrime;
+import static com.dici.math.MathUtils.reverse;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

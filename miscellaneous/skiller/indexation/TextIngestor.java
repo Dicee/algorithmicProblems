@@ -1,15 +1,15 @@
 package miscellaneous.skiller.indexation;
 
-import static miscellaneous.utils.regex.Patterns.BLANKS;
-import static miscellaneous.utils.regex.Patterns.EMAIL;
-import static miscellaneous.utils.regex.Patterns.URL;
+import static com.dici.regex.Patterns.BLANKS;
+import static com.dici.regex.Patterns.EMAIL;
+import static com.dici.regex.Patterns.URL;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import miscellaneous.utils.collection.HashCounter;
+import com.dici.collection.HashCounter;
 
 public class TextIngestor {
 	public static HashCounter<String> ingest(String s) {

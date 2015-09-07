@@ -1,6 +1,6 @@
 package miscellaneous.skiller.indexation.entities;
 
-import miscellaneous.utils.collection.ArrayUtils;
+import com.dici.collection.ArrayUtils;
 
 public interface TextualContent {
 	public static enum SourceType { 

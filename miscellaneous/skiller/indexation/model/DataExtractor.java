@@ -1,6 +1,6 @@
 package miscellaneous.skiller.indexation.model;
 
-import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedBiFunction;
+import static com.dici.exceptions.ExceptionUtils.uncheckedBiFunction;
 
 import java.sql.ResultSet;
 import java.util.function.BiFunction;

@@ -3,12 +3,13 @@ package miscellaneous.markdown
 import java.io.File
 
 import scala.collection.JavaConversions
-import scala.collection.mutable.LinkedHashSet
 import scala.io.Source
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-import miscellaneous.utils.regex.Patterns._;
+
+import com.dici.regex.Patterns.EMAIL
+import com.dici.regex.Patterns.URL
 
 object MarkdownParser {
 	val doc = new Document

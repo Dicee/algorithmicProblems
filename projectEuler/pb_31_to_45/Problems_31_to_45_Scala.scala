@@ -1,11 +1,11 @@
 package projectEuler.pb_31_to_45
 
 import java.util.Arrays
-import miscellaneous.utils.math.MathUtils._
+import com.dici.math.MathUtils._
 import scala.io.Source
-import miscellaneous.utils.math.PermGen
-import miscellaneous.utils.math.MathUtils._
-import miscellaneous.utils.math.ScalaPermutation
+import com.dici.math.PermGen
+import com.dici.math.MathUtils._
+import com.dici.math.ScalaPermutation
 
 object Problems_31_to_45_Scala {
 	def problem33 = {
