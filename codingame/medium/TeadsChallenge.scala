@@ -16,7 +16,7 @@ object TeadsChallenge extends App {
 	val graph = HashMap[Int, Node]()
 	for(i <- 0 until n) {
 		val indices = sc.nextLine.split(" ").map(_.toInt)
-		graph.getOrElseUpdate(indices(0), new Node(indices(0))) >> graph.getOrElseUpdate(indices(1), new Node(indices(1)))
+		graph.getOrElseUpdate(indices(0), new Node) >> graph.getOrElseUpdate(indices(1), new Node)
 	}
 	
 	def totalDepth(node: Node, parent: Node): Int = Math.max(depth(node, parent, _.inputs), depth(node, parent, _.outputs))
@@ -31,7 +31,7 @@ object TeadsChallenge extends App {
 	println(longerPath / 2)
 }
 
-class Node(val value: Int) {
+class Node {
 	val inputs  = HashSet[Node]()
 	val outputs = HashSet[Node]()
 	def >>(that: Node) = { outputs += that; that.inputs += this }
