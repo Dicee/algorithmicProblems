@@ -19,14 +19,13 @@ object TeadsChallenge extends App {
 		graph.getOrElseUpdate(indices(0), new Node) >> graph.getOrElseUpdate(indices(1), new Node)
 	}
 	
-	def totalDepth(node: Node, parent: Node): Int = Math.max(depth(node, parent, _.inputs), depth(node, parent, _.outputs))
+	def totalDepth(node: Node, parent: Node): Int = 
+		Math.max(depth(node, parent, _.inputs), depth(node, parent, _.outputs))
 	def depth(node: Node, parent: Node, children: Node => Set[Node]) = 
 		1 + (children(node) - parent).map(totalDepth(_, node)).foldLeft(0)((a, b) => Math.max(a, b))	
 		
 	val root       = graph.valuesIterator.next
-	val left       = depth(root, root, _.inputs)
-	val right      = depth(root, root, _.outputs)
-	val longerPath = left + right - 1
+	val longerPath = depth(root, root, _.inputs) + depth(root, root, _.outputs) - 1
 	
 	println(longerPath / 2)
 }
