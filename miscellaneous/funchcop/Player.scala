@@ -13,6 +13,7 @@ trait Player {
 	def cast(spell : Spell): Player
 	def play(players: List[ReadOnlyPlayer]): Unit
 	
+	val name    : String
 	val safeCopy: ReadOnlyPlayer
 }
 
@@ -26,10 +27,20 @@ sealed trait ReadOnlyPlayer extends Player {
 	override def play(players: List[ReadOnlyPlayer]) = ()
 }
 
-abstract class BasePlayer(private var _health: Int = 0, private var _actionPts: Int = 6, private var _movePts: Int = 3) extends Player {
+object BasePlayer {
+    private val namesRegistry = new scala.collection.mutable.HashSet[String]
+            private def register(name: String) = {
+        Check.isTrue(!namesRegistry.contains(name), s"Name already in use: ${name}")
+        namesRegistry += name
+    }
+}
+
+abstract class BasePlayer(val name: String, private var _health: Int = 0, private var _actionPts: Int = 6, private var _movePts: Int = 3) extends Player {
 	Check.isPositive(_health)
 	Check.isPositive(_actionPts)
 	Check.isPositive(_movePts)
+	
+	BasePlayer.register(name)
 	
 	def play(players: List[ReadOnlyPlayer])
 
@@ -58,6 +69,8 @@ abstract class BasePlayer(private var _health: Int = 0, private var _actionPts: 
 		override def health    = _health
 		override def actionPts = _actionPts
 		override def movePts   = _movePts
+		
+		lazy val name = BasePlayer.this.name
 	}
 }
 
