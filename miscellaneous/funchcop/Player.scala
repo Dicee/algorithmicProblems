@@ -3,34 +3,49 @@ package miscellaneous.funchcop
 import scala.math._
 import com.dici.check.Check
 
+trait Player {
+	def health   : Int
+	def actionPts: Int
+	def movePts  : Int
+            
+	def hit (damage: Int  ): Player
+	def move(dist  : Int  ): Player
+	def cast(spell : Spell): Player
+	def play(players: List[ReadOnlyPlayer]): Unit
+	
+	val safeCopy: ReadOnlyPlayer
+}
+
 sealed trait ReadOnlyPlayer extends Player {
-	// noop
+    val safeCopy = this
+
+    // noop
 	override def hit (damage: Int  ) = this
 	override def move(dist  : Int  ) = this
 	override def cast(spell : Spell) = this
 	override def play(players: List[ReadOnlyPlayer]) = ()
 }
 
-abstract class Player(private var _health: Int = 0, private var _actionPts: Int = 6, private var _movePts: Int = 3) {
+abstract class BasePlayer(private var _health: Int = 0, private var _actionPts: Int = 6, private var _movePts: Int = 3) extends Player {
 	Check.isPositive(_health)
 	Check.isPositive(_actionPts)
 	Check.isPositive(_movePts)
 	
-	def health    = _health
-	def actionPts = _actionPts
-	def movePts   = _movePts
-	
 	def play(players: List[ReadOnlyPlayer])
+
+	final def health    = _health
+	final def actionPts = _actionPts
+	final def movePts   = _movePts
 	
-	def hit(damage: Int) = { _health = max(0, _health - damage); this }
+	final def hit(damage: Int) = { _health = max(0, _health - damage); this }
 	
-	def move(dist: Int) = {
+	final def move(dist: Int) = {
 		if (dist > _movePts) throw new ImpossibleMoveException(dist, _movePts)
 		_movePts -= dist
 		this
 	}
 	
-	def cast(spell: Spell) = {
+	final def cast(spell: Spell) = {
 	    if (spell.cost > _actionPts) throw new ImpossibleActionException(spell.cost, _movePts)
 		_actionPts -= spell.cost
 		this
