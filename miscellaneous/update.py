@@ -37,10 +37,10 @@ def read_regexps(args,root):
 			return [ file ]
 	
 	def get_regex(s):
-		return "^" + s.replace(".","\.").replace("*","[^/]+") + "$"
+		prefix = "" if root == "." else root + "/"
+		return "^" + prefix + s.replace(".","\.").replace("*","[^/]+") + "$"
 			
-	prefix = "" if root == "." else root + "/"
-	return [ re.compile(get_regex(item)) for arg in args for item in get_pattern(prefix + arg) ]
+	return [ re.compile(get_regex(item)) for arg in args for item in get_pattern(arg) ]
 
 """Determine whether a file should be ignored or not"""
 def accept(name,ignore):
@@ -52,8 +52,6 @@ def absolute_path(root,subfile):
 """Fetch the list of the absolute path of all the files recursively contained by the given root"""
 def fetch_files(ignore,root):
 	if not os.path.isdir(root):
-		##if "stack" in root:
-		##	print("hey",root,accept(root,ignore))
 		return frozenset({ root }) if accept(root,ignore) else frozenset()
 		
 	files = { s for s in os.listdir(root) if accept(s,ignore) }
@@ -112,23 +110,23 @@ if __name__ == '__main__':
 	
 	if sys.argv[1] in [ "export","import" ]:
 		ends = (props["eclipse-project"],props["repository"])
-		repo = ends[1]
-		(destination, source) = ends if sys.argv[1] == "export" else (ends[1],ends[0])
+		if sys.argv[1] == "export":
+			ends = (ends[1],ends[0])
+		home = ends[0]
 	elif sys.argv[1] in [ "ignore","unignore" ]:
 		home = "."
 	else:
 		fail(sys.argv[1] + " is not a valid operation")
 		
 	local_ignore = set(props["ignore"].strip().split(";")).difference([""])
-	ignore       = { repo + "/" + x for x in local_ignore }
-	regs         = read_regexps([ f for f in os.listdir(source) if accept(f,ignore) ],source) if sys.argv[2] == "-all" else read_regexps(sys.argv[2:],source)
-	files        = fetch_files(ignore,source)
+	ignore       = { home + "/" + x for x in local_ignore }
+	regs         = read_regexps([ f for f in os.listdir(home) if accept(f,ignore) ],home) if sys.argv[2] == "-all" else read_regexps(sys.argv[2:],home)
+	files        = fetch_files(ignore,home)
 	selected     = filter_files(regs,files)
-	
-	
+
 	if selected:
 		if sys.argv[1] in [ "ignore","unignore" ]:
 			props["ignore"] = ";".join(local_ignore.union(selected) if sys.argv[1] == "ignore" else local_ignore.difference(selected))
 			print_properties(props,"update.ini")
 		else:
-			copy_files(selected,source,destination)
+			copy_files(selected,ends[0],ends[1])
