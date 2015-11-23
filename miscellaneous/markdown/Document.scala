@@ -1,9 +1,9 @@
 package miscellaneous.markdown
 
-import miscellaneous.utils.check.Check
 import scala.collection.mutable.LinkedHashSet
 import org.jsoup.nodes.Node
-import miscellaneous.utils.files.FileUtils
+import com.dici.files.FileUtils
+import com.dici.check.Check
 
 class Document(private var _theme: Theme=Themes.AMAZON_LIGHT) {
 	private val doc = {

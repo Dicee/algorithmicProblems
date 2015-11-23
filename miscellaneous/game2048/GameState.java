@@ -1,9 +1,9 @@
 package miscellaneous.game2048;
 
-import static miscellaneous.utils.check.Check.areEqual;
-import static miscellaneous.utils.check.Check.notNull;
-import static miscellaneous.utils.collection.ArrayUtils.toPrettyString;
-import static miscellaneous.utils.math.MathUtils.isBetween;
+import static com.dici.check.Check.areEqual;
+import static com.dici.check.Check.notNull;
+import static com.dici.collection.ArrayUtils.toPrettyString;
+import static com.dici.math.MathUtils.isBetween;
 
 import java.util.Optional;
 

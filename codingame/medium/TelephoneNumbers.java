@@ -1,62 +1,29 @@
 package codingame.medium;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class TelephoneNumbers {
-
-    private ArrayList<Couple> children;   
-    private int n;
-    
-    public TelephoneNumbers(int n) {
-        children = new ArrayList<>();
-        this.n = n;
-    }
+    private Map<String, TelephoneNumbers> children = new HashMap<>();  
       
-   	public int addSequence(String[] arr, int index) {
-   		if (index > arr.length - 1)
-   			return 0;
-   		int created    = 0;
-    	String num     = arr[index];
-    	TelephoneNumbers child = null;
-    	for (Couple j : children)
-    		if (j.num.equals(num)) {
-    			child = j.sol;
-    			break;
-    		}
-    	if (child == null) {
-    		created++;
-    	    children.add(new Couple(num,child = new TelephoneNumbers(n-1)));
-    	}
-    	return created + child.addSequence(arr,index + 1);
-    }    
-   	
-   	public int countChild() {
-   		int result = 0;
-   		for (Couple j : children)
-   			result += 1 + j.sol.countChild();
-    	return result;
-   	}
-   	
-   	class Couple {
-   		public TelephoneNumbers	sol;
-		public String num;
-
-		public Couple(String num, TelephoneNumbers sol) {
-   			this.sol = sol;
-   			this.num = num;
-   		}
-   	}
+    public int addSequence(String num) { return addSequence(num.split(""), 0); }
     
-	public static void main(String args[]) {
-		Scanner in = new Scanner(System.in);
-		int n = in.nextInt();
-		TelephoneNumbers sol = new TelephoneNumbers(n);
-		in.nextLine();
-		int created = 0;
-		for (int i = 0; i < n; i++) 
-			created += sol.addSequence(in.nextLine().split(""),1);		
-		System.out.println(created);
-		in.close();
-	}
+       private int addSequence(String[] arr, int index) {
+           if (index > arr.length - 1) return 0;
+        int added = children.putIfAbsent(arr[index], new TelephoneNumbers()) == null ? 1 : 0;
+        return added + children.get(arr[index]).addSequence(arr,index + 1);
+    }    
+    
+    public static void main(String args[]) {
+        try (Scanner in = new Scanner(System.in)) {
+            int n = in.nextInt();
+            in.nextLine();
+            
+            TelephoneNumbers phoneNumbers = new TelephoneNumbers();
+            int created = 0;
+            for (int i = 0; i < n; i++) created += phoneNumbers.addSequence(in.nextLine());
+            System.out.println(created);
+        }
+    }
 }

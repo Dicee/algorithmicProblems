@@ -1,9 +1,11 @@
 package projectEuler.pb_31_to_45
 
 import java.util.Arrays
-import miscellaneous.utils.math.MathUtils._
+import com.dici.math.MathUtils._
 import scala.io.Source
-import miscellaneous.utils.math.PermGen
+import com.dici.math.PermGen
+import com.dici.math.MathUtils._
+import com.dici.math.ScalaPermutation
 
 object Problems_31_to_45_Scala {
 	def problem33 = {
@@ -47,7 +49,7 @@ object Problems_31_to_45_Scala {
 	}
 	
 	def problem43 = {
-		def subNum(perm : Array[Int], index : Int) = 100*perm(index) + 10*perm(index + 1) + perm(index + 2)
+		def subNum(perm : ScalaPermutation, index : Int) = 100*perm(index) + 10*perm(index + 1) + perm(index + 2)
 		PermGen("1023465789").filter(perm =>
 			subNum(perm,1) % 2 == 0 &&
 			subNum(perm,2) % 3 == 0 &&

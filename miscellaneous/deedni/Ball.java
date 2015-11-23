@@ -1,6 +1,6 @@
 package miscellaneous.deedni;
 
-import static miscellaneous.utils.collection.ArrayUtils.swap;
+import static com.dici.collection.ArrayUtils.swap;
 
 import java.util.ArrayList;
 import java.util.List;

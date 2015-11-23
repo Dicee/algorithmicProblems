@@ -1,8 +1,8 @@
 package miscellaneous.skiller.indexation;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static miscellaneous.utils.collection.CollectionUtils.reverse;
-import static miscellaneous.utils.files.FileUtils.getPathRelativeToClass;
+import static com.dici.collection.CollectionUtils.reverse;
+import static com.dici.files.FileUtils.getPathRelativeToClass;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,7 +19,7 @@ import miscellaneous.skiller.indexation.entities.Comment;
 import miscellaneous.skiller.indexation.entities.Question;
 import miscellaneous.skiller.indexation.entities.TextualContent.SourceType;
 import miscellaneous.skiller.indexation.entities.WordCount;
-import miscellaneous.utils.strings.StringUtils;
+import com.dici.strings.StringUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -1,10 +1,11 @@
 package projectEuler.pb_31_to_45;
 
 
-import static miscellaneous.utils.math.MathUtils.isPalindrome;
-import static miscellaneous.utils.math.MathUtils.isPandigital;
-import static miscellaneous.utils.math.MathUtils.isPrime;
-import static miscellaneous.utils.math.MathUtils.reverse;
+import static com.dici.math.MathUtils.isPalindrome;
+import static com.dici.math.MathUtils.isPandigital;
+import static com.dici.math.MathUtils.isPrime;
+import static com.dici.math.MathUtils.reverse;
+import static com.dici.math.Permutation.identity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import miscellaneous.utils.math.PermutationGenerator;
+import com.dici.math.Permutation;
+import com.dici.math.PermutationGenerator;
 
 public class Problems_31_to_45_Java {
 	/**
@@ -396,10 +398,9 @@ public class Problems_31_to_45_Java {
 			for (int j=1 ; j<=i ; j++) sum += j;
 			//We eliminate the pandigital numbers that are divisible by 3
 			if (sum % 3 != 0)
-				for (Integer[] perm : new PermutationGenerator(i,true)) {
+				for (Permutation perm : new PermutationGenerator(identity(i),true)) {
 					int n = 0;
-					for (int j=0 ; j<perm.length ; j++) 
-						n = n*10 + perm[j] + 1;
+					for (int digit : perm) n = n*10 + digit + 1;
 					if (isPrime(n)) 
 						return n;
 				}
@@ -447,13 +448,13 @@ public class Problems_31_to_45_Java {
 	public static long problem43_bis() {
 		long    res   = 0;
 		int[][] conds = { { 4,7 },{ 5,11},{ 6,13 },{ 7,17 } };
-		ext : for (Integer[] perm : new PermutationGenerator("1023546789")) {
-			if (perm[3] % 2 != 0)                       continue;
-			if (perm[5] % 5 != 0)                       continue;
-			if ((perm[2] + perm[3] + perm[4]) % 3 != 0) continue;
+		ext : for (Permutation perm : new PermutationGenerator(Permutation.fromDigits("1023546789"))) {
+			if (perm.get(3) % 2 != 0)                       continue;
+			if (perm.get(5) % 5 != 0)                       continue;
+			if ((perm.get(2) + perm.get(3) + perm.get(4)) % 3 != 0) continue;
 			for (int[] cond : conds) {
 				int i = cond[0];
-				if ((100*perm[i] + 10*perm[i + 1] + perm[i + 2]) % cond[1] != 0)
+				if ((100*perm.get(i) + 10*perm.get(i)+ 1 + perm.get(i)+ 2) % cond[1] != 0)
 					continue ext;
 			}
 			long n = 0;

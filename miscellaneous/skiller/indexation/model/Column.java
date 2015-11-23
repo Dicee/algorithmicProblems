@@ -1,7 +1,7 @@
 package miscellaneous.skiller.indexation.model;
 
-import static miscellaneous.utils.check.Check.areEqual;
-import static miscellaneous.utils.check.Check.notNull;
+import static com.dici.check.Check.areEqual;
+import static com.dici.check.Check.notNull;
 
 import java.sql.ResultSet;
 

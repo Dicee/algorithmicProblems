@@ -5,7 +5,7 @@ import java.io.PrintWriter
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
-import miscellaneous.utils.files.FileUtils
+import com.dici.files.FileUtils
 
 object md2html extends App {
 //	interesting themes : base16-dark.css, eclipse.css, mbo.css, monokai.css, pastel-on-dark.css

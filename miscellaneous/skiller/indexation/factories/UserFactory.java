@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import miscellaneous.skiller.indexation.entities.User;
 import miscellaneous.skiller.indexation.model.DBManager;
-import miscellaneous.utils.collection.ArrayUtils;
+import com.dici.collection.ArrayUtils;
 
 public class UserFactory extends AbstractDBFactory<String,User> {
 	@Override

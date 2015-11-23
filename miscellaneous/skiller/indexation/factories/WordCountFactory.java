@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import miscellaneous.skiller.indexation.entities.TextualContent.SourceType;
 import miscellaneous.skiller.indexation.entities.WordCount;
 import miscellaneous.skiller.indexation.model.DBManager;
-import miscellaneous.utils.collection.ArrayUtils;
+import com.dici.collection.ArrayUtils;
 
 public final class WordCountFactory extends AbstractDBFactory<Long,WordCount> {
 	@Override

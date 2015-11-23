@@ -1,13 +1,13 @@
 package miscellaneous.skiller.indexation;
 
+import static com.dici.check.Check.notBlank;
+import static com.dici.collection.CollectionUtils.reverse;
+import static com.dici.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
+import static com.dici.exceptions.ExceptionUtils.uncheckedConsumer;
+import static com.dici.files.FileUtils.getPathRelativeToClass;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static miscellaneous.skiller.indexation.model.Table.QUESTIONS;
-import static miscellaneous.utils.check.Check.notBlank;
-import static miscellaneous.utils.collection.CollectionUtils.reverse;
-import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckExceptionsAndGet;
-import static miscellaneous.utils.exceptions.ExceptionUtils.uncheckedConsumer;
-import static miscellaneous.utils.files.FileUtils.getPathRelativeToClass;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,7 +18,6 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -32,9 +31,6 @@ import miscellaneous.skiller.indexation.factories.CommentFactory;
 import miscellaneous.skiller.indexation.factories.QuestionFactory;
 import miscellaneous.skiller.indexation.factories.WordCountFactory;
 import miscellaneous.skiller.indexation.model.DBManager;
-import miscellaneous.utils.check.Check;
-import miscellaneous.utils.collection.StreamUtils;
-import miscellaneous.utils.strings.StringUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -43,6 +39,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.dici.collection.StreamUtils;
+import com.dici.strings.StringUtils;
 import com.google.common.base.Stopwatch;
 
 public class IndexWords extends AbstractIndexer {

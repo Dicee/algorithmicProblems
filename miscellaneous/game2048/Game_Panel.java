@@ -5,19 +5,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import miscellaneous.utils.check.Check;
+import com.dici.check.Check;
 
 public class Game_Panel extends JPanel implements KeyListener, Game2048 {
 	// instance variables

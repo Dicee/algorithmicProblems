@@ -1,20 +1,21 @@
 package codingame.medium;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class BenderADepressedRobot {
-	
 	public enum Direction {
 		SOUTH( 1, 0),
 		EAST ( 0, 1),
 		NORTH(-1, 0),
 		WEST ( 0,-1);
 		
-		public int x, y;
+		public final int x, y;
 		
 		private Direction (int x, int y) {
 			this.x = x;
@@ -36,7 +37,7 @@ public class BenderADepressedRobot {
 		CHANGE_WEST ("W"),
 		BLANK       (" ");
 		
-		private String	symbol;
+		private String symbol;
 
 		private Case(String symbol) {
 			this.symbol = symbol;
@@ -44,19 +45,17 @@ public class BenderADepressedRobot {
 		
 		public static Case getCase(String symbol) {
 			for (Case c : values())
-				if (c.symbol.equals(symbol))
-					return c;
+				if (c.symbol.equals(symbol)) return c;
 			return null;
 		}
 	}
 	
 	private static class State {
-		
-		private Case[][] map;
-		private Direction dir;
-		private Point pos;
-		private boolean	inversed;
-		private boolean	enraged;
+		private final Case[][] map;
+		private final Direction dir;
+		private final Point pos;
+		private final boolean	inversed;
+		private final boolean	enraged;
 		
 		public State(Case[][] map, Direction dir, Point pos, boolean inversed, boolean enraged) {
 			this.map      = map;
@@ -66,39 +65,15 @@ public class BenderADepressedRobot {
 			this.enraged  = enraged;
 		}
 		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((dir == null) ? 0 : dir.hashCode());
-			result = prime * result + (enraged ? 1231 : 1237);
-			result = prime * result + (inversed ? 1231 : 1237);
-			result = prime * result + Arrays.hashCode(map);
-			result = prime * result + ((pos == null) ? 0 : pos.hashCode());
-			return result;
-		}
+		public int hashCode() { return Objects.hash(Arrays.deepHashCode(map), dir, pos, inversed, enraged); }
+		
 		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			State other = (State) obj;
-			if (dir != other.dir)
-				return false;
-			if (enraged != other.enraged)
-				return false;
-			if (inversed != other.inversed)
-				return false;
-			if (!Arrays.deepEquals(map, other.map))
-				return false;
-			if (pos == null) {
-				if (other.pos != null)
-					return false;
-			} else if (!pos.equals(other.pos))
-				return false;
-			return true;
+		public boolean equals(Object o) {
+			if (this == o)             return true;
+			if (!(o instanceof State)) return false;
+			State that = (State) o;
+			return dir.equals(that.dir) && pos.equals(that.pos) && inversed == that.inversed && enraged == that.enraged && 
+			        Arrays.deepEquals(map, that.map);
 		}
 	}
 		
@@ -166,29 +141,16 @@ public class BenderADepressedRobot {
 		while (map[current.x][current.y] != Case.SUICIDE) {
 			int x = current.x, y = current.y;
 			switch (map[x][y]) {
-				case CHANGE_NORTH :
-					dir = Direction.NORTH;
-					break;
-				case CHANGE_SOUTH :
-					dir = Direction.SOUTH;
-					break;
-				case CHANGE_EAST :
-					dir = Direction.EAST;
-					break;
-				case CHANGE_WEST :
-					dir = Direction.WEST;
-					break;
-				case BEER :
-					enraged = !enraged;
-					break;
-				case INVERSOR :
-					inversed = !inversed;
-					break;
-				case TELEPORT :
-					Point p = new Point(x,y);
+				case CHANGE_NORTH : dir      = Direction.NORTH; break;
+				case CHANGE_SOUTH : dir      = Direction.SOUTH; break;
+				case CHANGE_EAST  : dir      = Direction.EAST ; break;
+				case CHANGE_WEST  : dir      = Direction.WEST ; break;
+				case BEER         : enraged  = !enraged       ; break;
+				case INVERSOR     : inversed = !inversed      ; break;
+				case TELEPORT     : 
+				    Point p  = new Point(x,y);
 					current = telep[0].equals(p) ? telep[1] : telep[0];
 				default :
-					break;
 			}
 			
 			Case keepDir = map[current.x + dir.x][current.y + dir.y];
@@ -204,7 +166,6 @@ public class BenderADepressedRobot {
 			    break;
 			}
 		}
-		for (Direction direction : moves) 
-			System.out.println(direction);
+		for (Direction direction : moves) System.out.println(direction);
 	}
 }

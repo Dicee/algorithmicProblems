@@ -2,7 +2,7 @@ package miscellaneous.game2048;
 
 import java.util.Random;
 
-import miscellaneous.utils.check.Check;
+import com.dici.check.Check;
 
 public class Tile {
 	private static final Random rd = new Random();

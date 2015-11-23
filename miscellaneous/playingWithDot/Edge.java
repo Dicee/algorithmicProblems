@@ -1,13 +1,13 @@
 package miscellaneous.playingWithDot;
 
-import static miscellaneous.utils.check.Check.notNull;
+import static com.dici.check.Check.notNull;
 
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
-import miscellaneous.utils.collection.richIterator.RichIterator;
-import miscellaneous.utils.files.FileUtils;
+import com.dici.collection.richIterator.RichIterator;
+import com.dici.files.FileUtils;
 
 public class Edge {
 	private static String unpartitionedPath(String path) {

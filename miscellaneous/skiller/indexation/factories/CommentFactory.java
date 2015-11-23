@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import miscellaneous.skiller.indexation.entities.Comment;
 import miscellaneous.skiller.indexation.model.DBManager;
-import miscellaneous.utils.collection.ArrayUtils;
+import com.dici.collection.ArrayUtils;
 
 public class CommentFactory extends AbstractDBFactory<Long,Comment> {
 	@Override
