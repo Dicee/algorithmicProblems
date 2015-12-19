@@ -1,5 +1,3 @@
-package codeeval.moderate.MthToLastElement;
-
 import sys
 # Do you really call that a moderate problem ? Damn... the difficulty of CodeEval's 
 # "challenges" is so poorly evaluated... And not only for this one...

@@ -1,5 +1,3 @@
-package codeeval.easy.MatrixRotation;
-
 import sys
 from math import sqrt
 with open(sys.argv[1], 'r') as lines:

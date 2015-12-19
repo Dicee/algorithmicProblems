@@ -1,5 +1,3 @@
-package codeeval.moderate.FindASquare;
-
 import sys
 import re
 import math

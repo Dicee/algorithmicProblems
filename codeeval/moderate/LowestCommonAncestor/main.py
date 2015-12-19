@@ -1,5 +1,3 @@
-package codeeval.moderate.LowestCommonAncestor;
-
 import re
 import sys
 

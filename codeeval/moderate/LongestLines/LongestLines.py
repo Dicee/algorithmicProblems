@@ -1,5 +1,3 @@
-package codeeval.moderate.LongestLines;
-
 import sys
 from heapq import *
 

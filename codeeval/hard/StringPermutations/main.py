@@ -1,5 +1,3 @@
-package codeeval.hard.StringPermutations;
-
 import sys
 
 def swap(arr,i,j):

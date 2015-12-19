@@ -1,5 +1,3 @@
-package codeeval.easy.MaxRangeSum;
-
 import sys
 from functools import reduce
 with open(sys.argv[1],'r') as lines:

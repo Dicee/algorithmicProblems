@@ -1,5 +1,3 @@
-package codeeval.moderate.SumOfIntegers;
-
 import sys
 with open(sys.argv[1], 'r') as lines:
 	for line in lines:

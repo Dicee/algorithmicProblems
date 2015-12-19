@@ -1,5 +1,3 @@
-package codeeval.moderate.EmailValidation;
-
 import re
 import sys
 matcher = re.compile('^"[\w_\-+\.@]+"|[\w_\-+\.?]*@{1}[a-z0-9]+\.{1}[a-z0-9-]+\.?[a-z0-9-]{2,}')

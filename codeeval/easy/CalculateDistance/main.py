@@ -1,5 +1,3 @@
-package codeeval.easy.CalculateDistance;
-
 import sys
 import re
 from math import sqrt

@@ -1,5 +1,3 @@
-package codeeval.moderate.NumberPairs;
-
 import sys
 import math
 

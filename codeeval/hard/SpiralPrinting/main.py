@@ -1,5 +1,3 @@
-package codeeval.hard.SpiralPrinting;
-
 import sys
 from math import *
 def reached_goal(i,j,wbounds,hbounds,incs):

@@ -1,5 +1,3 @@
-package codeeval.easy.ShortestRepetition;
-
 import sys
 import re
 
