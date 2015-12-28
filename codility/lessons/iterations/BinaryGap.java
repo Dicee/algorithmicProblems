@@ -3,7 +3,7 @@ package codility.lessons.iterations;
 /**
  * Level : painless
  */
-class Solution {
+class BinaryGap {
     public int solution(int N) {
         int     max   = 0;
         int     count = 0;
