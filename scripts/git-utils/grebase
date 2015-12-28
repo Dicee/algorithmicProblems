@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ $# -eq 0 ] 
+then
+    branch=master
+else
+    branch=$1
+fi
+
+echo "git stash"
+old_stash=$(git rev-parse -q --verify refs/stash)
+git stash
+new_stash=$(git rev-parse -q --verify refs/stash)
+
+echo "git rebase -i remotes/origin/$branch"
+git rebase -i remotes/origin/$branch
+[ "$old_stash" != "$new_stash" ] && echo "git stash pop" && git stash pop

@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "git stash"
+old_stash=$(git rev-parse -q --verify refs/stash)
+git stash
+new_stash=$(git rev-parse -q --verify refs/stash)
+echo "git pull --rebase"
+git pull --rebase
+[ "$old_stash" != "$new_stash" ] && echo "git stash pop" && git stash pop

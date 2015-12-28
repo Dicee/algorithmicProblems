@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ $# -eq 0 ] 
+then
+    branch=master
+else
+    branch=$1
+fi
+echo "git log HEAD...remotes/origin/$branch"
+git log HEAD...remotes/origin/$branch
