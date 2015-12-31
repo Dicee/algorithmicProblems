@@ -1,4 +1,4 @@
-package catmullClark;
+package miscellaneous.subdivisionAlgorithms.catmullClark;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

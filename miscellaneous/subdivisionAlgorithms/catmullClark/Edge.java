@@ -1,4 +1,4 @@
-package catmullClark;
+package miscellaneous.subdivisionAlgorithms.catmullClark;
 
 /**
  * This class enables to represent an Edge from two vertices. Nothing particular to say about it.
