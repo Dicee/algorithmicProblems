@@ -1,15 +1,14 @@
 package miscellaneous.markdown
 
 import java.io.File
-
 import scala.collection.JavaConversions
 import scala.io.Source
-
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
-
 import com.dici.regex.Patterns.EMAIL
 import com.dici.regex.Patterns.URL
+import java.net.URI
+import java.net.URL
 
 object MarkdownParser {
 	val doc = new Document
@@ -86,8 +85,10 @@ object MarkdownParser {
 	    }
 	      
 	    private def parseParagraph(s: String) = P(parseStyledText(s))
-	    private def parseStyledText(s: String)  =  
-	    	s.replaceAll("\\s+" .wrapBy("(\\*){2}"),""                                       )
+	    private def parseStyledText(s: String)  = 
+            s.split("\\s+").map(word => if (isURI(word)) s"<a href='${word}'>${word}</a>" else word)
+             .mkString(" ")
+	    	 .replaceAll("\\s+" .wrapBy("(\\*){2}"),""                                       )
 	         .replaceAll("\\s+" .wrapBy("\\*"     ),""                                       )
 	         .replaceAll("\\s+" .wrapBy("~~"      ),""                                       )
 	         .replaceAll("\\s+" .wrapBy("`"       ),""                                       )
@@ -96,7 +97,8 @@ object MarkdownParser {
 	         .replaceAll("(.*?)".wrapBy("\\*"     ),"<span class=\"emphasize\">$1</span>"    )
 	         .replaceAll("(.*?)".wrapBy("~~"      ),"<span class=\"strikethrough\">$1</span>")
 	         .replaceAll(EMAIL.regex               ,"<a href=\"mailto:$0\">$0</a>"           )
-	         .replaceAll(URL.regex                 ,"<a href=\"$0\">$0</a>"                  )
+             
+        private def isURI(s: String) = try { new URL(s); true } catch { case _: Throwable => false }
 	}
 	    
     private case class Br  (                                 ) extends HTMLNode(doc.create("br"       ))
