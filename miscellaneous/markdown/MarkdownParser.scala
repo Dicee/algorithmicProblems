@@ -120,13 +120,13 @@ object MarkdownParser {
 		private val MIMES = Map(
 				"text/x-java"   -> "clike/clike.js"  , "text/x-c++src" -> "clike/clike.js", "text/x-csrc"     -> "clike/clike.js", 
 				"text/x-scala"  -> "clike/clike.js"  , "text/x-stex"   -> "stex/stex.js"  , "text/javascript" -> "javascript/javascript.js", 
-				"text/x-python" -> "python/python.js", "text/x-sql"    -> "sql/sql.js"
+				"text/x-python" -> "python/python.js", "text/x-sql"    -> "sql/sql.js"    , "text/html"       -> "xml/xml.js"
 		)
     	
     	private val LANGUAGES = Map (
 			"java"  -> "text/x-java" , "cpp" -> "text/x-c++src", "c++"        -> "text/x-c++src"  , "c"       -> "text/x-csrc",
 			"scala" -> "text/x-scala", "tex" -> "text/x-stex"  , "javascript" -> "text/javascript",  "python" -> "text/x-python",
-            "sql"   -> "text/x-sql" 
+            "sql"   -> "text/x-sql"  , "xml" -> "text/html"    , "html"       -> "text/html"
 		)
     			
 		private var id = -1
