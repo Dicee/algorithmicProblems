@@ -18,7 +18,7 @@ public abstract class MoveWithLength implements Move {
 
     public MoveWithLength(int length) { 
         // Check.isBetween is right-exclusive 
-        Check.areDifferent(length, 0, "Move cannot be of length 0");
+        Check.notEqual(length, 0, "Move cannot be of length 0");
         Check.isBetween(- BOARD_SIZE, length, BOARD_SIZE + 1, "Move larger than board size : " + length + " (maximum " + BOARD_SIZE + ")");
         this.length = length;
     }

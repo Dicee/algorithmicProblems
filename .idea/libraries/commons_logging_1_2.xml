@@ -2,7 +2,6 @@
   <library name="commons-logging-1.2">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/dici-utils.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/guava-18.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/hamcrest-junit-2.0.0.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/java-hamcrest-2.0.0.0.jar!/" />
