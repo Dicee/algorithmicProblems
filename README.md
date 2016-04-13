@@ -3,15 +3,15 @@ algorithmicProblems
 
 Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match Codility's version). The problems come from CodinGame, Project Euler, Codility and CodeEval.
 
-CodinGame problems are on average reasonably hard/interesting, they often include pathfinding and sometimes lead to a quite longer code than the other challenges.
+- CodinGame problems are on average reasonably hard/interesting, they often include pathfinding and sometimes lead to a quite longer code than the other challenges.
 
-Project Euler proposes the more mathematical-based problems, the goal is most often to find mathematical tricks to reduce the space of solutions. The first problems are fairly easy but difficulty increases pretty quickly.
+- Project Euler proposes the more mathematical-based problems, the goal is most often to find mathematical tricks to reduce the space of solutions. The first problems are fairly easy but difficulty increases pretty quickly.
 
-Codility problems are purely algorithmic. The average difficulty of the respectable problems is quite high.
+- Codility problems are purely algorithmic. The average difficulty of the respectable problems is quite high.
+**NB** : For Codility, I will share the code both of the training problems (in the *lessonX* folders) and challenges I participated to. 
 
-CodeEval problems are globally trivial or easy whatever their difficuly category, however some of them are interesting or at least a bit difficult. Yet, it was overall a way to me to train my Python and Scala.
+- CodeEval problems are globally trivial or easy whatever their difficuly category, however some of them are interesting or at least a bit difficult. Yet, it was overall a way to me to train my Python and Scala.
 
-- NB1 : For Codility, I will share the code both of the training problems (in the *lessonX* folders) and challenges I participated to. 
 
 Links 
 ===================
