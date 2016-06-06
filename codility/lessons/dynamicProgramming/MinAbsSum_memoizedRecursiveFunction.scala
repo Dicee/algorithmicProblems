@@ -3,7 +3,7 @@ package codility.lessons.dynamicProgramming
 /**
  * Level: ambitious
  *
- * Note: this solution does not meet all the performance requirements, it either fails to terminate
+ * Note: this solution does not meet all the performance requirements. For large problems, it either fails to terminate
  *       before the timeout or crashes due to a stack overflow
  */
 object MinAbsSum_memoizedRecursiveFunction {
