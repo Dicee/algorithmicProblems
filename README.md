@@ -12,6 +12,7 @@ Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match C
 
 - CodeEval problems are globally trivial or easy whatever their difficuly category, however some of them are interesting or at least a bit difficult. Yet, it was overall a way to me to train my Python and Scala.
 
+- HackerRank. Can't say anything yet, I haven't try enough problems from there to judge them 
 
 Links 
 ===================
@@ -22,4 +23,6 @@ Links
 - Codility (https://codility.com/programmers/lessons/) is a website that proposes some algorithmic lessons and exercises. It also provides a nice in-browser IDE and offers its services to company recruiters to test their candidates on Codility's platform.
 
 - CodeEval (https://www.codeeval.com) is a website that proposes algorithmic challenges of various difficulties and have a nice ranking/progression system.
+
+- HackerRank (https://www.hackerrank.com) is a website that organizes various algorithmic challenges.
 
