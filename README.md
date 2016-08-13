@@ -13,6 +13,8 @@ Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match C
 
 - **HackerRank:** Can't say anything yet, I haven't tried enough problems from there to judge them.
 
+Additionally, the *miscellaneous* folder contains random work I've been doing on my own. Not all of it is complete/refined, but I like keeping track of it.
+
 Links 
 ===================
 - CodinGame (http://www.codingame.com/cg/) is a french website dedicated to programming freaks which proposes problems of increasing difficulty.
