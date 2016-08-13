@@ -1,3 +1,5 @@
+package hackerrank.challenges.AmazingEMEAInternCoding.ConnectedCellInAGrid
+
 import scala.io.Source
 import scala.collection.mutable.HashSet
 import scala.collection.mutable.Queue

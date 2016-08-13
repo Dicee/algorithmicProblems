@@ -1,3 +1,5 @@
+package hackerrank.challenges.AmazingEMEAInternCoding.AlternatingCharacters
+
 import scala.io.Source
 
 // https://www.hackerrank.com/contests/amazing-intern-coding-challenge-2/challenges/alternating-characters
