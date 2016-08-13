@@ -1,7 +1,9 @@
 package hackerrank.challenges.AmazingEMEAInternCoding.GreedyFlorist
 
 import scala.io.Source
-    
+
+// Difficulty: fairly easy. An imperative solution would have a bit more edge cases than this high-level code (thank the Scala standard library !)
+
 // https://www.hackerrank.com/contests/amazing-intern-coding-challenge-2/challenges/greedy-florist
 object Solution {
     def main(args: Array[String]) {        

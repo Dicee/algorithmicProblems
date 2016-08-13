@@ -4,6 +4,10 @@ import scala.io.Source
 import scala.collection.mutable.HashSet
 import scala.collection.mutable.Queue
 
+// Difficulty: that's a classic flood-fill so it's pretty easy to get the idea for an experienced programmer, but it's an interesting
+//             problem for a beginner. It requires a bit of coding, contrarily to most of the other problems of the same challenge which
+//             have n-liner solutions.
+
 // https://www.hackerrank.com/contests/amazing-intern-coding-challenge-2/challenges/connected-cell-in-a-grid
 object Solution {
     def main(args: Array[String]) {

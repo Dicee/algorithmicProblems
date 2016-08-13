@@ -2,6 +2,8 @@ package hackerrank.challenges.AmazingEMEAInternCoding.AlternatingCharacters
 
 import scala.io.Source
 
+// Difficulty: easy. No scaling problem, no edge case.
+
 // https://www.hackerrank.com/contests/amazing-intern-coding-challenge-2/challenges/alternating-characters
 object Solution {
     def main(args: Array[String]) {
