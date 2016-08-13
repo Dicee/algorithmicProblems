@@ -12,7 +12,7 @@ Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match C
 
 - CodeEval problems are globally trivial or easy whatever their difficuly category, however some of them are interesting or at least a bit difficult. Yet, it was overall a way to me to train my Python and Scala.
 
-- HackerRank. Can't say anything yet, I haven't try enough problems from there to judge them 
+- HackerRank. Can't say anything yet, I haven't tried enough problems from there to judge them 
 
 Links 
 ===================
