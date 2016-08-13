@@ -1,7 +1,7 @@
 algorithmicProblems
 ===================
 
-Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match Codility's version). The problems come from CodinGame, Project Euler, Codility and CodeEval.
+Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match Codility's version). The problems come from CodinGame, Project Euler, Codility, CodeEval, HackerRank and some of them don't have a specific source.
 
 - CodinGame problems are on average reasonably hard/interesting, they often include pathfinding and sometimes lead to a quite longer code than the other challenges.
 
