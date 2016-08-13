@@ -3,16 +3,15 @@ algorithmicProblems
 
 Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match Codility's version). The problems come from CodinGame, Project Euler, Codility, CodeEval, HackerRank and some of them don't have a specific source.
 
-- CodinGame problems are on average reasonably hard/interesting, they often include pathfinding and sometimes lead to a quite longer code than the other challenges.
+- **CodinGame** problems are on average reasonably hard/interesting, they often include pathfinding and sometimes lead to a quite longer code than the other challenges.
 
-- Project Euler proposes the more mathematical-based problems, the goal is most often to find mathematical tricks to reduce the space of solutions. The first problems are fairly easy but difficulty increases pretty quickly.
+- **Project Euler** proposes the more mathematical-based problems, the goal is most often to find mathematical tricks to reduce the space of solutions. The first problems are fairly easy but difficulty increases pretty quickly.
 
-- Codility problems are purely algorithmic. The average difficulty of the respectable problems is quite high.
-**NB** : I will share both the code of the training problems (in the *lessonX* folders) and the challenges I participated to. 
+- **Codility** problems are purely algorithmic. The average difficulty of the respectable problems is quite high.
 
-- CodeEval problems are globally trivial or easy whatever their difficuly category, however some of them are interesting or at least a bit difficult. Yet, it was overall a way to me to train my Python and Scala.
+- **CodeEval** problems are generally trivial or easy whatever their difficuly category, however some of them are interesting. Yet, it was overall a way for me to train my Python and Scala.
 
-- HackerRank. Can't say anything yet, I haven't tried enough problems from there to judge them 
+- **HackerRank:** Can't say anything yet, I haven't tried enough problems from there to judge them.
 
 Links 
 ===================
