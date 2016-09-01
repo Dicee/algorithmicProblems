@@ -1,4 +1,4 @@
-package hackerrank.exercises.Sierpinski
+package hackerrank.exercises.functionalProgramming.recursion.sierpinskiTriangles
 
 // Difficulty: moderate. Pretty classical but still requires coding.
 
