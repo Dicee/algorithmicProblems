@@ -1,13 +1,12 @@
 package miscellaneous.game2048;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 import static com.dici.check.Check.areEqual;
 import static com.dici.check.Check.notNull;
 import static com.dici.collection.ArrayUtils.toPrettyString;
 import static com.dici.math.MathUtils.isBetween;
-
-import java.util.Optional;
-
-import scala.actors.threadpool.Arrays;
 
 public class GameState {
 	public static final int	BOARD_SIZE	= 4;
