@@ -8,7 +8,7 @@ import javafx.scene.input.InputEvent
 import javafx.scene.layout.GridPane
 import javafx.stage.{Screen, Stage}
 
-import miscellaneous.autoCompletion.ParrotAutoCompleter
+import miscellaneous.autoCompletion.{ParrotAutoCompleter, TolerantAutoCompleter}
 
 class AutoCompleterFX extends Application {
   object Constants {
@@ -23,7 +23,7 @@ class AutoCompleterFX extends Application {
   private val suggestions: Array[Button] = Array.ofDim(NumSuggestions)
   private val userInput  : TextField     = new TextField
 
-  private val autoCompleter = new ParrotAutoCompleter
+  private val autoCompleter = new ParrotAutoCompleter with TolerantAutoCompleter { override val MaxRetries: Int = 5 }
 
   override def start(primaryStage: Stage): Unit = {
     val visualBounds = Screen.getPrimary.getVisualBounds
