@@ -23,7 +23,7 @@ class AutoCompleterFX extends Application {
   private val suggestions: Array[Button] = Array.ofDim(NumSuggestions)
   private val userInput  : TextField     = new TextField
 
-  private val autoCompleter = new ParrotAutoCompleter with TolerantAutoCompleter { override val MaxRetries: Int = 5 }
+  private val autoCompleter = new ParrotAutoCompleter with TolerantAutoCompleter { override def MaxRetries: Int = 5 }
 
   override def start(primaryStage: Stage): Unit = {
     val visualBounds = Screen.getPrimary.getVisualBounds
