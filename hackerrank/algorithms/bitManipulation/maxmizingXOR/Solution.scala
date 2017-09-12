@@ -8,7 +8,7 @@ import scala.annotation.tailrec
 object Solution {
   private def reversedBits(n: Int): List[Boolean] = if (n <= 1) List(n == 1) else (n % 2 == 1) :: reversedBits(n >> 1)
 
-  private def maxXOR(minBits: List[Boolean], maxBits: List[Boolean], acc: List[Boolean] = Nil) = {
+  private def maxXOR(minBits: List[Boolean], maxBits: List[Boolean]) = {
     @tailrec
     def recSol(minBits: List[Boolean], maxBits: List[Boolean], bitLength: Int, canFlipBit: Boolean = false, acc: Int = 0): Int = (minBits, maxBits) match {
       case (minStrongestBit :: minTail, maxStrongestBit :: maxTail) =>
