@@ -6,8 +6,8 @@ import java.util.List;
 /**
  * Forgot the integer overflow edge-case, otherwise very classic (variant of Kadane's algorithm)
  */
-public class Solution5 {
-    public static List<Integer> maxset(List<Integer> arr) {
+public class Solution {
+    public List<Integer> maxset(List<Integer> arr) {
         int start = 0, end = 0;
         long sum = 0;
 
