@@ -25,7 +25,6 @@ public class Solution5 {
                     maxSum = sum;
                     maxStart = start;
                     maxEnd = end;
-
                 }
                 start = end = i + 1;
                 sum = 0;
