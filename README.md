@@ -11,7 +11,9 @@ Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match C
 
 - **CodeEval** problems are generally trivial or easy whatever their difficuly category, however some of them are interesting. Yet, it was overall a way for me to train my Python and Scala.
 
-- **HackerRank:** Can't say anything yet, I haven't tried enough problems from there to judge them.
+- **HackerRank:** very good website with a broad range of core computer science problems (as opposed to website like CodinGame that are more gamified) ranging from easy to hard. Good for learning about some data structures that aren't frequently used or specific algorithms/set of problems.
+
+- **Interviewbit:** not all problems are interesting, but the website is pretty well-designed and useful to people who wish to train for programming interviews. Also has nice functionalities that I didn't see on many websites like system design questions and even mock interviews with other members of the website although I did not try either of those.
 
 - **Miscellaneous:** this folder contains random work I've been doing on my own. Not all of it is complete/refined, but I like keeping track of it.
 
