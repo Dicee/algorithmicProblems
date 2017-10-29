@@ -27,5 +27,7 @@ Links
 
 - CodeEval (https://www.codeeval.com) is a website that proposes algorithmic challenges of various difficulties and have a nice ranking/progression system.
 
-- HackerRank (https://www.hackerrank.com) is a website that organizes various algorithmic challenges.
+- HackerRank (https://www.hackerrank.com) is a website that organizes various algorithmic challenges. It's a very good resource for developping one's algorithmic abilities.
+
+- Interviewbit (https://www.interviewbit.com/) is a website that is heavily focused on providing an interview-like experience. It covers a large variety of coding problems and system design questions. Good resource for preparing interviews.
 
