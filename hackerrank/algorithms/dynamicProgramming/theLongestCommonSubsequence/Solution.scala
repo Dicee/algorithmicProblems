@@ -3,6 +3,7 @@ package hackerrank.algorithms.dynamicProgramming.theLongestCommonSubsequence
 /**
  * Difficulty: medium. It's a big classic, but not that straightforward to come up with the idea without knowing it.
  */
+// https://www.hackerrank.com/challenges/dynamic-programming-classics-the-longest-common-subsequence/problem
 object Solution {
     def main(args: Array[String]) {
         val lines = scala.io.Source.stdin.getLines()
