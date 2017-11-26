@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Less efficient than the specialized two characters alphabet solution that also met the OP's requirements but can be applied to any finite alphabet 
  * that can be stored in an array (i.e. must have less than 2^32 - 1 symbols and fit in memory).
  */
-public class TwoCharactersAlphabet {
+public class GeneralSolution {
   public static void main(String[] args) {
       listWords(new char[]{ 'e', 'z', 'f' }, 3);
   }
