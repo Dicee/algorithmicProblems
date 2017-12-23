@@ -1,7 +1,7 @@
 package hackerrank.dataStructures.arrays.arrayManipulation
 
 // Difficulty: I'll be honest, I didn't find the optimal, linear solution by myself. It's pretty ingenious but very easy to implement.
-//             The best idea I could came up with was to implement an interval tree to find all intervals intersecting each of the cells
+//             The best idea I could come up with was to implement an interval tree to find all intervals intersecting each of the cells
 //             at the end of the m queries. I believe the complexity would have been O(n log(n + m)). The implementation would have been 
 //             substantially more difficult than the linear solution.
 //             Therefore, the 'Hard' tag attributed to this question by HackerRank makes sense.
