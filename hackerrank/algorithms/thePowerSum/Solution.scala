@@ -4,7 +4,7 @@ package hackerrank.algorithms.recursion.thePowerSum
 //             which would have been less appropriate (sub-problems do not overlap).
 
 // Basic idea: if 1 = p0, p1, p2, ..., pj are all successive integers i such that i^n <= x and S(0..j)(n) is the number of ways to get n by
-//             summing unique elements among [p0..pj], then we can express the solution as follows:
+//             summing unique elements among [p0^n..pj^n], then we can express the solution as follows:
 //             S(0..j)(x) = S(0..k)(x - j) + S(0..j-1)(x) where k is the first integer such that pk^n <= x - j  
 
 // https://www.hackerrank.com/challenges/the-power-sum/problem
