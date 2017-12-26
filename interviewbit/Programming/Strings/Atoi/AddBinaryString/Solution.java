@@ -1,6 +1,8 @@
-import static java.math.BigInteger.ZERO;
+package interviewbit.Programming.Strings.Atoi.AddBinaryString;
 
 import java.math.BigInteger;
+
+import static java.math.BigInteger.ZERO;
 
 public class Solution {
     public String addBinary(String a, String b) {
