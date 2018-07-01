@@ -10,16 +10,11 @@ object ScalaSolution {
     def connectedCell(matrix: Array[Array[Int]]): Int = {
         val explored = new mutable.HashSet[Point]
         
-        // in theory the product of two ints nxm can be bigger than Integer.MAX_VALUE but in our case they're both lower than 10 so an int is sufficient
+        // in theory the product of two ints nxm can be bigger than Int.MinValue but in our case they're both lower than 10 so an int is sufficient
         var max = Int.MinValue;
         val toExplore = new mutable.Queue[Point]()
-        
-        for (i <- 0 until matrix.length; j <- 0 until matrix(0).length) {
-            val count = floodFill(matrix, explored, toExplore, Point(i, j))
-            max = Math.max(max, count)
-            toExplore.clear()
-        }
-        max
+    
+        (for (i <- 0 until matrix.length; j <- 0 until matrix(0).length) yield floodFill(matrix, explored, toExplore, Point(i, j))).max
     }
     
     private def floodFill(matrix: Array[Array[Int]], explored: mutable.Set[Point], toExplore: mutable.Queue[Point], origin: Point): Int = {
