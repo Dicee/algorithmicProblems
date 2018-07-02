@@ -10,7 +10,7 @@ object ScalaSolution {
     def connectedCell(matrix: Array[Array[Int]]): Int = {
         val explored = new mutable.HashSet[Point]
         
-        // in theory the product of two ints nxm can be bigger than Int.MinValue but in our case they're both lower than 10 so an int is sufficient
+        // in theory the product of two ints nxm can be bigger than Int.MaxValue but in our case they're both lower than 10 so an int is sufficient
         var max = Int.MinValue;
         val toExplore = new mutable.Queue[Point]()
     
@@ -22,12 +22,12 @@ object ScalaSolution {
 
         var count = 0
         toExplore += origin
-        explored.add(origin);
+        explored += origin
 
         while (toExplore.nonEmpty) {
             count += 1
 
-            val point = toExplore. dequeue()
+            val point = toExplore.dequeue()
             toExplore ++= (for { 
                 di <- -1 to 1; dj <- -1 to 1
                 if di != 0 || dj != 0
@@ -40,6 +40,5 @@ object ScalaSolution {
     }
     
     private def shouldExplore(matrix: Array[Array[Int]], explored: mutable.Set[Point], point: Point) = matrix(point.i)(point.j) == 1 && explored.add(point)
-    
     private case class Point(i: Int, j: Int)
 }
