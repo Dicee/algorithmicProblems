@@ -4,7 +4,7 @@ package hackerrank.algorithms.gameTheory.kittyAndKatty
 //             sheet of paper until it becomes clear that the solution was so trivial. Here's how I solved it:
 //
 //             The problem can be hugely simplified by using properties of the modulo operator. In particular, for any
-//             integers (a, b), (a % n = k and b % n = j) => ((a + b) % n = k + j)
+//             integers (a, b), (a % n = k and b % n = j) => (a + b) % n = (k + j) % n
 //
 //             Therefore, for any integer k <= n, the state of boxes B = (b1, b2, ..., bk, ..., bn) is equivalent to the
 //             problem (b1, b2, ..., bk + 3*sigma, ..., bn) where sigma is either 1 or -1. This means the problem can
@@ -28,7 +28,7 @@ package hackerrank.algorithms.gameTheory.kittyAndKatty
 //
 //             - similarly, (1, 0, 1) gives the choice between {2, -2} <=> {2, 1}, hence the same conclusion as above
 //
-//             We've proved that for n = 2, there is always a winning move independently of who is playing it ! That means
+//             We've proven that for n = 2, there is always a winning move independently of who is playing it ! That means
 //             that for all n >= 2, the last player always wins, which boils down to knowing the parity of n. The only edge
 //             case is n = 1, which is odd but is still a win for Kitty (trivial).
 //
