@@ -9,9 +9,9 @@ object Solution {
        val matrix = Array.ofDim[Int](s1.length + 1, s2.length + 1)
        for (i <- 1 until matrix.length) {
             for (j <- 1 until matrix(0).length) {
-                if (s1(i - 1) == s2(j - 1)) {
-                    matrix(i)(j) = 1 + matrix(i - 1)(j - 1)
-                } else matrix(i)(j) = Math.max(matrix(i)(j - 1), matrix(i - 1)(j))
+                matrix(i)(j) = 
+                    if (s1(i - 1) == s2(j - 1)) 1 + matrix(i - 1)(j - 1)
+                    else Math.max(matrix(i)(j - 1), matrix(i - 1)(j))
             }
         }
         matrix(s1.length)(s2.length)
