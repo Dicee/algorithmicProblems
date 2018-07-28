@@ -8,18 +8,8 @@ import scala.annotation.tailrec
 // https://www.hackerrank.com/challenges/minimum-swaps-2/problem?h_l=interview&playlist_slugs%5B%5D%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D%5B%5D=arrays
 object Solution {
     def minimumSwaps(arr: Array[Int]): Int = {
-      println(arr.toList)
-      println(arr.view
-           .zipWithIndex
-           .sortBy(_._1) // stable sort, this is important here
-           .map(_._2).toList)
-
-      val originalIndices = arr
-           .view
-           .zipWithIndex
-           .sortBy(_._1) // stable sort, this is important to not overestimate the count
-           .map(_._2)
-           .toArray
+        // stable sort, this is important to not overestimate the count
+      val originalIndices = arr.view.zipWithIndex.sortBy(_._1).map(_._2).toArray
 
       val explored = new mutable.HashSet[Int]
       var swaps    = 0
@@ -33,7 +23,6 @@ object Solution {
                   swaps       += 1
               } while(currentIndex != originalIndex)
               swaps -= 1
-              println(s"Swaps $swaps")
           }
       }
 
