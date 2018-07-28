@@ -1,7 +1,7 @@
 import hackerrank.algorithms.strings.commonChild
 
 // Difficulty: trivial if you already know LCS/are trained with DP. A bit disappointing that I was able to copy-paste a fragment
-//             of my LCS solution (also from Hackerrank0 to solve this problem.
+//             of my LCS solution (also from Hackerrank) to solve this problem.
 
 // https://www.hackerrank.com/challenges/common-child/problem?h_l=interview&playlist_slugs%5B%5D%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D%5B%5D=strings
 object Solution {
