@@ -1,5 +1,7 @@
 package hackerrank.interviewPreparationKit.miscellaneous.maximumXor
 
+import scala.annotation.tailrec
+
 // Difficulty: medium. The implementation is easy but you need to get the right idea to solve it efficiently. I really enjoyed it, 
 //             it's one of these problems that is sufficiently elegant to be satisfying to solve, while also not being too hard.
 
@@ -23,18 +25,20 @@ object Solution {
         private class Node {
             private val children = Array[Node](null, null)
             
-            def insert(value: Int, mask: Int): Unit = if (mask != 0) {
+            @tailrec
+            final def insert(value: Int, mask: Int): Unit = if (mask != 0) {
                 val bit = if ((value & mask) > 0) 1 else 0       
                 if (children(bit) == null) children(bit) = new Node
                 children(bit).insert(value, mask >> 1)
             } 
             
-            def maximumXor(value: Int, mask: Int, acc: Int): Int = 
+            @tailrec
+            final def maximumXor(value: Int, mask: Int, acc: Int): Int = 
                 if (mask == 0) acc
                 else {
-                    val masked     = value & mask
-                    val bit        = if (masked > 0) 1 else 0
+                    val bit        = if ((value & mask) > 0) 1 else 0
                     val optimalBit = bit ^ 1 // XOR is optimal if the left bit is the opposite of the right bit
+                    
                     if (children(optimalBit) != null) children(optimalBit).maximumXor(value, mask >> 1, acc + mask)
                     else if (children(bit) != null) children(bit).maximumXor(value, mask >> 1, acc)
                     else throw new IllegalStateException("All leaves should be at depth ${Solution.NumBits}")
