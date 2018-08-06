@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 // Difficulty: medium. The size of the problem means a brute force solution is enough to pass all tests, so in that sense the problem is easy.
 //             Nevertheless, it requires a lot more code than a typical Hackerrank solution and it still took me several hours to get it done as 
-//             I used it as an occasion to write as much idiomatic and elegant Scala as possible over my usual concerns of performance. I liked 
+//             I used it as an occasion to write as idiomatic and elegant Scala as possible over my usual concerns of performance. I liked 
 //             being able to sacrifice some performance for pure immutability (except in the very last statement!) and elegance, for once!
 
 // https://www.hackerrank.com/challenges/crossword-puzzle/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=recursion-backtracking
