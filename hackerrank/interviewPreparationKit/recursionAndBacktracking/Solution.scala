@@ -13,9 +13,8 @@ object Solution {
     private type Solution = Map[Point, Char]
     
     def crosswordPuzzle(crossword: Array[String], csvWords: String): Array[String] = {
-        val words = Set(csvWords.split(";"): _*)
-        val n     = crossword.length
-
+        val n = crossword.length
+        
         def backtracking(p: Point, remainingWords: Set[String], occupiedCells: Solution): Option[Solution] = {
             if (remainingWords.isEmpty) Some(occupiedCells)
             else {
@@ -35,13 +34,13 @@ object Solution {
         }
 
         def tryUsingWord(word: String, p: Point, step: Step, remainingWords: Set[String], occupiedCells: Solution) = 
-        tryFitWord(word, p, step, occupiedCells) match {
-            case Some(partialSol) => next(p) match {
-              case Some(q) => backtracking(q, remainingWords - word, partialSol)
-              case None    => None
-            }
-            case None             => None
-        }   
+            tryFitWord(word, p, step, occupiedCells) match {
+                case Some(partialSol) => next(p) match {
+                  case Some(q) => backtracking(q, remainingWords - word, partialSol)
+                  case None    => None
+                }
+                case None      => None
+            }   
 
         def tryFitWord(word: String, start: Point, step: Step, occupiedCells: Solution): Option[Solution] = {
             @tailrec
@@ -70,7 +69,8 @@ object Solution {
         def isValid   (p: Point) = p.i >= 0 && p.i < n && p.j >= 0 && p.j < n && isFillable(p)
         def isFillable(p: Point) = crossword(p.i)(p.j) == '-'
         
-        val solution = crossword.map(Array(_: _*))
+        val words       = Set(csvWords.split(";"): _*)
+        val solution    = crossword.map(Array(_: _*))
         val filledCells = backtracking(Point(0, 0), words, Map()).get
         for ((Point(i, j), ch) <- filledCells) solution(i)(j) = ch
 
