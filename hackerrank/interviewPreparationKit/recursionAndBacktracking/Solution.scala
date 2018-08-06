@@ -13,10 +13,11 @@ object Solution {
     private type Solution = Map[Point, Char]
     
     def crosswordPuzzle(crossword: Array[String], csvWords: String): Array[String] = {
-        val n = crossword.length
+        val n          = crossword.length
+        val emptyCells = Set() ++ (for (i <- 0 until n; j <- 0 until n; if crossword(i)(j) == '-') yield Point(i, j))
         
         def backtracking(p: Point, remainingWords: Set[String], occupiedCells: Solution): Option[Solution] = {
-            if (remainingWords.isEmpty) Some(occupiedCells)
+            if (remainingWords.isEmpty && emptyCells == occupiedCells.keySet) Some(occupiedCells)
             else {
                 val sol = remainingWords.view.flatMap(word => {
                     tryUsingWord(word, p, Horizontal, remainingWords, occupiedCells) orElse 
@@ -72,5 +73,15 @@ object Solution {
         for ((Point(i, j), ch) <- filledCells) solution(i)(j) = ch
 
         solution.map(_.mkString)
+    }
+    
+    // these immutable classes are not the most efficient way to achieve their purpose, but my solution is
+    // a brute force algorithm anyway, so I figured I'd just have fun with Scala's DSL capabilities
+    case class Point(i : Int, j : Int) { def +(step  : Step) = Point(i + step.di, j + step.dj) }
+    case class Step (di: Int, dj: Int) { def *(lambda: Int ) = Step (lambda * di, lambda * dj) }
+
+    object Step {
+      val Horizontal = Step(0, 1)
+      val Vertical = Step(1, 0)
     }
 }
