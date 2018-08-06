@@ -35,11 +35,8 @@ object Solution {
 
         def tryUsingWord(word: String, p: Point, step: Step, remainingWords: Set[String], occupiedCells: Solution) = 
             tryFitWord(word, p, step, occupiedCells) match {
-                case Some(partialSol) => next(p) match {
-                  case Some(q) => backtracking(q, remainingWords - word, partialSol)
-                  case None    => None
-                }
-                case None      => None
+                case Some(partialSol) => backtracking(p, remainingWords - word, partialSol)
+                case None             => None
             }   
 
         def tryFitWord(word: String, start: Point, step: Step, occupiedCells: Solution): Option[Solution] = {
