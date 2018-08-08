@@ -11,10 +11,11 @@ object Solution {
     }
     
     // Each element i can be moved to at most two positions (i + k and i - k). However, elements between 0 and k - 1 
-    // (for example)  and only be moved forward, which means that the element that is displaced by moving i (< k) to i + k 
+    // (for example) can only be moved forward, which means that the element that is displaced by moving i (< k) to i + k 
     // is the only element that can fill the void left by i after it moved forward. Therefore, any solution *must* swap i 
-    // and i + k. In the end, there is actually a single possible position for each element. In some cases, some elements 
-    // will need to be moved to the same position, rendering the problem impossible.
+    // and i + k. In the end, this shift will propagate from element to element, meaning that there is actually a single 
+    // possible position for each element. In some cases, some elements will need to be moved to the same position, making 
+    // the problem unsolvable.
     def searchSolution(arr: Array[Int], n: Int, k: Int): Boolean = {
         for (i <- 0 until n) {
             // otherwise, the element has already been swapped
