@@ -1,6 +1,6 @@
 package hackerrank.algorithms.sorting.fraudulentActivityNotifications;
 
-import hackerrank.algorithms.sorting.fraudulentActivityNotifications.FailedSolution.SkipList;
+import hackerrank.algorithms.sorting.fraudulentActivityNotifications.SkipListSolutionForFun.SkipList;
 import org.junit.Test;
 
 import java.util.*;
@@ -33,7 +33,7 @@ public class SkipListTest {
         SkipList skipList = new SkipList(0.5f);
         List<Integer> expected = new ArrayList<>();
 
-        for (Integer value : Arrays.asList(2, 8, 9, 5, 0, 3, -2, 4, -8, 0)) {
+        for (Integer value : Arrays.asList(2, 8, 2, 9, 5, 0, 3, -2, 4, -8, 0)) {
             if (value < 0) {
                 skipList.remove(- value);
                 expected.remove((Integer) (- value));
@@ -60,20 +60,23 @@ public class SkipListTest {
         assertThat(toListFromRandomAccessor(skipList), equalTo(expected));
     }
 
-    // shows huge performance degradation when the number of distinct values inserted increases. That makes sense because
-    // the set doesn't get any bigger when duplicates are added, while our specialized skip list needs to keep all duplicates.
-    // Despite efforts to not construct links between nodes with equal values (except at the lowest level), it seems like
-    // the resulting skip list loses its ability to "skip".
+    // Example output (not quite as fast as java.util.TreeSet but has random access and is still pretty good !):
     //
-    // To achieve better performance, we could perhaps implement a more
-    // complicated version in which we only create nodes on higher levels for the first insertion of a given value, and then
-    // always add duplicates at the head of the list of duplicates on the lowest level, so that the links that may have been
-    // created on the higher levels can skip all duplicates straight to the last one. On the lowest level, we could have special
-    // nodes with an additional pointer to the last occurrence of their value to avoid paying the high penalty of going through
-    // all duplicates on this level.
-    //
-    // Another idea would be to hack the distances contained by the nodes to encode the presence of duplicates, but right
-    // now it seems to me like it would be tricky/impossible to maintain correctness in lookup operations based on distance.
+    // Set.add performed in 50 ms
+    // Set.get performed in 13 ms
+    // Set.remove performed in 6 ms
+    // ===
+    // SkipList.add performed in 372 ms
+    // SkipList.get performed in 41 ms
+    // SkipList.remove performed in 152 ms
+    // ===
+    // SkipList.add performed in 201 ms
+    // SkipList.get performed in 18 ms
+    // SkipList.remove performed in 75 ms
+    // ===
+    // Set.add performed in 29 ms
+    // Set.get performed in 67 ms
+    // Set.remove performed in 10 ms
     @Test
     public void speed() {
         Collection<Integer> values = randomValues(100);
