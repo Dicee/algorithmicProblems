@@ -10,29 +10,32 @@ package hackerrank.algorithms.sorting.fraudulentActivityNotifications
 // https://www.hackerrank.com/challenges/fraudulent-activity-notifications/problem
 object Solution {
   private val MaxExpenditure = 200
-
+    
   def activityNotifications(expenditure: Array[Int], window: Int): Int = {
     val buckets = Array.ofDim[Int](MaxExpenditure + 1)
     expenditure.view.take(window).foreach(i => buckets(i) += 1)
-
+    
     var notifications = 0
     val halfWindow = window / 2
-
-    val dailySpend = expenditure.toList
-    dailySpend.zip(dailySpend.drop(window)).foreach { case (spentFirstDay, spentToday) =>
-      var (countBelowIndex, index) = (0, 0)
-      while (countBelowIndex < halfWindow) {
-        countBelowIndex += buckets(index)
-        index += 1
-      }
-
-      val median = if (window % 2 == 1) index - 1 else (index - 1 + (if (countBelowIndex > halfWindow) index - 1 else index)).toDouble / 2
-      if (spentToday >= 2 * median) notifications += 1
-
-      buckets(spentFirstDay) -= 1
-      buckets(spentToday) += 1
+      
+    for (i <- (window until expenditure.length).view) {
+        val (spentFirstDay, spentToday) = (expenditure(i - window), expenditure(i))
+        var (countBelowIndex, index, lower, higher) = (0, 0, -1, -1)
+        
+        while (lower < 0 || higher < 0) {
+            countBelowIndex += buckets(index)
+            if (lower < 0 && countBelowIndex > halfWindow - 1) lower = index
+            if (higher < 0 && countBelowIndex > halfWindow) higher = index
+            index += 1
+        }
+        
+        buckets(spentFirstDay) -= 1
+        buckets(spentToday) += 1
+        
+        val median = if (window % 2 == 1) higher else (lower + higher).toDouble / 2
+        if (spentToday >= 2 * median) notifications += 1
     }
-
+      
     notifications
   }
 }
