@@ -1,4 +1,4 @@
-import hackerrank.algorithms.strings.makingAnagrams
+package hackerrank.algorithms.strings.makingAnagrams
 
 // Difficulty: easy
 

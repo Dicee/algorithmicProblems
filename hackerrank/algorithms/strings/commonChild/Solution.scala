@@ -1,4 +1,4 @@
-import hackerrank.algorithms.strings.commonChild
+package hackerrank.algorithms.strings.commonChild
 
 // Difficulty: trivial if you already know LCS/are trained with DP. A bit disappointing that I was able to copy-paste a fragment
 //             of my LCS solution (also from Hackerrank) to solve this problem.
