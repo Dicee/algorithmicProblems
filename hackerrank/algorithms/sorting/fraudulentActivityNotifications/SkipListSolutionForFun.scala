@@ -100,39 +100,6 @@ object SkipListSolutionForFun {
       JavaConverters.seqAsJavaList(buffer.toList)
     }
 
-    // temporary, for debugging
-    override def toString() = {
-      def reach(n: Int)(node: Node): Node = if (n == 0) node else reach(n - 1)(node.bottom)
-
-      val sb = new StringBuilder
-
-      for (i <- height - 1 to 0 by -1) {
-        if (i != height - 1) sb ++= "\n"
-        sb ++= toString(reach(i)(_))
-      }
-      sb.toString()
-    }
-
-    private def toString(fn: Node => Node) = {
-      var node = head
-      while (fn(node.bottom) != null) node = node.bottom
-      node = node
-
-      val sb = new StringBuilder("SkipList(")
-      var first = true
-
-      while (node != null) {
-        if (!first) sb ++= ", "
-        sb.append((node.value, node.distanceToRight))
-        node = node.right
-        first = false
-      }
-
-      sb ++= ")"
-      sb.toString
-    }
-    // temporary, for debugging
-
     // null is not very Scalatic but will help reducing the memory overhead of the pointers
     private class Node(val value: Int, var right: Node = null, var bottom: Node = null, var distanceToRight: Int = 0) {
       def apply(index: Int) = {
