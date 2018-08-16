@@ -6,6 +6,7 @@ import com.google.common.annotations.VisibleForTesting
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
+import scala.collection.JavaConverters
 
 // Notes: before even starting to implement my first idea, I knew this problem had to have a simpler solution using plain
 //        sorts rather than implementing a rather advanced version of a skip list (required to be growable, shrinkable,
@@ -49,10 +50,7 @@ object SkipListSolutionForFun {
 
     def ++=(values: Iterable[Int]): Unit = values.foreach(this += _)
 
-    def insert(value: Int): Unit = {
-      this += value
-    }
-
+    def insert(value: Int): Unit = this += value
     def +=(value: Int): Unit = {
       var insertionHeight = 1
       while (rd.nextFloat() <= insertProbability) insertionHeight += 1
@@ -95,8 +93,7 @@ object SkipListSolutionForFun {
         duplicates = node.distanceToRight
         node = node.right
       }
-
-      import scala.collection.JavaConverters
+      
       JavaConverters.seqAsJavaList(buffer.toList)
     }
 
@@ -107,17 +104,16 @@ object SkipListSolutionForFun {
         var node = this
 
         while (remaining > 0) {
-          while (node.right != null && node.distanceToRight <=
-            remaining) {
+          while (node.right != null && node.distanceToRight <= remaining) {
             remaining -= node.distanceToRight
             node = node.right
           }
 
           // this will happen because we insert a single node to represent many duplicate values, and we encode this
-          // information in the distance. Therefore, we won't always
+          // information in the distance. Therefore, we won't always reach exactly 0 for remaining, we may overdo it
+          // and go negative
           if (remaining > 0) {
             if (node.bottom == null) {
-              assert(node.distanceToRight > remaining)
               node = node.right
               remaining = 0
             } else node = node.bottom
