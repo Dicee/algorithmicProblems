@@ -28,8 +28,8 @@ object SkipListSolutionForFun {
     var notifications = 0
     val halfWindow = window / 2
 
-    val dailySpend = expenditure.toList
-    dailySpend.zip(dailySpend.drop(window)).foreach { case (spentFirstDay, spentToday) =>
+    for (i <- (window until expenditure.length).view) {
+      val (spentFirstDay, spentToday) = (expenditure(i - window), expenditure(i))
       val median = if (window % 2 == 1) skipList(halfWindow) else (skipList(halfWindow - 1) + skipList(halfWindow)).toDouble / 2
       if (spentToday >= 2 * median) notifications += 1
 
