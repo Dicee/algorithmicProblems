@@ -29,11 +29,13 @@ object Solution {
     
     private case class Position(x: Int, y: Int, distance: Int) {
         def validNeighbours(grid: Array[String]) = {
-            val d = distance + 1
-            (for (i <- (x - 1 to 0 by -1)          .view) yield Position(i, y, d)).takeWhile(pos => grid(pos.x)(pos.y) != 'X') ++
-            (for (i <- (x + 1 until grid.length)   .view) yield Position(i, y, d)).takeWhile(pos => grid(pos.x)(pos.y) != 'X') ++
-            (for (j <- (y - 1 to 0 by -1)          .view) yield Position(x, j, d)).takeWhile(pos => grid(pos.x)(pos.y) != 'X') ++
-            (for (j <- (y + 1 until grid(0).length).view) yield Position(x, j, d)).takeWhile(pos => grid(pos.x)(pos.y) != 'X')
+            val d       = distance + 1
+            val isValid = (pos: Position) => grid(pos.x)(pos.y) != 'X'
+            
+            (for (i <- (x - 1 to 0 by -1)          .view) yield Position(i, y, d)).takeWhile(isValid) ++
+            (for (i <- (x + 1 until grid.length)   .view) yield Position(i, y, d)).takeWhile(isValid) ++
+            (for (j <- (y - 1 to 0 by -1)          .view) yield Position(x, j, d)).takeWhile(isValid) ++
+            (for (j <- (y + 1 until grid(0).length).view) yield Position(x, j, d)).takeWhile(isValid)
         }
     }
 }
