@@ -8,24 +8,15 @@ package hackerrank.dataStructures.arrays.arrayManipulation
 
 // https://www.hackerrank.com/challenges/crush/problem
 object Solution {
-    def main(args: Array[String]) {
-        val lines       = scala.io.Source.stdin.getLines()
-        val Array(n, m) = lines.next().split(' ').map(_.toInt)
-
+    def arrayManipulation(n: Int, queries: Array[Array[Int]]): Long = {
         val arr = Array.ofDim[Int](n)
-
-        for (line <- lines) {
-            val Array(low, high, k) = line.split(' ').map(_.toInt)
+        for (Array(low, high, k) <- queries) {
             arr(low  - 1) += k
             if (high < arr.length) arr(high) -= k
         }
 
-        var (runningSum, max) = (BigInt(0), BigInt(0))
-        for (i <- arr) {
-            runningSum += i
-            max = runningSum.max(max)
-        }
-
-        println(max)
+        var (runningSum, max) = (0L, 0L)
+        for (i <- arr) { runningSum += i; max = runningSum.max(max) }
+        max
     }
 }
