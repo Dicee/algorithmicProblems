@@ -8,16 +8,13 @@ import scala.collection.mutable.ArrayBuffer
 object Solution {
     def solution(indices: Array[Array[Int]], queries: Array[Int]): Array[Array[Int]] = {
         val nodes = (0 to indices.length).map(new Node(_)).toArray
-        val root  = nodes(1)
 
         for ((Array(left, right), i) <- indices.zipWithIndex) {
             if (left  > 0) nodes(i + 1).left  = nodes(left )
             if (right > 0) nodes(i + 1).right = nodes(right)
         }
 
-        queries.map(baseDepth => {
-            collectInOrder(swap(root, baseDepth))
-        })
+        queries.map(collectInOrder(swapNodes(nodes(1), _)))
     }
 
     private def swapNodes(root: Node, baseDepth: Int) = {
