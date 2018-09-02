@@ -1,3 +1,5 @@
+package hackerrank.interviewPreparationKit.stackAndQueues.aTaleOfTwoStacks
+
 import scala.io.Source
 
 // Difficulty: trivial. I did not implement it as two stacks as suggested by the problem (for training purposes) because it's
