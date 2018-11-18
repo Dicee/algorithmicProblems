@@ -19,7 +19,7 @@ class Solution {
           dp(i + 1)(j + 1) =
             if      (i == -1) j + 1
             else if (j == -1) i + 1
-            else if (input.charAt(i) == target.charAt(j)) dp(i)(j)
+            else if (input(i) == target(j)) dp(i)(j)
             else 1 + min(min(dp(i)(j), dp(i)(j + 1)), dp(i + 1)(j))
         }
     
