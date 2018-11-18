@@ -3,7 +3,16 @@
 
 // https://www.interviewbit.com/problems/regular-expression-ii/
 public class RegularExpressionIIBacktracking {
-    public int isMatch(String regexp, String toMatch) {
+    public static void main(String[] args) {
+        System.out.println(isMatch("ac", "ab*c")); // 1
+        System.out.println(isMatch("abcbcd", "a.*c.*d")); // 1
+        System.out.println(isMatch("abbc", "ab*bbc")); // 1
+        System.out.println(isMatch("efwihfioghih35i", ".*")); // 1
+        System.out.println(isMatch("abc", "abcc*c*c*c*")); // 1
+        System.out.println(isMatch("abc", "abcc*c*c*c")); // 0
+    }
+
+    public static int isMatch(String regexp, String toMatch) {
         return backtrack(toMatch, regexp, 0, 0) ? 1 : 0;
     }
 
@@ -16,18 +25,14 @@ public class RegularExpressionIIBacktracking {
             canRepeat = nextChar == '*';
         }
 
-        if (currentMatch >= toMatch.length()) return canRepeat;
-
         char ch = regexp.charAt(index);
-        boolean characterMatches = toMatch.charAt(currentMatch) == ch || ch == '.';
+        boolean characterMatches = currentMatch < toMatch.length() && (toMatch.charAt(currentMatch) == ch || ch == '.');
 
+        if (canRepeat && backtrack(regexp, toMatch, index + 2, currentMatch)) return true;
         if (characterMatches) {
-            if (canRepeat) {
-                return backtrack(regexp, toMatch, index, currentMatch + 1) ||
-                       backtrack(regexp, toMatch, index + 2, currentMatch);
-            }
+            if (canRepeat && backtrack(regexp, toMatch, index, currentMatch + 1)) return true;
             return backtrack(regexp, toMatch, index + 1, currentMatch + 1);
         }
-        return canRepeat && backtrack(regexp, toMatch, index + 2, currentMatch);
+        return false;
     }
 }
