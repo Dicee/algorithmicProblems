@@ -1,3 +1,5 @@
+package interviewbit.Programming.DynamicProgramming
+
 // Difficulty: medium. Since Interviewbit is aimed at preparing interviews, I try to do these in interview-like conditions. 
 //             I find this one has enough edge cases to make it fairly challenging to get exactly right in 45-60 minutes.
 //             I also didn't come up with a DP solution right away, instead using simple backtracking.
