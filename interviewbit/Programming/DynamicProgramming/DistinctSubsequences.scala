@@ -1,5 +1,8 @@
 package interviewbit.Programming.DynamicProgramming
 
+// Difficulty: trivial
+
+// https://www.interviewbit.com/problems/distinct-subsequences/
 object DistinctSubsequences {
   def main(args: Array[String]): Unit = {
     println(numDistinct("rabbbit", "rabbit")) // 3
