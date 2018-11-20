@@ -1,3 +1,5 @@
+package interviewbit.Programming.DynamicProgramming
+
 import scala.math._
 
 // Difficulty: easy to see it's DP, and easy to find the formula.
