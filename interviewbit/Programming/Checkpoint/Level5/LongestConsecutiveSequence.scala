@@ -1,11 +1,11 @@
 package interviewbit.Programming.Checkpoint.Level5
 
-// Difficulty: easy
-
-// https://www.interviewbit.com/problems/longest-consecutive-sequence/
 import scala.collection.mutable
 import scala.math._
 
+// Difficulty: easy
+
+// https://www.interviewbit.com/problems/longest-consecutive-sequence/
 object LongestConsecutiveSequence {
   def main(args: Array[String]): Unit = {
     println(longestConsecutive(Array(100, 4, 200, 1, 3, 2))) // 4
