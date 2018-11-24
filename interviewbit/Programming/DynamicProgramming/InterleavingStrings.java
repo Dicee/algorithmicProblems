@@ -5,7 +5,7 @@ package interviewbit.Programming.DynamicProgramming;
 //             efficient.
 
 // https://www.interviewbit.com/problems/interleaving-strings/
-public class Solution {
+public class InterleavingStrings {
     public int isInterleave(String s1, String s2, String target) {
             return backtrack(s1, s2, 0, 0, target) ? 1 : 0;
         }

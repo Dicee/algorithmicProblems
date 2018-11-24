@@ -1,4 +1,4 @@
-package interviewbit.Programming.StcksAndQueues
+package interviewbit.Programming.StacksAndQueues
 
 import scala.annotation.tailrec
 
@@ -25,8 +25,8 @@ object EvaluateExpressionFunctional {
   private trait Token
   private object Token {
     def apply(s: String) = s.toList match {
-      case (op @ ('+' | '-' | '*' | '/')) :: Nil => Op(op     )
-      case _                                     => Num (s.toInt)
+      case List(op @ ('+' | '-' | '*' | '/')) => Op (op     )
+      case _                                  => Num(s.toInt)
     }
   }
 

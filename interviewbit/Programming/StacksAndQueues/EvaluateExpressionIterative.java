@@ -1,4 +1,4 @@
-package interviewbit.Programming.StackAndQueues
+package interviewbit.Programming.StacksAndQueues;
 
 import java.util.*;
 import java.util.stream.Stream;

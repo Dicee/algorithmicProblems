@@ -1,4 +1,4 @@
-package package hackerrank.interviewPreparationKit.search.swapNodes
+package hackerrank.interviewPreparationKit.search.swapNodes
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -14,7 +14,7 @@ object Solution {
             if (right > 0) nodes(i + 1).right = nodes(right)
         }
 
-        queries.map(collectInOrder(swapNodes(nodes(1), _)))
+        queries.map(baseDepth => collectInOrder(swapNodes(nodes(1), baseDepth)))
     }
 
     private def swapNodes(root: Node, baseDepth: Int) = {

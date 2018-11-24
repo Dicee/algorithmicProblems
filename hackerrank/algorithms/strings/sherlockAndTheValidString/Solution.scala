@@ -1,11 +1,13 @@
-package algorithmicProblems.hackerrank.algorithms.strings.sherlockAndTheValidString
+package hackerrank.algorithms.strings.sherlockAndTheValidString
+
+import scala.collection.immutable.TreeSet
 
 // Difficulty: easy. I still managed to miss an edge case of my first try though =(
 
 // https://www.hackerrank.com/challenges/sherlock-and-valid-string
 object Solution {
     def isValid(s: String): String = {
-        val occurrences      = s.groupBy(identity).mapValues(_.size)
+        val occurrences      = s.groupBy(identity).mapValues(_.length)
         val distinctValues   = TreeSet[Int]() ++ occurrences.values
         val sameOccurrences  = distinctValues.size == 1
         val onlyOneException = distinctValues.toList match {
