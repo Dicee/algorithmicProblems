@@ -1,4 +1,4 @@
-package interviewbit.Programming.Strings.Atoi.AddBinaryString;
+package interviewbit.Programming.Strings.AddBinaryString;
 
 import java.math.BigInteger;
 
