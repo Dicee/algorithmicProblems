@@ -4,7 +4,7 @@ import scala.math._
 
 // Difficulty: medium. My solution seems a bit more complicated than other solutions I've seen afterwards but it
 //             also seemed faster. Many of them are performing inefficient string operations. My implementation is
-//             O(n^2), which I'm don't think can be improved.
+//             O(n^2), which I don't think can be improved.
 
 // https://www.interviewbit.com/problems/palindrome-partitioning-ii/
 object PalindromePartitioningII {
