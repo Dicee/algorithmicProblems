@@ -1,6 +1,5 @@
 package hackerrank.algorithms.dynamicProgramming.maxArraySum
 
-import scala.collection.mutable
 import scala.annotation.tailrec
 
 // Difficulty: relatively easy, the recurrence relation is not too hard to find.
@@ -13,8 +12,8 @@ object OptimalSolution {
     //
     // Therefore, we can easily calculate S(n) with a bottom-up approach by only remembering
     // about the last two sub-solutions
-    def maxSubsetSum(arr: Array[Int]): Long = recSol(arr, 0, 0, 0)
-    
+    def maxSubsetSum(arr: Array[Int]): Long = if (!arr.exists(_ >= 0)) arr.max else recSol(arr, 0, 0, 0)
+
     @tailrec
     private def recSol(arr: Array[Int], end: Int, antePrevious: Int, previous: Int): Long = {
         if (end == arr.length) Math.max(antePrevious, previous)

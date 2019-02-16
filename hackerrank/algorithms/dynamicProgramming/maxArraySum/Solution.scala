@@ -8,7 +8,7 @@ import scala.collection.mutable
 
 // https://www.hackerrank.com/challenges/max-array-sum/problem?h_l=playlist&slugs%5B%5D%5B%5D=interview&slugs%5B%5D%5B%5D=interview-preparation-kit&slugs%5B%5D%5B%5D=dynamic-programming
 object Solution {
-    def maxSubsetSum(arr: Array[Int]): Long = recSol(arr, arr.length, new mutable.HashMap())
+    def maxSubsetSum(arr: Array[Int]): Long = if (!arr.exists(_ >= 0)) arr.max else recSol(arr, arr.length, new mutable.HashMap())
     
     private def recSol(arr: Array[Int], end: Int, memoize: mutable.Map[Int, Long]): Long = {
         if (end <= 2) Math.max(0, arr.view.slice(0, end).max)
