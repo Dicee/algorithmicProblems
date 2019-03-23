@@ -1,5 +1,9 @@
 package hackerrank.interviewPreparationKit.dictionariesAndHashMaps.countTriplets;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 // Difficulty: medium. Some thought required to figure out what information to store to maintain a linear complexity.
 
 // https://www.hackerrank.com/challenges/count-triplets-1/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=dictionaries-hashmaps
@@ -11,7 +15,7 @@ public class Solution {
         Map<Long, Long> countMatchingPairs = new HashMap<>();
         long count = 0;
 
-        for(int i = 0; i < arr.size(); i++) {
+        for(int i = 0; i < values.size(); i++) {
             long value = values.get(i);
 
             if (value % r == 0) {
