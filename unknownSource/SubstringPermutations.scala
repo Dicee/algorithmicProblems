@@ -21,6 +21,9 @@ object SubstringPermutations {
     // permuted, overlapping matches, two partial matches, one full match
     println(isSubstringPermutable("peenrda eepD_eeaeepdrDn", "Deependra")) // true
 
+    // permuted, overlapping matches, two partial matches, one full match in the middle of the string
+    println(isSubstringPermutable("peenrda eepD_eeaeepdrDn hello", "Deependra")) // true
+
     // permuted, no overlapping match, 4 partial matches, no full match
     println(isSubstringPermutable("peenrda eepD_ednra edpDener", "Deependra")) // false
 
