@@ -46,11 +46,11 @@ object SubstringPermutations {
       if (chars.count(ch) > 0) {
         chars   -= ch
         matched += 1
-        i += 1
+        i       += 1
       } else if (matched > 0) {
         chars   += longest(i - matched)
         matched -= 1
-      } else i += 1
+      } else i  += 1
     }
     matched == shortest.length
   }
