@@ -2,6 +2,11 @@ package unknownSource
 
 import scala.collection.mutable
 
+// Difficulty: medium. I came up with the main idea relatively quickly but it does require some thought about edge cases
+//             and complexity. I'm still not sure my solution covers all cases and not entirely sure about my complexity.
+//             It seems linear to me, with a worst case of 2*|longest| iterations (if the string contains as many
+//             non-overlapping partial matches - as long as possible - that can possibly fit in the length)
+
 object SubstringPermutations {
   def main(args: Array[String]): Unit = {
     // no permutation, no match overlap, no partial match, one full match
