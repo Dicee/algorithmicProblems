@@ -22,3 +22,4 @@ object Solution {
             case _ => false
         }
     }
+}
