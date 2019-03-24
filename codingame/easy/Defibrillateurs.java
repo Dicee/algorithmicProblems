@@ -1,5 +1,7 @@
 package codingame.easy;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 class Defibrillateurs {
@@ -31,7 +33,7 @@ class Defibrillateurs {
     }
     
 	public static void main(String args[]) {
-		HashMap<Integer,Defibrillateur> defibrillateurs = new HashMap<>();
+		Map<Integer,Defibrillateur> defibrillateurs = new HashMap<>();
 		Scanner in = new Scanner(System.in);
 		double longitude = degToRad(Double.parseDouble(in.next().replace(',','.')));
 		double latitude  = degToRad(Double.parseDouble(in.next().replace(',','.')));
