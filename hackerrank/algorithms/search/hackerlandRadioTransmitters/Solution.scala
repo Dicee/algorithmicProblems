@@ -1,5 +1,8 @@
 package hackerrank.algorithms.search.hackerlandRadioTransmitters
 
+import scala.annotation.tailrec
+import scala.util.Sorting
+
 // Difficulty: fairly simple. This is a O(n.log(n)) greedy solution since Range.contains runs in constant time.
 //             I haven't tried optimizing beyond that as it was passing all the tests already.
 
