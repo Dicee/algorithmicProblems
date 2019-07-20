@@ -14,11 +14,8 @@ object Solution {
 
   private def determineGridSize(toEncrypt: String) = {
     val sqrtLen        = sqrt(toEncrypt.length)
-    val (lower, upper) = (floor(sqrtLen).toInt, ceil(sqrtLen).toInt)
-
-    if      (lower == upper)                    (lower, lower)
-    else if (lower * upper >= toEncrypt.length) (lower, upper)
-    else                                        (upper, upper)
+    val (lower, upper) = (floor(sqrtLen).toInt, ceil(sqrtLen).toInt)    
+    if (lower * upper >= toEncrypt.length) (lower, upper) else (upper, upper)
   }
 
   private def buildColumn(j: Int, toEncrypt: String, n: Int, m: Int) = {
