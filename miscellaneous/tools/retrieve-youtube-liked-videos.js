@@ -15,7 +15,7 @@ function printLikedVideos() {
     const likedVideos = [];
 
     for (const videoListElement of getVideoListElements()) {
-     const blockLink = videoListElement.children[2].children[0];
+     const blockLink = videoListElement.children[1].children[0];
      
      const title = blockLink.children[1].children[0].children[1].innerHTML.trim();
      const link = blockLink.href;
