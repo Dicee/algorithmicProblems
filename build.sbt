@@ -1,4 +1,4 @@
-name := "algorithmicProblems-sbt"
+name := "algorithmicProblems"
 
 version := "0.1"
 
