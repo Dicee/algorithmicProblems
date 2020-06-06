@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/algorithmicProblems.iml" filepath="$PROJECT_DIR$/.idea/algorithmicProblems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/algorithmicProblems-sbt.iml" filepath="$PROJECT_DIR$/.idea/modules/algorithmicProblems-sbt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/algorithmicProblems-sbt-build.iml" filepath="$PROJECT_DIR$/.idea/modules/algorithmicProblems-sbt-build.iml" />
     </modules>
   </component>
 </project>

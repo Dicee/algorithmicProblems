@@ -21,6 +21,9 @@ local.properties
 .settings/
 .loadpath
 
+# custom
+backup/
+
 # External tool builders
 .externalToolBuilders/
 
