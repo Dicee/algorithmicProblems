@@ -24,7 +24,7 @@ object Main {
     def main(args: Array[String]) {
     	val candidates = candidatesUrl.map(parseCandidatePageContent)
         printGlobalRanking(candidates.sorted.reverse)
-        printRankingPerCategory(candidates.groupBy(_.category).mapValues(_.sorted.reverse))
+        printRankingPerCategory(candidates.groupBy(_.category).view.mapValues(_.sorted.reverse).toMap)
     }
     
     def parseCandidatePageContent(url: String) =

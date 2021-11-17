@@ -1,5 +1,8 @@
 package hackerrank.dataStructures.trie.noPrefixSet
 
+import scala.collection.mutable
+import scala.collection.mutable.HashMap
+
 // Difficulty: moderate, harder than I thought at first. I missed a few edge cases and took longer than I would have liked
 //             to handle them.
 
@@ -8,13 +11,8 @@ object Solution {
     // still weird to my inner Java programmer, but Scala has the same case convention for classes and constants
     private val CharsRange = 'j' - 'a' + 1
 
-    // such a shame there is no constructor for this in Scala =(
-    private class PreSizedHashMap[A, B](initSize : Int) extends scala.collection.mutable.HashMap[A, B] {
-        override def initialSize: Int = initSize
-    }
-
     private class NoPrefixTrie {
-        private val children = new PreSizedHashMap[Char, NoPrefixTrie](CharsRange / 4)
+        private val children = new mutable.HashMap[Char, NoPrefixTrie](CharsRange / 4, mutable.HashMap.defaultLoadFactor)
 
         def this(chars: List[Char]) = { this(); this += chars }
 

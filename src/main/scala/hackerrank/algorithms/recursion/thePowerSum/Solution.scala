@@ -1,5 +1,7 @@
 package hackerrank.algorithms.recursion.thePowerSum
 
+import scala.io.StdIn.readInt
+
 // Difficulty: easy but fun. If it hadn't been labeled as "recursion", I would probably have looked for a DP solution instead,
 //             which would have been less appropriate (sub-problems do not overlap).
 
@@ -23,6 +25,6 @@ object Solution {
     }
 
     def main(args: Array[String]) {
-       println(numberOfWays(readInt(),readInt()))
+       println(numberOfWays(readInt(), readInt()))
     }
 }

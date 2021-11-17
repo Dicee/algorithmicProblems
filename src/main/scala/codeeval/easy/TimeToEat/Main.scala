@@ -1,5 +1,6 @@
 package codeeval.easy.TimeToEat
 
+import scala.language.postfixOps
 import scala.io.Source
 
 object Main extends App {

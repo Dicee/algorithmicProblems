@@ -1,6 +1,6 @@
 package interviewbit.Programming.GraphDataStructureAndAlgorithms.WordLadderI
 
-import scala.collection.{IterableView, mutable}
+import scala.collection.{View, mutable}
 
 // Difficulty: easy, classic A*. Wrote in Scala despite Interwbit didn't support it for this question, because it's a lot more
 //             elegant than the Java version
@@ -67,6 +67,6 @@ object Solution {
     private val _neighbours = mutable.HashSet[Node]()
 
     def link(node: Node): Unit = _neighbours += node
-    def neighbours: IterableView[Node, _] = _neighbours.view
+    def neighbours: View[Node] = _neighbours.view
   }
 }

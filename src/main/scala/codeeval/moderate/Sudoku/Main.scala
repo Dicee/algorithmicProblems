@@ -1,12 +1,5 @@
-package codeeval.moderate.Sudoku;
+package codeeval.moderate.Sudoku
 
-package testouille
-
-import scala.util.matching.Regex
-import scala.collection.immutable.Stack
-
-//import scala.collection.mutable.ArrayBuffer
-//
 //object Main extends App {
 //    scala.io.Source.fromFile(args(0)).getLines
 //    	.filter(!_.isEmpty)

@@ -15,7 +15,7 @@ object Solution {
   }
 
   def wordBreak(s: String, words: Array[String]): Array[String]  = {
-    val uniqueWords = words.view.distinct.sorted.toArray
+    val uniqueWords = words.view.distinct.toArray.sorted
     val dp = Array.ofDim[Boolean](s.length + 1)
     val sentences = Array.fill[Sentences](s.length + 1)(new Sentences)
     dp(0) = true

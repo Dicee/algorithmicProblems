@@ -1,6 +1,6 @@
 package unknownSource
 
-import scala.collection.mutable
+import scala.collection.{SeqView, View, mutable}
 import scala.math._
 
 /**
@@ -10,7 +10,7 @@ import scala.math._
  */
 object SimplifyDebts {
   def simplifyDebts(debts: List[Debt]) = {
-    val nodes = debts.view
+    val nodes = debts.to(LazyList)
       .flatMap { case Debt(from, to, _) => List(from, to) }
       .distinct
       .map(name => (name, new Node(name)))

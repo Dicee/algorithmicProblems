@@ -20,7 +20,7 @@ object Main extends App {
 
           words.zipWithIndex.sliding(n - 1).foreach {
             case indexedSlice =>
-              if (indexedSlice.map(_._1).deep == ngram.deep) {
+              if (indexedSlice.map(_._1) sameElements ngram) {
                 val key      = words(indexedSlice.last._2 + 1)
                 occurrences += key -> (occurrences.getOrElse(key, 0) + 1)
               }
