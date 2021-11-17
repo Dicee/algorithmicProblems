@@ -1,7 +1,7 @@
 package miscellaneous.markdown
 
 import java.io.File
-import scala.collection.JavaConversions
+import scala.jdk.CollectionConverters._
 import scala.io.Source
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -38,7 +38,7 @@ object MarkdownParser {
 	
 	private abstract class HTMLNode(val elt: Element) {
         def appendHTML(htmlContent: String) =
-            JavaConversions.asScalaIterator(Jsoup.parseBodyFragment(htmlContent).body.childNodes.iterator).toList.foreach(elt.appendChild(_))
+            Jsoup.parseBodyFragment(htmlContent).body.childNodes.iterator.asScala.toList.foreach(elt.appendChild)
     }
 
 	private object HTMLNode {
@@ -47,7 +47,7 @@ object MarkdownParser {
         private implicit class AugmentedString(s: String) {
         	val str = s.trim
         	
-	        def hasPrefix (prefix : Char  ) = str.length > 0 && str(0) == prefix && (str.length == 1 || str(1) != prefix)  
+	        def hasPrefix (prefix : Char  ) = str.nonEmpty && str(0) == prefix && (str.length == 1 || str(1) != prefix)
 	        def trim      (margin : Int   ) = str.drop(margin).dropRight(margin)
 	        def wrapBy    (wrapper: String) = wrapper + str + wrapper
 	        def wrapByTag(tagName: String)  = s"<$tagName>$str</$tagName>"

@@ -7,7 +7,7 @@ import scala.collection.mutable
 // https://www.hackerrank.com/challenges/sherlock-and-anagrams/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=dictionaries-hashmaps
 object Solution {
     def sherlockAndAnagrams(s: String): Int = {
-        val substrings = for (i <- s.indices; l <- 1 to s.length - i) yield new Word(s.view(i, i + l))
+        val substrings = for (i <- s.indices; l <- 1 to s.length - i) yield new Word(s.slice(i, i + l))
         // number of pairs in a set of n elements: C(2, n) = n! / (2! (n - 2)!) = n (n - 1) / 2
         substrings.groupBy(identity).values.map(duplicates => duplicates.size * (duplicates.size - 1) / 2).sum
     }

@@ -2,7 +2,7 @@ name := "algorithmicProblems"
 
 version := "0.1"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.13.6"
 libraryDependencies ++= Seq(
   "org.projectlombok" % "lombok" % "1.18.12",
   "org.jsoup" % "jsoup" % "1.13.1",

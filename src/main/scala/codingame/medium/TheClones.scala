@@ -1,6 +1,7 @@
-import math._
-import scala.util._
+package codingame.medium
+
 import scala.collection.mutable.ArrayBuffer
+import scala.io.StdIn.readLine
 
 /**
  * Auto-generated code below aims at helping you parse
@@ -35,7 +36,7 @@ object Player {
 }
 
 sealed abstract class Direction(val inc: Int)
-final case object Left extends Direction(-1)
-final case object Right extends Direction(1)
+case object Left extends Direction(-1)
+case object Right extends Direction(1)
 
 final case class Pos(x: Int, floor: Int)

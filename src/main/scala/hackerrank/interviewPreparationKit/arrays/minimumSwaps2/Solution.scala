@@ -9,7 +9,7 @@ import scala.annotation.tailrec
 object Solution {
     def minimumSwaps(arr: Array[Int]): Int = {
         // stable sort, this is important to not overestimate the count
-      val originalIndices = arr.view.zipWithIndex.sortBy(_._1).map(_._2).toArray
+      val originalIndices = arr.view.zipWithIndex.toArray.sortBy(_._1).map(_._2)
 
       val explored = new mutable.HashSet[Int]
       var swaps    = 0

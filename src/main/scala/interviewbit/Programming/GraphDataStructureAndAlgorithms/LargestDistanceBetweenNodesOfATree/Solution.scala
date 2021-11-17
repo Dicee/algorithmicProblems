@@ -46,7 +46,7 @@ object Solution {
     depths
   }
 
-  private def top2(depths: SeqView[Int, _]): List[Int] = {
+  private def top2(depths: SeqView[Int]): List[Int] = {
     val topDepths = new mutable.PriorityQueue[Int]()(implicitly[Ordering[Int]].reverse)
     for (depth <- depths) {
       topDepths.enqueue(depth)
