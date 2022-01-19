@@ -1,7 +1,7 @@
 algorithmicProblems
 ===================
 
-Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match Codility's version). The problems come from CodinGame, Project Euler, Codility, CodeEval, HackerRank and some of them don't have a specific source.
+Some solutions of algorithmic problems in Scala, Java, Kotlin and Python (2.7 to match Codility's version). The problems come from CodinGame, Project Euler, Codility, CodeEval, HackerRank, Advent of Code and some of them don't have a specific source.
 
 - **CodinGame** problems are on average reasonably hard/interesting, they often include pathfinding and sometimes lead to a quite longer code than the other challenges.
 
@@ -15,19 +15,23 @@ Some solutions of algorithmic problems in Scala, Java and Python (2.7 to match C
 
 - **Interviewbit:** not all problems are interesting, but the website is pretty well-designed and useful to people who wish to train for coding/problem solving interviews. The problems labeled witht he name of a big tech company (Google, Amazon, Facebook, Microsoft) are very useful to train. The website also has nice functionalities that I didn't see on many websites like system design questions and even mock interviews with other members of the website. Pretty cool.
 
+- **Advent of Code:** easy problems, just for the fun of having an advent of code for developers. All the ones I did so far require manual parsing of an input file, and can be solved with a brute force solution given that the file is small.
+
 - **Miscellaneous:** this folder contains random work I've been doing on my own. Not all of it is complete/refined, but I like keeping track of it.
 
 Links 
 ===================
-- CodinGame (http://www.codingame.com/cg/) is a french website dedicated to programming freaks which proposes problems of increasing difficulty.
+- [CodinGame](http://www.codingame.com/cg/) is a french website dedicated to programming freaks which proposes problems of increasing difficulty.
 
-- Project Euler (https://projecteuler.net/) is a website that every math and algorithmic lover must visit. To this date, more than 470 problems have been released, giving a hard time to thousands of programers. Most of these problems are math-oriented and require good skills both in math and programming.
+- [Project Euler](https://projecteuler.net/) is a website that every math and algorithmic lover must visit. To this date, more than 470 problems have been released, giving a hard time to thousands of programers. Most of these problems are math-oriented and require good skills both in math and programming.
 
-- Codility (https://codility.com/programmers/lessons/) is a website that proposes some algorithmic lessons and exercises. It also provides a nice in-browser IDE and offers its services to company recruiters to test their candidates on Codility's platform.
+- [Codility](https://codility.com/programmers/lessons/) is a website that proposes some algorithmic lessons and exercises. It also provides a nice in-browser IDE and offers its services to company recruiters to test their candidates on Codility's platform.
 
-- CodeEval (https://www.codeeval.com) is a website that proposes algorithmic challenges of various difficulties and have a nice ranking/progression system.
+- [CodeEval](https://www.codeeval.com) is a website that proposes algorithmic challenges of various difficulties and have a nice ranking/progression system.
 
-- HackerRank (https://www.hackerrank.com) is a website that organizes various algorithmic challenges. It's a very good resource for developping one's algorithmic abilities.
+- [HackerRank](https://www.hackerrank.com) is a website that organizes various algorithmic challenges. It's a very good resource for developping one's algorithmic abilities.
 
-- Interviewbit (https://www.interviewbit.com/) is a website that is heavily focused on providing an interview-like experience. It covers a large variety of coding problems and system design questions. Good resource for preparing interviews.
+- [Interviewbit](https://www.interviewbit.com/) is a website that is heavily focused on providing an interview-like experience. It covers a large variety of coding problems and system design questions. Good resource for preparing interviews.
+
+- [Advent of Code](https://adventofcode.com) is a fun website with Christmas-themed problems (one per day, like an advent calendar). I did it because it was referenced from the Kotlin guide on getting started, so I thought it'd be a fun way to learn the language. 
 
