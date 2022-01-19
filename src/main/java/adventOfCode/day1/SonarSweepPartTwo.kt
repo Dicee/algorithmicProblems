@@ -1,6 +1,4 @@
-package yodlehihou.adventOfCode.day1
-
-import adventOfCode.day1.SonarSweep
+package adventOfCode.day1
 
 // Difficulty: trivial
 
