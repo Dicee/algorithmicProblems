@@ -18,6 +18,6 @@ object SonarSweep {
     val depths = SonarSweep::class.java.getResource("depths.txt")!!
             .readText()
             .trim()
-            .split('\n')
+            .lines()
             .map { it.toInt() }
 }

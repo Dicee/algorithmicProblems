@@ -23,5 +23,5 @@ fun main() {
 object BinaryDiagnostic {
     val report = BinaryDiagnostic::class.java.getResource("diagnostic.txt")!!
         .readText()
-        .split('\n')
+        .lines()
 }
