@@ -21,5 +21,5 @@ fun main() {
 object Dive {
     val instructions = Dive::class.java.getResource("instructions.txt")!!
         .readText()
-        .split('\n')
+        .lines()
 }

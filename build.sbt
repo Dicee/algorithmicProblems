@@ -24,3 +24,5 @@ libraryDependencies ++= Seq(
   "org.junit.jupiter" % "junit-jupiter-engine" % "5.0.0" % Test
 )
 
+addSbtPlugin("com.hanhuy.sbt" % "kotlin-plugin" % "2.0.0")
+
