@@ -6,7 +6,7 @@ import kotlin.math.min
 // Difficulty: medium. For the first part, it was easy to see the median was the answer, but it was really not obvious to me that the mean
 //             was the solution for the second part, and I didn't have better ideas than a quadratic brute-force solution at first.
 
-// https://adventofcode.com/2021/day//
+// https://adventofcode.com/2021/day/7
 fun main() {
     val crabs = TheTreacheryOfWhales.crabs
 
