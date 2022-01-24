@@ -2,7 +2,7 @@ package adventOfCode.day10
 
 // Difficulty: easy, and super classic
 
-// https://adventofcode.com/2021/day/9
+// https://adventofcode.com/2021/day/10
 fun main() {
     val parsingResults = SyntaxScoring.chunkLines.map { parseLine(it) }
 
