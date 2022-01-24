@@ -29,7 +29,7 @@ private fun part2(parsingResults: List<ParsingResult>): Long {
 private fun parseLine(line: String): ParsingResult {
     val deque = ArrayDeque<Char>()
     for (ch in line) {
-        if (ch in SyntaxScoring.openingChars) deque.addFirst(ch)
+        if (ch in SyntaxScoring.validPairs.keys) deque.addFirst(ch)
         else if (deque.isEmpty() || SyntaxScoring.validPairs[deque.removeFirst()] != ch) return IllegalLine(ch)
     }
     return IncompleteLine(buildString(deque.size) {
@@ -43,7 +43,6 @@ data class IncompleteLine(val missingSuffix: String): ParsingResult
 
 object SyntaxScoring {
     val chunkLines = SyntaxScoring::class.java.getResource("chunks.txt")!!.readText().lines()
-    val openingChars = setOf('(', '[', '{', '<')
     val validPairs = mapOf('(' to ')', '[' to ']', '{' to '}', '<' to '>')
     val illegalScoring = mapOf(')' to 3, ']' to 57, '}' to 1197, '>' to 25137)
     val incompleteScoring = mapOf(')' to 1, ']' to 2, '}' to 3, '>' to 4)

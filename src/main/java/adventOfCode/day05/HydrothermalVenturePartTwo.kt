@@ -1,4 +1,4 @@
-package adventOfCode.day5
+package adventOfCode.day05
 
 // Difficulty: trivial: the first part is a superset of the second...
 

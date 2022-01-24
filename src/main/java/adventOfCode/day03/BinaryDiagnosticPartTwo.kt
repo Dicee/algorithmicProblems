@@ -1,4 +1,4 @@
-package adventOfCode.day3
+package adventOfCode.day03
 
 // Difficulty: fairly easy. Not hard in terms of algorithm, but required me more code than other problems so far, and it was harder to write tidily
 // (especially as I'm trying to learn how to write idiomatic Kotlin code)

@@ -1,4 +1,4 @@
-package adventOfCode.day4
+package adventOfCode.day04
 
 // Difficulty: easy but annoying, quite a lot of code!
 

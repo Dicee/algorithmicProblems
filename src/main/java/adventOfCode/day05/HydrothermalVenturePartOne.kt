@@ -1,4 +1,4 @@
-package adventOfCode.day5
+package adventOfCode.day05
 
 import kotlin.math.max
 import kotlin.math.sign

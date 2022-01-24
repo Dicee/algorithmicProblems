@@ -1,4 +1,4 @@
-package adventOfCode.day1
+package adventOfCode.day01
 
 // Difficulty: trivial
 
