@@ -1,4 +1,4 @@
-package adventOfCode.day6
+package adventOfCode.day06
 
 // Difficulty: easy. That's the first AoC problem so far where I applied some "smarts" to avoid blowing up memory and time complexity,
 //             so it's also a funnier one to do.

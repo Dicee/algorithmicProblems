@@ -1,4 +1,4 @@
-package adventOfCode.day8
+package adventOfCode.day08
 
 // Difficulty: easy.I quite liked it, it's original.
 

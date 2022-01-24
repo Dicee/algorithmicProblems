@@ -1,4 +1,4 @@
-package adventOfCode.day7
+package adventOfCode.day07
 
 import kotlin.math.abs
 import kotlin.math.min
