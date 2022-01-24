@@ -48,7 +48,5 @@ private fun cartesianProduct(range: IntRange) = cartesianProduct(range, range)
 private fun cartesianProduct(left: IntRange, right: IntRange) = left.asSequence().flatMap { i -> right.map { j -> i to j } }
 
 object SmokeBasin {
-    val heightMap = SmokeBasin::class.java.getResource("heightMap.txt")!!
-        .readText()
-        .lines()
+    val heightMap = SmokeBasin::class.java.getResource("heightMap.txt")!!.readText().lines()
 }
