@@ -1,6 +1,6 @@
 package adventOfCode.day09
 
-// Difficulty: easy.
+// Difficulty: easy, classic flood fill.
 
 // https://adventofcode.com/2021/day/9
 fun main() {
