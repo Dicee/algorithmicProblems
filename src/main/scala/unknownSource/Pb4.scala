@@ -11,7 +11,7 @@ object Pb4 extends App {
    */
   def solution(arr: Array[Int]) = {
     var (maxSoFar, res) = (Int.MinValue, Int.MinValue)
-    for (i <- 0 until arr.length) {
+    for (i <- arr.indices) {
       maxSoFar = Math.max(maxSoFar, arr(i) - i)
       res = Math.max(res, maxSoFar + arr(i) + i)
     }
