@@ -1,7 +1,7 @@
 package unknownSource
 
-import scala.collection.{SeqView, View, mutable}
-import scala.math._
+import scala.collection.mutable
+import scala.math.min
 
 /**
  * Given a set of debts from one person to another, returns an alternative set of debts allowing all
@@ -16,7 +16,7 @@ object SimplifyDebts {
       .map(name => (name, new Node(name)))
       .toMap
 
-    debts.foreach { case Debt(from, to, amount) => nodes(from) give (nodes(to), amount) }
+    debts.foreach { case Debt(from, to, amount) => nodes(from) give(nodes(to), amount) }
 
     for (node <- nodes.values; if node.balance >= 0) node.sellAllDebts()
     nodes.values.foreach(_.simplifyBidirectionalDebts())
@@ -28,31 +28,32 @@ object SimplifyDebts {
     private val out = mutable.HashMap[Node, Int]()
 
     def balance = in.values.sum - out.values.sum
-    def debts = out.map { case( to, amount) => Debt(name, to.name, amount) }.toList
+
+    def debts = out.map { case (to, amount) => Debt(name, to.name, amount) }.toList
 
     def give(receiver: Node, amount: Int): Unit = {
       val debt = out.getOrElse(receiver, 0) + amount
-      this    .out += receiver -> debt
-      receiver.in  += this     -> debt
+      this.out += receiver -> debt
+      receiver.in += this -> debt
     }
 
     def reimburse(receiver: Node, amount: Int): Unit = {
       val debt = out(receiver) - amount
       assert(debt >= 0)
-      if (debt == 0) this    .out -= receiver else this    .out += receiver -> debt
-      if (debt == 0) receiver.in  -= this     else receiver.in  += this     -> debt
+      if (debt == 0) this.out -= receiver else this.out += receiver -> debt
+      if (debt == 0) receiver.in -= this else receiver.in += this -> debt
     }
 
     def sellAllDebts(): Unit = {
       assert(balance >= 0)
       while (out.nonEmpty) {
-        val (giver   , credit) = in .iterator.next()
-        val (receiver, debit ) = out.iterator.next()
+        val (giver, credit) = in.iterator.next()
+        val (receiver, debit) = out.iterator.next()
 
         val debtToSell = min(debit, credit)
-        giver give      (receiver, debtToSell)
-        giver reimburse (this    , debtToSell)
-        this  reimburse (receiver, debtToSell)
+        giver give(receiver, debtToSell)
+        giver reimburse(this, debtToSell)
+        this reimburse(receiver, debtToSell)
       }
     }
 
@@ -60,8 +61,8 @@ object SimplifyDebts {
       for ((node, received) <- in) {
         out.get(node).foreach(given => {
           val exchange = min(given, received)
-          this reimburse (node, exchange)
-          node reimburse (this, exchange)
+          this reimburse(node, exchange)
+          node reimburse(this, exchange)
         })
       }
     }
@@ -88,21 +89,21 @@ object SimplifyDebts {
     val simplifiedDebts = simplifyDebts(debts)
     println(s"Simplified debts:\n${simplifiedDebts.mkString("- ", "\n- ", "\n")}")
 
-//    Initial debts:
-//      - David owes 30£ to Baptiste
-//      - David owes 20£ to Camille
-//      - Julia owes 60£ to Baptiste
-//      - Julia owes 60£ to David
-//      - Julia owes 40£ to Camille
-//      - Julia owes 40£ to Lucie
-//      - Lucie owes 100£ to Julia
-//      - Baptiste owes 20£ to Camille
-//      - Camille owes 40£ to Baptiste
-//             
-//    Simplified debts:
-//      - Julia owes 110£ to Baptiste
-//      - Julia owes 40£ to Camille
-//      - Julia owes 10£ to David
-//      - Lucie owes 60£ to Julia
+    //    Initial debts:
+    //      - David owes 30£ to Baptiste
+    //      - David owes 20£ to Camille
+    //      - Julia owes 60£ to Baptiste
+    //      - Julia owes 60£ to David
+    //      - Julia owes 40£ to Camille
+    //      - Julia owes 40£ to Lucie
+    //      - Lucie owes 100£ to Julia
+    //      - Baptiste owes 20£ to Camille
+    //      - Camille owes 40£ to Baptiste
+    //
+    //    Simplified debts:
+    //      - Julia owes 110£ to Baptiste
+    //      - Julia owes 40£ to Camille
+    //      - Julia owes 10£ to David
+    //      - Lucie owes 60£ to Julia
   }
 }

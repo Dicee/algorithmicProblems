@@ -2,11 +2,6 @@ package unknownSource
 
 import scala.collection.mutable
 
-// Difficulty: medium. I came up with the main idea relatively quickly but it does require some thought about edge cases
-//             and complexity. I'm still not sure my solution covers all cases and not entirely sure about my complexity.
-//             It seems linear to me, with a worst case of 2*|longest| iterations (if the string contains as many
-//             non-overlapping partial matches - as long as possible - that can possibly fit in the length)
-
 object SubstringPermutations {
   def main(args: Array[String]): Unit = {
     // no permutation, no match overlap, no partial match, one full match
@@ -32,11 +27,12 @@ object SubstringPermutations {
   }
 
   /**
-    * Is there a permutation of <code>shortest</code> that is a contiguous substring of
-    * <code>longest</code>?
-    * @param longest a string guaranteed to be longer than <code>shortest</code>
-    * @param shortest a string guaranteed to be shorter than <code>longest</code>
-    */
+   * Is there a permutation of <code>shortest</code> that is a contiguous substring of
+   * <code>longest</code>?
+   *
+   * @param longest  a string guaranteed to be longer than <code>shortest</code>
+   * @param shortest a string guaranteed to be shorter than <code>longest</code>
+   */
   def isSubstringPermutable(longest: String, shortest: String): Boolean = {
     val chars = new Multiset(shortest)
     var (matched, i) = (0, 0)
@@ -44,13 +40,13 @@ object SubstringPermutations {
     while (i < longest.length && matched < shortest.length) {
       val ch = longest(i)
       if (chars.count(ch) > 0) {
-        chars   -= ch
+        chars -= ch
         matched += 1
-        i       += 1
+        i += 1
       } else if (matched > 0) {
-        chars   += longest(i - matched)
+        chars += longest(i - matched)
         matched -= 1
-      } else i  += 1
+      } else i += 1
     }
     matched == shortest.length
   }
@@ -58,14 +54,18 @@ object SubstringPermutations {
   private class Multiset[T] {
     private val map = mutable.HashMap[T, Int]()
 
-    def this(iterable: Iterable[T]) = { this(); iterable.foreach(this += _) }
+    def this(iterable: Iterable[T]) = {
+      this(); iterable.foreach(this += _)
+    }
 
     def +=(t: T): Unit = map += t -> (count(t) + 1)
+
     def -=(t: T): Unit = {
       val cnt = count(t)
       assert(cnt > 0, s"Cannot remove $t as current count is zero.")
       if (cnt == 1) map -= t else map += t -> (cnt - 1)
     }
+
     def count(t: T) = map.getOrElse(t, 0)
   }
 }
