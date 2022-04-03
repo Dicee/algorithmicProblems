@@ -5,7 +5,7 @@ package codility.challenges;
  * This code obtained a 83% score (100% functionnality, 75% scalability) and a silver award.
  * https://codility.com/cert/view/certRRGNH9-6FTC4MP9TBPSUVZD
  */
-class Solution {
+public class TiedRopes {
     public int solution(int[] A, int[] B, int[] C) {
         int[] weights = new int[B.length];
         
