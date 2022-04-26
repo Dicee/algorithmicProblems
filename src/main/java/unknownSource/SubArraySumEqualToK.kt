@@ -7,10 +7,10 @@ import kotlin.random.Random
 // of an entire sub-array
 private fun findSubArraySum(arr: IntArray, sum: Int): Boolean {
     val previousPrefixSums = mutableSetOf<Int>()
-    val prefixSums = arr.asSequence().scan(0) { acc, v -> acc + v }.drop(1).toList()
+    val prefixSums = arr.scan(0) { acc, v -> acc + v }
 
     for ((i, v) in prefixSums.withIndex()) {
-        if (v == sum || v - sum in previousPrefixSums) return true
+        if (v - sum in previousPrefixSums) return true
         previousPrefixSums += prefixSums[i]
     }
     return false
