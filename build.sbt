@@ -24,5 +24,6 @@ libraryDependencies ++= Seq(
   "org.junit.jupiter" % "junit-jupiter-engine" % "5.0.0" % Test
 )
 
-addSbtPlugin("com.hanhuy.sbt" % "kotlin-plugin" % "2.0.0")
+//addSbtPlugin("com.hanhuy.sbt" % "kotlin-plugin" % "2.0.0")
 
+libraryDependencies += "org.jetbrains.kotlinx" % "kotlinx-coroutines-core" % "1.6.0"
