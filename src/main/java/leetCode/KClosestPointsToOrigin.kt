@@ -51,7 +51,7 @@ fun main() {
     ), 5) // [[2, 31], [-27, -38], [-55, -39], [-57, -67], [34, -84]]
 }
 
-fun kClosest(points: Array<IntArray>, k: Int): Array<IntArray> {
+private fun kClosest(points: Array<IntArray>, k: Int): Array<IntArray> {
     quickSelect(points, k - 1)
     return points.sliceArray(0 until k)
 }
