@@ -42,5 +42,5 @@ private fun generateUniqueInvalidSums(validSums: Set<Int>, size: Int): Sequence<
                 yield(sum)
             }
         }
-    }.filterNot(validSums::contains).take(size)
+    }.take(size)
 }
