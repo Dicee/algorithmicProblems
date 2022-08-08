@@ -17,7 +17,6 @@ fun main() {
     test(intArrayOf(0, 0, 4, 1, 2, 10), intArrayOf(5, -5, 3, 1, 2, -3), "RRRGGG", 6)
 }
 
-
 private fun largestBalancedRadius(xs: IntArray, ys: IntArray, colors: String): Int {
     val sortedDistWithColor = xs.indices.asSequence()
         .map { (xs[it].toLong() * xs[it].toLong() + ys[it].toLong() * ys[it].toLong()) to colors[it] }
