@@ -58,7 +58,7 @@ private fun collectLineages(id1: String, id2: String, lineage: Lineage, acc: Mut
     return acc
 }
 
-class Lineage(val node: Node, val parent: Lineage? = null) {
+data class Lineage(val node: Node, val parent: Lineage? = null) {
     val depth: Int = (parent?.depth ?: -1) + 1
 }
 
