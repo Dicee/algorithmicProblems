@@ -2,6 +2,7 @@ package hackerrank.challenges.algoGuruGenesis
 
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Internal Amazon contest. Test challenge (may not remain active forever): https://www.hackerrank.com/contests/test-1657703073/challenges.
@@ -34,7 +35,7 @@ fun main() {
     while (j <= N - 1) {
         val diff = i * threshold + (suffixSums[i] - suffixSums[j + 1]) - L
         val maxRemovable = threshold - sortedPackages[j]
-        threshold -= if (i != 0 && diff / i < maxRemovable) diff / i else maxRemovable
+        threshold -= if (i != 0) min(maxRemovable, max(0, diff / i)) else maxRemovable
 
         while (i < N && sortedPackages[i] >= threshold) i++
         j = max(i, j + 1)
