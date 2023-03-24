@@ -43,7 +43,7 @@ fun main() {
     insert(7)
     assertCacheContains(3, 6, 7)
 
-    useCache(3)
+    insert(3)
     insert(8)
     assertCacheContains(3, 7, 8)
 

@@ -12,14 +12,21 @@ class LeastRecentlyUsedCache[K, V](maxSize: Int) {
     if (map.size == maxSize) {
       map -= nodes.pop().key
     }
-    val node = nodes.append(kv._1, kv._2)
+
+    val node = map.get(kv._1).map(_.copy(value = kv._2)).getOrElse(nodes.append(kv._1, kv._2))
     map += kv._1 -> node
+
+    markUsed(node)
   }
 
   def get(key: K): Option[V] = {
     val node = map.get(key)
-    node.foreach(nodes.moveToTail)
+    node.foreach(markUsed)
     node.map(_.value)
+  }
+
+  private def markUsed(node: Node) {
+    nodes.moveToTail(node)
   }
 
   def toMap: Map[K, V] = map.view.mapValues(_.value).toMap
@@ -73,8 +80,7 @@ class LeastRecentlyUsedCache[K, V](maxSize: Int) {
     }
   }
 
-  class Node(val key: K, val value: V, var previous: Node = null, var next: Node = null) {
-  }
+  case class Node(key: K, value: V, var previous: Node = null, var next: Node = null)
 }
 
 object Main {
@@ -101,7 +107,7 @@ object Main {
     insert(7)
     assertCacheContains(3, 6, 7)
 
-    useCache(3)
+    insert(3)
     insert(8)
     assertCacheContains(3, 7, 8)
 

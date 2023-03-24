@@ -11,21 +11,26 @@ class ConstantTimeLookupLruCache<K, V>(private val maxSize: Int) : LruCache<K, V
 
     override fun get(key: K): V? {
         val node = map[key]
-        if (node != null) nodes.moveToTail(node)
+        if (node != null) markUsed(node)
         return node?.value
     }
 
     override fun put(key: K, value: V) {
-        if (map.size == maxSize) map.remove(nodes.pop().key)
+        if (map.size == maxSize && key !in map) map.remove(nodes.pop().key)
 
-        val node = nodes.append(key, value)
+        val node = map[key]?.copy(value = value) ?: nodes.append(key, value)
         map[key] = node
+
+        markUsed(node)
+    }
+
+    private fun markUsed(node: Node<K, V>) {
+        nodes.moveToTail(node)
     }
 
     override fun toMap(): Map<K, V> {
         return map.mapValues { it.value.value }
     }
-
 }
 
 private class DoublyLinkedList<K, V> {
@@ -74,11 +79,30 @@ private class DoublyLinkedList<K, V> {
         }
         return node
     }
+
+    override fun toString(): String {
+        return buildString {
+            append('[')
+
+            var node = head
+            var first = true
+
+            while (node != null) {
+                if (!first) append(", ")
+                append(node.value)
+
+                node = node.next
+                first = false
+            }
+
+            append(']')
+        }
+    }
 }
 
 private data class Node<K, V>(
     val key: K,
-    val value: V,
+    var value: V,
     var previous: Node<K, V>? = null,
     var next: Node<K, V>? = null,
 )
