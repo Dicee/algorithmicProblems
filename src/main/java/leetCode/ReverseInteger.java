@@ -1,3 +1,6 @@
+/**
+ * Difficulty: marked as medium but is easy
+ */
 class ReverseInteger {
     public int reverse(int x) {
         int y = 0;
