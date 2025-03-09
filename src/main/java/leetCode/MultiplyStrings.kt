@@ -1,6 +1,8 @@
 /**
  * Difficulty: marked as medium but is easy. Without being able to execute though, I would have found it more difficult to not forget any edge case.
  *             It's a bit tedious to write, and of course super inefficient for BigInt multiplication, but I think it was the spirit of the question.
+ * 
+ * https://leetcode.com/problems/multiply-strings/description/
  */
 
 fun multiply(num1: String, num2: String): String {
@@ -65,6 +67,7 @@ fun sum(intermediateResults: List<String>) = buildString {
     if (carryOver > 0) append(carryOver.digitToChar())
 }.reversed()
 
+// executing in REPL
 multiply("123", "456")
 multiply("2", "3")
 multiply("295", "3")
