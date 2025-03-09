@@ -1,5 +1,7 @@
 /**
  * Difficulty: marked as medium but is easy
+ *
+ * https://leetcode.com/problems/reverse-integer/description/
  */
 class ReverseInteger {
     public int reverse(int x) {
