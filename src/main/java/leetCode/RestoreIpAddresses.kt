@@ -2,7 +2,7 @@
  * Difficulty: easy, marked as medium. I did waste some time trying to make a backtracking solution work, which involved pretty tricky
  *             state management, before I pause and think "Dude, solutions are at most 12 characters long, this can just be brute-forced!".
  *             After that, it's pretty easy.
- * 
+ *
  * https://leetcode.com/problems/restore-ip-addresses
  */
 fun restoreIpAddresses(s: String): List<String> {
@@ -12,15 +12,9 @@ fun restoreIpAddresses(s: String): List<String> {
 
     // ok to brute-force because it's a small space to explore and it makes the solution very simple
     for (i in 1..3) {
-        if (!isValidPart(0, i, s)) {
-            println("Invalid: ${s.substring(0, i)}")
-            continue
-        }
+        if (!isValidPart(0, i, s)) continue
         for (j in i + 1..i+ 3) {
-            if (!isValidPart(i, j, s)) {
-                println("Invalid: ${s.substring(i, j)}")
-                continue
-            }
+            if (!isValidPart(i, j, s)) continue
             for (k in j + 1..j + 3) {
                 if (isValidPart(j, k, s) && isValidPart(k, s.length, s)) {
                     solutions.add(buildString {
