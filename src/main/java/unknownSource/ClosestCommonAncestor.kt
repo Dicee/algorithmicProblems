@@ -9,7 +9,7 @@ fun main() {
                     Node("braccio", setOf(Node("costaril"), Node("milotta"))),
             ))
     ))
-
+ 
     println(findClosestCommonAncestor("sleb", "sleb", hierarchy)) // sleb
     println(findClosestCommonAncestor("alberto", "sleb", hierarchy)) // sleb
     println(findClosestCommonAncestor("alberto", "courtino", hierarchy)) // sleb
