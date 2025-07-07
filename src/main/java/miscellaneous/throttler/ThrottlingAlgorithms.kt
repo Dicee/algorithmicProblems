@@ -1,16 +1,23 @@
+import kotlin.math.exp
 import kotlin.math.min
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 import java.io.File
 import java.util.ArrayDeque
 
 val rootDir = File("/Users/courtino/repos/personal/algorithmicProblems/src/main/java/miscellaneous/throttler/")
-for (i in 1..6) {
-    val clock = Clock()
-    val tokenBucketRateLimiter = TokenBucketRateLimiter(tpsThreshold = 110, burstTpsThreshold = 135, clock)
-    val slidingWindowRateLimiter = SlidingWindowRateLimiter(tpsThreshold = 110, windowLengthSec = 5, clock)
 
-    runThrottlingSimulation(tokenBucketRateLimiter, clock, i)
-    runThrottlingSimulation(slidingWindowRateLimiter, clock, i)
+val rateLimiterFactories = listOf(
+    { clock: Clock -> TokenBucketRateLimiter(tpsThreshold = 110, burstTpsThreshold = 135, clock) },
+    { clock: Clock -> SlidingWindowRateLimiter(tpsThreshold = 110, windowLengthSec = 10, clock) },
+    { clock: Clock -> RampDownSlidingWindowRateLimiter(tpsThreshold = 110, burstTpsThreshold = 135, windowLengthSec = 10, clock) },
+)
+
+for (i in 1..6) {
+    for (rateLimiterFactory in rateLimiterFactories) {
+        val clock = Clock()
+        runThrottlingSimulation(rateLimiterFactory(clock), clock, i)
+    }
 }
 
 fun runThrottlingSimulation(rateLimiter: RateLimiter, clock: Clock, i: Int) {
@@ -79,7 +86,7 @@ class TokenBucketRateLimiter(tpsThreshold: Int, private val burstTpsThreshold: I
     }
 }
 
-class SlidingWindowRateLimiter(tpsThreshold: Int, private val windowLengthSec: Int, private val clock: Clock) : RateLimiter {
+class SlidingWindowRateLimiter(tpsThreshold: Int, windowLengthSec: Int, private val clock: Clock) : RateLimiter {
     private val segmentLengthMs = 1 // we work on 1 ms buckets for finer granularity
     private val maxBucketCount = windowLengthSec * 1000 / segmentLengthMs
 
@@ -109,6 +116,63 @@ class SlidingWindowRateLimiter(tpsThreshold: Int, private val windowLengthSec: I
         val timeBucket: Long,
         var callsCount: Int = 0,
     )
+}
+
+class RampDownSlidingWindowRateLimiter(tpsThreshold: Int, burstTpsThreshold: Int, windowLengthSec: Int, private val clock: Clock) : RateLimiter {
+    private val segmentLengthMs = 1 // we work on 1 ms buckets for finer granularity
+
+    private val maxBucketCount = windowLengthSec * 1000 / segmentLengthMs
+    private val segments = ArrayDeque<Segment>(maxBucketCount)
+
+    private val windowThreshold = windowLengthSec * tpsThreshold
+    private val windowBurstThreshold = windowLengthSec * burstTpsThreshold
+
+    private var attemptedCallsWithinWindow: Int = 0
+    private var grantedCallsWithinWindow: Int = 0
+
+    override fun grant(requestedCapacity: Int): RateLimiterResult {
+        val currentTimeBucket = clock.now / segmentLengthMs
+
+        while (segments.isNotEmpty() && segments.first.timeBucket < currentTimeBucket - maxBucketCount) {
+            val (_, attemptedCallsCount, grantedCallsCount) = segments.pop()
+            attemptedCallsWithinWindow -= attemptedCallsCount
+            grantedCallsWithinWindow -= grantedCallsCount
+        }
+
+        if (segments.isEmpty() || segments.last.timeBucket < currentTimeBucket) segments.addLast(Segment(currentTimeBucket))
+
+        val totalRequested = attemptedCallsWithinWindow + requestedCapacity
+        val maxTotalGranted = grantedCallsWithinWindow + requestedCapacity
+
+        val grantedCapacity =
+            if (maxTotalGranted <= windowThreshold) requestedCapacity
+            else if (maxTotalGranted <= windowBurstThreshold) linearRampDown(requestedCapacity, totalRequested)
+            else exponentialRampDown(requestedCapacity, totalRequested)
+
+        val rateLimiterResult = RateLimiterResult(grantedCapacity, requestedCapacity - grantedCapacity)
+        attemptedCallsWithinWindow += requestedCapacity
+        grantedCallsWithinWindow += grantedCapacity
+        segments.last.update(rateLimiterResult)
+
+        return rateLimiterResult
+    }
+
+    private fun linearRampDown(requestedCapacity: Int, totalRequested: Int) =
+        (requestedCapacity * windowThreshold.toDouble() / totalRequested).roundToInt()
+
+    private fun exponentialRampDown(requestedCapacity: Int, totalRequested: Int) =
+        (requestedCapacity * exp(windowThreshold - totalRequested.toDouble())).roundToInt()
+
+    private data class Segment(
+        val timeBucket: Long,
+        var attemptedCallsCount: Int = 0,
+        var grantedCallsCount: Int = 0,
+    ) {
+        fun update(rateLimiterResult: RateLimiterResult) {
+            attemptedCallsCount += rateLimiterResult.grantedCapacity + rateLimiterResult.deniedCapacity
+            grantedCallsCount += rateLimiterResult.grantedCapacity
+        }
+    }
 }
 
 class Clock {
