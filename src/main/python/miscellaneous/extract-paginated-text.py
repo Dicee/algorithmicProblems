@@ -23,7 +23,6 @@ def get_base_name(file_name):
 
 images = sorted([f for f in os.listdir() if is_image(f)])
 grouped_images = { k: [v for v in values] for k, values in groupby(images, get_base_name) }
-#print(grouped_images)
 
 for group_name, group_files in grouped_images.items():
     is_single_page = len(group_files) == 1
